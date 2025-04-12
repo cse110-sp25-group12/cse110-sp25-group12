@@ -1,0 +1,25 @@
+title: CSE 110 | SP25 | Team 12
+description: Team 12 homepage for CSE 110 SP25
+theme: just-the-docs/just-the-docs
+
+# url: https://just-the-docs.github.io
+
+math: katex
+search_enabled: true
+
+aux_links:
+  Projct Repo: https://github.com/cse110-sp25-group12/cse110-sp25-group12/
+aux_links_new_tab: true
+
+footer_content: 'Copyright &copy; 2025 University of California, San Diego. Districuted by an <a href="https://opensource.org/license/mit">MIT license.</a>'
+
+callouts:
+  note:
+    color: blue
+    title: note
+  warning:
+    color: red
+    title: warning
+  important:
+    color: green
+    title: important
