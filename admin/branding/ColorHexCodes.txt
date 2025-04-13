@@ -1,0 +1,11 @@
+#f5eee3 (soft beige background)
+
+#3b2115 (dark brown/black text and outlines)
+
+#8a2e2e (main Git logo red)
+
+#fdfdfd (white used in the eyes and Git path)
+
+#e7cab4 (shadow and accent)
+
+#552d1e (darker shade of the main red for shadows and edges)
