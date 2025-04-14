@@ -166,7 +166,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/james.jpeg" alt="James profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/james.jpeg" alt="James profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://0rd1nary13.github.io/CSE110-Lab-Week-1/" target="_blank">James</a></p>
         <a href="mailto:jforest@ucsd.edu">jforest@ucsd.edu</a>
