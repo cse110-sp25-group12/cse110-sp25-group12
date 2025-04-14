@@ -1,7 +1,7 @@
 ---
 title: Home
 layout: home
-permalink: //cse110-sp25-group12
+permalink: /
 ---
 
 # Team 12 - Git Commitment Issues
