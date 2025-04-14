@@ -164,4 +164,13 @@ Team Members
         <p>Fun fact: I am living under a rock - I don't have Instagram or TikTok</p>
     </div>
 </div>
+
+<div class="profile-mem">
+    <img class="profile-pic mem" src="/assets/images/james.png" alt="James profile picture">
+    <div class="profile-info profile-info-mem">
+        <p class="profile-name"><a href="https://0rd1nary13.github.io/CSE110-Lab-Week-1/" target="_blank">James</a></p>
+        <a href="mailto:jforest@ucsd.edu">jforest@ucsd.edu</a>
+    </div>
+</div>
+
 </div>

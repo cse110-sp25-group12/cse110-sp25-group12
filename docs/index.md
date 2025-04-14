@@ -1,7 +1,7 @@
 ---
 title: Home
 layout: home
-permalink: /
+permalink: //cse110-sp25-group12
 ---
 
 # Team 12 - Git Commitment Issues
@@ -17,7 +17,7 @@ CSE 110 Team 12 at UC San Diego (Spring 2025)
 > When we do, we can put the rationale behind the name in this section
  -->
 
-We are *Git Commitment Issues*, a team of 10 students in CSE 110 at UC San Diego. 
+We are *Git Commitment Issues*, a team of 11 students in CSE 110 at UC San Diego. 
 
 [Our Values](/cse110-sp25-group12/values){: .btn .btn-outline }
 [Our Team](/cse110-sp25-group12/team){: .btn .btn-outline }
