@@ -1,7 +1,7 @@
 ---
 title: Our Team
 layout: default
-permalink: /cse110-sp25-group12/team
+permalink: /team
 ---
 
 # Our Team

@@ -1,7 +1,7 @@
 ---
 title: Our Brand
 layout: default
-permalink: /cse110-sp25-group12/brand
+permalink: /brand
 --- 
 
 # Our Brand

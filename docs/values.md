@@ -1,7 +1,7 @@
 ---
 title: Our Values
 layout: default
-permalink: /cse110-sp25-group12/values
+permalink: /values
 ---
 
 # Our Values
