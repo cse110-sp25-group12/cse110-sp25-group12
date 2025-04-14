@@ -1,1 +1,1 @@
-# Website Hosted on GitHub Pages using Jekyll [https://github.com/cse110-sp25-group12/cse110-sp25-group12.git](https://cse110-sp25-group12.github.io/cse110-sp25-group12/)
+# Website Hosted on GitHub Pages using Jekyll [[https://github.com/cse110-sp25-group12/cse110-sp25-group12.git](https://cse110-sp25-group12.github.io/cse110-sp25-group12/](https://cse110-sp25-group12.github.io/cse110-sp25-group12/cse110-sp25-group12))
