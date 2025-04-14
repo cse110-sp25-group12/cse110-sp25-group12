@@ -1,7 +1,7 @@
 ---
 title: Our Brand
 layout: default
-permalink: /brand
+permalink: /cse110-sp25-group12/brand
 --- 
 
 # Our Brand
@@ -27,13 +27,13 @@ Our Mascot
 {: .fs-6 .fw-300 }
 Our mascot is a playful representation of our team's moniker. Our mascot Gitty is a cute, cartoonish character that looks worried at the prospect of encountering commitment issues. He is sometimes seen without legs as he is able to grow them out at will. 
 
-![Git Commitment Issues Mascot](/assets/images/gitty.png)
+![Git Commitment Issues Mascot](/cse110-sp25-group12/assets/images/gitty.png)
 
 
 Our Logo
 {: .fs-6 .fw-300 }
 Our logo depicts Gitty without legs with a wreath of text around him. The text reads "Git Commitment Issues" and our team name "Team 12". The logo is designed to be simple and memorable, reflecting our team's identity and values.
-![Git Commitment Issues Logo](/assets/images/logo.png)
+![Git Commitment Issues Logo](/cse110-sp25-group12/assets/images/logo.png)
 
 
 Our Colors

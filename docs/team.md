@@ -1,7 +1,7 @@
 ---
 title: Our Team
 layout: default
-permalink: /team
+permalink: /cse110-sp25-group12/team
 ---
 
 # Our Team
@@ -76,7 +76,7 @@ Team Members
 
 <div class="profile-display">
 <div class="profile-mem">
-    <img class="profile-pic mem" src="../assets/images/moises.png" alt="Moises profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/moises.png" alt="Moises profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://github.com/MoisesRM32" target="_blank">Moises Mendoza</a></p>
         <a href="mailto:mom009@ucsd.edu">mom009@ucsd.edu</a>
@@ -85,7 +85,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/seyed.jpg" alt="Seyed (Amir) profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/seyed.jpg" alt="Seyed (Amir) profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://amirrezash007.github.io/SeyedShams/" target="_blank">Seyed (Amir) Shams Taleghani</a></p>
         <a href="mailto:Sshamstaleghani@ucsd.edu">Sshamstaleghani@ucsd.edu</a>
@@ -94,7 +94,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/sriharsha.jpg" alt="Sriharsha profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/sriharsha.jpg" alt="Sriharsha profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://kavurisriharsha.github.io/cse110-lab1/" target="_blank">Sriharsha Kavuri</a></p>
         <a href="mailto:skavuri@ucsd.edu">skavuri@ucsd.edu</a>
@@ -103,7 +103,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/paz.jpg" alt="Paz profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/paz.jpg" alt="Paz profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://pmogrelia.github.io" target="_blank">Paz Mogrelia</a></p>
         <a href="mailto:pmogrelia@ucsd.edu">pmogrelia@ucsd.edu</a>
@@ -112,7 +112,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/changrong.jpg" alt="Changrong profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/changrong.jpg" alt="Changrong profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://github.com/ChangrongLi8858/CL-CSE-110" target="_blank">Changrong Li</a></p>
         <a href="mailto:ncli558933@gmail.com">ncli558933@gmail.com</a>
@@ -121,7 +121,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/xuiwen.JPG" alt="Xiuwen profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/xuiwen.JPG" alt="Xiuwen profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://xwinner7.github.io/Lab-Week-1/" target="_blank">Xiuwen Zhu</a></p>
         <a href="mailto:xiz189@ucsd.edu">xiz189@ucsd.edu</a>
@@ -130,7 +130,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/Fallback.png" alt="Jungwon profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/Fallback.png" alt="Jungwon profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name">Jungwon Kim</p>
         <a href="#">(email not provided)</a>
@@ -139,7 +139,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/evan.jpg" alt="Evan profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/evan.jpg" alt="Evan profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://twintersww.github.io/CSE110-Lab1/" target="_blank">Evan Wu</a></p>
         <a href="mailto:e8wu@ucsd.edu">e8wu@ucsd.edu</a>
@@ -148,7 +148,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/nimai.PNG" alt="Nimai profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/nimai.PNG" alt="Nimai profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://nixmai.github.io/NimaiKasibatlaCSE110/" target="_blank">Nimai Kasibatla</a></p>
         <a href="mailto:nkasibatla@ucsd.edu">nkasibatla@ucsd.edu</a>
@@ -157,7 +157,7 @@ Team Members
 </div>
 
 <div class="profile-mem">
-    <img class="profile-pic mem" src="/assets/images/fabio.png" alt="Fabio profile picture">
+    <img class="profile-pic mem" src="/cse110-sp25-group12/assets/images/fabio.png" alt="Fabio profile picture">
     <div class="profile-info profile-info-mem">
         <p class="profile-name"><a href="https://ruhlando.github.io/cse110-github-pages/" target="_blank">FABIO RUHLAND</a></p>
         <a href="mailto:fabio.ruhland@gmail.com">fabio.ruhland@gmail.com</a>
