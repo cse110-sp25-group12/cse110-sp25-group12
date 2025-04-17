@@ -1,7 +1,9 @@
 # 📝 Team Meeting Notes
 
 **Date:** 04-17   
+
 **Attendees:**   Fabio, James, Sriharsha, Xiuwen, Amirezza, Nimai, Christina, Moises, Evan
+
 **Meeting Type:** Weekly Sync
 
 ---
