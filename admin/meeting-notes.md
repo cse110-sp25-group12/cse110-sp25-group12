@@ -1,18 +1,16 @@
 # 📝 Team Meeting Notes
 
-**Date:** MM-DD   
-**Attendees:**   
+**Date:** 04-17   
+**Attendees:**   Fabio, James, Sriharsha, Xiuwen, Amirezza, Nimai, Christina, Moises, Evan
 **Meeting Type:** Weekly Sync
 
 ---
 
 ## ✅ Agenda
 
-- [ ] Warmup Exercise
-- [ ] Guidline + Meeting Notes
-- [ ] Which Project?
-- [ ] Create speficic tasks
-- [ ] Assign tasks
+- Went over admin/dev-guideline.md
+- Divide members into subteams (HTML/CSS, Design, JS, Test teams)
+- Go over warmup exercise instructions. Set basic tasks/deadlines
 
 ---
 
