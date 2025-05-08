@@ -30,6 +30,8 @@
 - Different opinions/approaches on solving a problem
 - Bad communication
 ## Define how to address situations where group "rules" are not being followed.
+- reach out to the person => talk to the person => be nice
+- reach out to the team lead
 ## Set up transparent communication protocols.
 - Having a clear workflow for working on a task/feature (everyone should follow the given structure)
 - Checking Slack daily
