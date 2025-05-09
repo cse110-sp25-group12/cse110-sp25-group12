@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jsdoc": "^4.0.4"
+  },
+  "scripts": {
+    "test": "jest",
+    "docs": "jsdoc source -r -d docs"
+  }
+}
