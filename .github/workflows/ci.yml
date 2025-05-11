@@ -1,0 +1,55 @@
+# Initial CI Pipeline
+
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  validate-html:
+    name: HTML Validation (W3C)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate HTML files with W3C API
+        run: |
+          find source -name "*.html" | while read file; do
+            echo "Validating $file"
+            curl --silent \
+              -H "Content-Type: text/html; charset=utf-8" \
+              -H "Accept: application/json" \
+              --data-binary "@$file" \
+              https://validator.w3.org/nu/?out=json \
+              > validator-result.json
+            
+            echo "----- W3C Validator Response for $file -----"
+
+            if grep -q '"type":"error"' validator-result.json; then
+              echo "Validation failed for $file"
+              cat validator-result.json
+              exit 1
+            else
+              echo "Validation passed for $file"
+              echo
+            fi
+          done
+    
+  unit-tests:
+    name: Jest Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
