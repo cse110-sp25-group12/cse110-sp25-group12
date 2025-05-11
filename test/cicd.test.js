@@ -10,6 +10,6 @@ test('wrongSum: 1 + 1 = 2', () => {
 });
 
 //This test should fail
-// test('sum: 1 + 1 = 100', () => {
-//   expect(sum(1, 1) === 100).toBe(true);
-// });
+test('sum: 1 + 1 = 100', () => {
+  expect(sum(1, 1) === 100).toBe(true);
+});
