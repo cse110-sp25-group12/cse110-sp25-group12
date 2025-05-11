@@ -1,3 +1,4 @@
+
 name: Generate and Push JSDoc to docs branch
 
 on:
@@ -5,6 +6,7 @@ on:
     branches:
       - main
       - cicd/initial-pipeline
+
 
   workflow_dispatch:
 
@@ -37,5 +39,6 @@ jobs:
           publish_dir: ./docs
           publish_branch: ${{ github.ref == 'refs/heads/main' && 'docs' || 'docs-cicd' }}
           force_orphan: true
+
 
     

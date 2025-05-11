@@ -1,7 +1,7 @@
 ---
 # Configuration for the Jekyll template "Just the Docs"
 parent: Decisions
-nav_order: 100
+nav_order: 000
 title: ADR Template
 
 # status: "{proposed | rejected | accepted | deprecated | … | superseded by ADR-0123"
