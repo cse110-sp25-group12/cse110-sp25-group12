@@ -19,11 +19,14 @@ jobs:
         run: |
           find source -name "*.html" | while read file; do
             echo "Validating $file"
-            curl --silent --output validator-result.txt --write-out "%{http_code}" \
+            curl --silent --output validator-result.txt \
               -F "uploaded_file=@$file;type=text/html" \
-              https://validator.w3.org/nu/?out=text > status.txt
+              https://validator.w3.org/nu/?out=text
+            
+            echo "----- W3C Validator Resopnse for $file -----"
+            cat validator-result.txt
 
-            if ! grep -q "200" status.txt; then
+            if grep -q "Error:" validator-result.txt; then
               echo "Validation failed for $file"
               cat validator-result.txt
               exit 1
