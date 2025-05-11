@@ -21,9 +21,9 @@ jobs:
             echo "Validating $file"
             curl --silent --output validator-result.txt \
               -F "uploaded_file=@$file;type=text/html" \
-              https://validator.w3.org/nu/?out=text
+              https://validator.w3.org/nu/?out=json
             
-            echo "----- W3C Validator Resopnse for $file -----"
+            echo "----- W3C Validator Response for $file -----"
             cat validator-result.txt
 
             if grep -q "Error:" validator-result.txt; then
