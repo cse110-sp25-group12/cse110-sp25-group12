@@ -1,3 +1,5 @@
+
+
 # Team Charter v1.0 – May 2025
 
 ## 1. Clearly define your team's purpose and objectives.
@@ -61,4 +63,5 @@
 ## 8. Weaknesses & Development Areas
 - Solving merge issues
 - We need to review GPT code more thoroughly before adopting it
+
 
