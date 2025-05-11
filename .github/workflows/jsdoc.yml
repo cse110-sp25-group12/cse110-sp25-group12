@@ -11,6 +11,9 @@ jobs:
     name: Build and Commit JSDoc to Same Branch
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v3
 
