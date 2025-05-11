@@ -35,7 +35,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
-          publish_branch: $${{ github.ref == 'refs/heads/main' && 'docs' || 'docs-cicd' }}
+          publish_branch: ${{ github.ref == 'refs/heads/main' && 'docs' || 'docs-cicd' }}
           force_orphan: true
 
     
