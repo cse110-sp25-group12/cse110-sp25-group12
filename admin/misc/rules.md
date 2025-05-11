@@ -1,3 +1,5 @@
+
+
 # Team Charter v1.0 – May 2025
 
 ## 1. Clearly define your team's purpose and objectives.
@@ -20,12 +22,24 @@
 - Transparency as building on open communication
 - Accountability
 ## 3. Define roles, responsibilities, and accountability structures.
-- Project Lead: Fabio Ruhland 
-- Technical Lead: James Forest
-- Backend Developer: Xiuwen Zhu
-- Frontend Developer: Sriharsha Kavuri (owner)
-- CI/CD Developer: Evan Wu (owner)
-- Testing Developer/Manager + Quality Assurance: Seyed Shams-Taleghani
+- **Project Lead:**
+  - Owner: Fabio
+  - Secondary: Xiuwen
+- **Technical Lead:**
+  - Owner: James
+  - Secondary: Evan, Xiuwen, Changrong
+- **Backend Developer:**
+  - Owner: Xiuwen, Paz
+  - Secondary: James, Nimai, Changrong
+- **Frontend Developer:**
+  - Owner: Sriharsha
+  - Secondary: Amirreza, Christina, Fabio
+- **CI/CD Developer:**
+  - Owner: Evan
+  - Secondary: James, Paz, Jungwon
+- **Testing Developer/Manager + Quality Assurance:**
+  - Owner: Amirreza, Changrong, Nimai
+  - Secondary: Christina, Jungwon
 ## 4. Proactively identify potential issues and establish conflict-resolution strategies.
 - Team members do not complete tasks 
 - No reliability
@@ -49,4 +63,5 @@
 ## 8. Weaknesses & Development Areas
 - Solving merge issues
 - We need to review GPT code more thoroughly before adopting it
+
 
