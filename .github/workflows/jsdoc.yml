@@ -33,8 +33,12 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add -f docs/
-          git commit -m "Update JSDoc [auto]" || echo "No changes to commit"
-          git push origin HEAD:${GITHUB_REF#refs/heads/}
+          if [ -d docs ]; then
+            git add -f docs/
+            git commit -m "Update JSDoc [auto]" || echo "No changes to commit"
+            git push origin HEAD:${GITHUB_REF#refs/heads/}
+          else
+            echo "No docs/folder generated. Skipping commit."
+          fi
 
     

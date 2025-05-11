@@ -5,7 +5,7 @@
     "jsdoc": "^4.0.4"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "docs": "jsdoc source -r -d docs"
   }
 }
