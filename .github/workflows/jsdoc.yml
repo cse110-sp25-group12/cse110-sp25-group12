@@ -1,14 +1,18 @@
-name: Generate JSDoc in docs/ for all branches
+
+name: Generate and Push JSDoc to docs branch
 
 on:
   push:
-    branches: [ "**" ]
+    branches:
+      - main
+      - cicd/initial-pipeline
+
 
   workflow_dispatch:
 
 jobs:
   build-and-deploy-docs:
-    name: Build and Commit JSDoc to Same Branch
+    name: Build and Push JSDoc to Separate Branch
     runs-on: ubuntu-latest
 
     permissions:
@@ -28,17 +32,13 @@ jobs:
       - name: Generate JSDoc
         run: npm run docs
       
-      - name: Commit generated docs
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Deploy to docs branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: ${{ github.ref == 'refs/heads/main' && 'docs' || 'docs-cicd' }}
+          force_orphan: true
 
-          if [ -d docs ]; then
-            git add -f docs/
-            git commit -m "Update JSDoc [auto]" || echo "No changes to commit"
-            git push origin HEAD:${GITHUB_REF#refs/heads/}
-          else
-            echo "No docs/folder generated. Skipping commit."
-          fi
 
     
