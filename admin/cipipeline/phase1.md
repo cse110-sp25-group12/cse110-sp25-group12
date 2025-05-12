@@ -11,7 +11,8 @@ Our current pipeline currently runs 3 jobs in 2 workflow files:
 - 3. JSDoc (runs on push into main): Builds docs/ using the JSDoc library and pushes it to separate docs branch.
 
 Diagram of current pipeline:
-	![phase1.png](phase1.png)
+
+![phase1.png](phase1.png)
 
 ## Future Considerations
 
