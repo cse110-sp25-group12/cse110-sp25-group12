@@ -1,55 +1,57 @@
 [
-    {
-        "company": "Apple",
-        "job position": "Machine Learning Engineer",
-        "salary": 265000,
-        "location": "San Francisco, CA",
-        "contact": {
-            "name": "Mark Spears",
-            "email": "mark.spears@apple.com",
-            "phone-number": "417-525-2998"
-          },
-        "notes": "Waiting to hear back from the recruiter screen I did last week",
-        "date applied": "2025-03-19",
-        "important dates": {
-            "Phone Interview": "2025-04-05",
-            "Technical Interview": "2025-04-12"
-          },
-        "status": "Applied"
-        
+  {
+    "id": 1,
+    "company": "Apple",
+    "jobPosition": "Machine Learning Engineer",
+    "salary": 265000,
+    "location": "San Francisco, CA",
+    "contact": {
+      "name": "Mark Spears",
+      "email": "mark.spears@apple.com",
+      "phoneNumber": "417-525-2998"
     },
-    {
-        "company": "Google",
-        "job position": "Software Developer",
-        "salary": 120000,
-        "location": "San Diego, CA",
-        "contact": {
-            "name": "Alex Jobs",
-            "email": "alex.jobs@google.com",
-            "phone-number": "999-999-9999"
-          },
-        "notes": "Have finished the coding challenge, waiting for results",
-        "date applied": "2025-04-19",
-        "important dates": {
-            "Challenge Submission": "2025-04-24" 
-          },
-        "status": "Interviewing"
+    "notes": "Waiting to hear back from the recruiter screen I did last week",
+    "dateApplied": "2025-03-19",
+    "importantDates": {
+      "Phone Interview": "2025-04-05",
+      "Technical Interview": "2025-04-12"
     },
-    {
-        "company": "Netflix",
-        "job position": "Product Designer",
-        "salary": 145000,
-        "location": "Chicago, IL",
-        "contact": {
-            "name": "Joe Davis",
-            "email": "joe.davis@netflix.com",
-            "phone-number": "888-888-8888"
-          },
-        "notes": "Have recieved the offer, reviewing benefits and stock options",
-        "date applied": "2025-03-29",
-        "important dates": {
-            "Offer Deadline": "2025-05-20"
-          },
-        "status": "Offerred"
-    }
+    "status": "Applied"
+  },
+  {
+    "id": 2,
+    "company": "Google",
+    "jobPosition": "Software Developer",
+    "salary": 120000,
+    "location": "San Diego, CA",
+    "contact": {
+      "name": "Alex Jobs",
+      "email": "alex.jobs@google.com",
+      "phoneNumber": "999-999-9999"
+    },
+    "notes": "Have finished the coding challenge, waiting for results",
+    "dateApplied": "2025-04-19",
+    "importantDates": {
+      "Challenge Submission": "2025-04-24"
+    },
+    "status": "Interviewing"
+  },
+  {
+    "id": 3,
+    "company": "Netflix",
+    "jobPosition": "Product Designer",
+    "salary": 145000,
+    "location": "Chicago, IL",
+    "contact": {
+      "name": "Joe Davis",
+      "email": "joe.davis@netflix.com",
+      "phoneNumber": "888-888-8888"
+    },
+    "notes": "Have received the offer, reviewing benefits and stock options",
+    "dateApplied": "2025-03-29",
+    "importantDates": {
+      "Offer Deadline": "2025-05-20"
+    },
+    "status": "Offered"
+  }
 ]
