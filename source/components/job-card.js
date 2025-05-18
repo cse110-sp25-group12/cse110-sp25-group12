@@ -2,10 +2,15 @@ class JobAppCard extends HTMLElement {
 	constructor() {
 		super();
 
-		// 1. Attach shadow DOM
+		// Attach shadow DOM
 		const shadow = this.attachShadow({ mode: 'open' });
 
-		// 2. Create the card structure (same as your HTML template)
+    // Add Material Symbols font link (needed inside Shadow DOM)
+    const fontLink = document.createElement('link');
+    fontLink.setAttribute('rel', 'stylesheet');
+    fontLink.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+		// Create the card structure (same as your HTML template)
 		const card = document.createElement('a');
 		card.classList.add('card');
 
@@ -39,7 +44,7 @@ class JobAppCard extends HTMLElement {
 		header.appendChild(company);
 		card.append(favoriteBtn, logo, header, position, requirements);
 
-		// 3. Style tag (insert all CSS you had in job-card.css)
+		// Style tag (insert all CSS you had in job-card.css)
 		const style = document.createElement('style');
 		style.textContent = `
 			* {
@@ -121,10 +126,10 @@ class JobAppCard extends HTMLElement {
 			}
 		`;
 
-		// 4. Append to Shadow DOM
-		shadow.append(style, card);
+		// Append to Shadow DOM
+		shadow.append(fontLink, style, card);
 
-		// 5. Store references for use in set data()
+		// Store references for use in set data()
 		this._elements = { logo, title, company, position, requirements, icon, favoriteBtn };
 	}
 
