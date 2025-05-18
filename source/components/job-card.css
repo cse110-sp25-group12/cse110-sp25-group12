@@ -79,11 +79,15 @@
       }
 
       ul.requirements {
-        margin: 0.5rem 0 0;
+        width: 100%;          /* take full width of the card */
+        text-align: left;     /* align text inside <li> to the left */
         padding-left: 1.25rem;
+        margin: 0.5rem 0 0;
+        align-self: flex-start; /* ensures list aligns left even inside a centered flexbox */
       }
 
       ul.requirements > li {
         margin: 0.25rem 0;
+        text-align: left; 
       }
     
