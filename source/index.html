@@ -8,25 +8,25 @@
   <!-- Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 
-<!-- Material Symbols (All icons enabled) -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap" />
-<style>
-  .material-symbols-outlined {
-    font-variation-settings:
-      'FILL' 0,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 24;
-  }
-</style>
-
+  <!-- Material Symbols (All icons enabled) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Filter Icon Button -->
-<button id="filter-toggle-btn" class="filter-icon-btn" title="Filter">
-  <span class="material-symbols-outlined">filter_list</span>
-</button>
+<article class="job-tracker-module">
+  <!-- Filter Icon Button -->
+  <button id="filter-toggle-btn" class="filter-icon-btn" title="Filter">
+    <span class="material-symbols-outlined">filter_list</span>
+  </button>
 
   <!-- Sort Controls -->
   <div id="sort-controls">
@@ -40,13 +40,12 @@
     </select>
   </div>
 
-<!-- Dropdown Menu -->
-<div id="filter-dropdown" class="dropdown hidden">
-  <label><input type="checkbox" value="Remote" /> Remote</label>
-  <label><input type="checkbox" value="Full-Time" /> Full-Time</label>
-  <label><input type="checkbox" value="Internship" /> Internship</label>
-</div>
-
+  <!-- Dropdown Menu -->
+  <div id="filter-dropdown" class="dropdown hidden">
+    <label><input type="checkbox" value="Remote" /> Remote</label>
+    <label><input type="checkbox" value="Full-Time" /> Full-Time</label>
+    <label><input type="checkbox" value="Internship" /> Internship</label>
+  </div>
 
   <main>
     <!-- Filtering Buttons will be inserted here -->
@@ -54,9 +53,10 @@
 
     <!-- Cards will go here -->
   </main>
+</article>
 
-  <!-- JavaScript Modules (placed at the end for best performance) -->
-  <script type="module" src="app.js"></script>
+<!-- JavaScript Modules (placed at the end for best performance) -->
+<script type="module" src="app.js"></script>
 
 </body>
 </html>
