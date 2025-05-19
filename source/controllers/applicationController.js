@@ -12,7 +12,7 @@ let applications = [];
  */
 export async function loadApplications() {
   try {
-    const response = await fetch('../data/applications.json');
+    const response = await fetch('./data/applications.json');
     if (!response.ok) throw new Error('Failed to fetch applications');
     
     applications = await response.json();

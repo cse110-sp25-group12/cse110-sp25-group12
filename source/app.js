@@ -36,83 +36,134 @@ class JobCard {
      */
     toJSON() {
       return {
-        id: this.id,
-        company: this.company,
-        jobPosition: this.jobPosition,
-        position: this.position,
-        salary: this.salary,
-        location: this.location,
-        contact: this.contact,
-        notes: this.notes,
-        dateApplied: this.dateApplied,
-        importantDates: this.importantDates,
-        status: this.status
+        id: this.id, // 1
+        company: this.company, // Google
+        jobPosition: this.jobPosition, // Machine Learning Engineer
+        position: this.position, // full-time, part-time, internship
+        salary: this.salary, // 265000
+        location: this.location, // San Francisco, CA
+        contact: this.contact, // Mark Spears
+        notes: this.notes, // Waiting to hear back from the recruiter screen I did last week
+        dateApplied: this.dateApplied, // 2025-03-19
+        importantDates: this.importantDates, // {Phone Interview: 2025-04-05, Technical Interview: 2025-04-12}
+        status: this.status // Applied
       };
     }
 }
 
-// Import web component
-import './components/job-card.js'; // Ensure the component is registered
+// Import web components and controllers
+import './components/job-card.js'; 
 import { JobApplicationForm } from './components/job-application-form.js';
+import { 
+  loadApplications, 
+  createApplication, 
+  updateApplication, 
+  deleteApplication,
+  getAllApplications
+} from './controllers/applicationController.js';
 
-let applicatoinData = [];
-
-// This get applications.json and transform it to the applicatoinData = [
-fetch('./data/applications.json')
-  .then(response => response.json())
-  .then(applications => {
-    applicatoinData = applications;
-    // Transform JSON data to match job-card component expectations
-    const jobData = applications.map(app => ({
-      company: app.company,
-      title: app.jobPosition,  // Map from jobPosition to title
-      position: app.position || "Full-Time", // Use position if available
-      logo: app.logo || "https://via.placeholder.com/64", // Fallback logo
-      requirements: [
-        app.location,
-        app.status ? `Status: ${app.status}` : null,
-        app.salary ? `Salary: $${app.salary}` : null
-      ].filter(Boolean) // Remove null items
-    }));
-
-    // Add cards to <main>
-    const main = document.querySelector('main');
-    if (main) {
-      jobData.forEach(job => {
-        const card = document.createElement('job-app-card');
-        card.data = job;
-        main.appendChild(card);
-      });
-    }
-  })
-  .catch(error => console.error('Error loading applications:', error));
-
-
-  
-// Initialize form if exists
+// DOM Elements
+const mainElement = document.querySelector('main');
 const jobForm = document.getElementById('jobApplicationForm');
-if (jobForm) {
-  new JobApplicationForm('jobApplicationForm', (formData) => {
-    const newCard = new JobCard(formData);
+
+/**
+ * Initialize the application
+ */
+function initApp() {
+  // Load applications data
+  loadApplicationsData();
+  
+  // Set up the form
+  setupForm();
+  
+  // Set up event listeners
+  setupEventListeners();
+}
+
+/**
+ * Load and display applications
+ */
+async function loadApplicationsData() {
+  try {
+    // Load applications from controller
+    await loadApplications();
     
-    if (newCard.status === "Interviewing") {
-      newCard.importantDates = {
+    // Get all applications and render them
+    const applications = getAllApplications();
+    renderApplicationCards(applications);
+  } catch (error) {
+    console.error('Error loading applications:', error);
+  }
+}
+
+/**
+ * Render application cards to the main element
+ * @param {Array} applications - Array of application objects
+ */
+function renderApplicationCards(applications) {
+  if (!mainElement) return;
+  
+  // Clear existing cards
+  const existingCards = mainElement.querySelectorAll('job-app-card');
+  existingCards.forEach(card => card.remove());
+  
+  // Create and append new cards
+  applications.forEach(app => {
+    const card = document.createElement('job-app-card');
+    card.data = app;
+    mainElement.appendChild(card);
+  });
+}
+
+/**
+ * Set up the application form
+ */
+function setupForm() {
+  if (!jobForm) return;
+  
+  new JobApplicationForm('jobApplicationForm', (formData) => {
+    // Add important dates for interviewing status
+    if (formData.status === "Interviewing") {
+      formData.importantDates = {
         "Phone Screen": getFutureDate(7),
         "Technical Interview": getFutureDate(14)
       };
     }
-    saveApplication(newCard);
+    
+    // Create the application through the controller
+    const newApplication = createApplication(formData);
+    
+    // Render the new card
+    const card = document.createElement('job-app-card');
+    card.data = newApplication;
+    mainElement?.appendChild(card);
   });
 }
 
-/** 
- * Saves application to localStorage
- * @param {JobCard} card - Card instance to save
+/**
+ * Set up global event listeners
  */
-function saveApplication(card) {
-  const applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
-  applications.push(card.toJSON());
-  localStorage.setItem('jobApplications', JSON.stringify(applications));
+function setupEventListeners() {
+  // Listen for delete events from cards
+  document.addEventListener('delete-application', (event) => {
+    const id = event.detail.id;
+    if (deleteApplication(id)) {
+      // Find and remove the card
+      const card = document.querySelector(`job-app-card[data-id="${id}"]`) || 
+                   event.target.closest('job-app-card');
+      if (card) {
+        card.remove();
+      }
+    }
+  });
+  
+  // Listen for edit events from cards
+  document.addEventListener('edit-application', (event) => {
+    const id = event.detail.id;
+    // Handle edit logic here
+    console.log(`Edit application ${id}`);
+    // This would typically open a form or modal
+  });
 }
 
 /** 
@@ -125,3 +176,33 @@ function getFutureDate(daysAhead) {
   date.setDate(date.getDate() + daysAhead);
   return date.toISOString().split('T')[0];
 }
+
+/**
+ * Debug utility to fetch applications.json and log the data
+ */
+async function debugFetchApplications() {
+  console.log('Fetching applications.json for debugging...');
+  try {
+    const response = await fetch('./data/applications.json');
+    if (!response.ok) {
+      throw new Error(`Error fetching applications.json: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('Applications.json data:', data);
+    return data;
+  } catch (error) {
+    console.error('Debug fetch failed:', error);
+  }
+}
+
+// Initialize the application when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Debug: Fetch mock data
+  debugFetchApplications()
+    .then(mockData => {
+      console.log('Mock applications loaded for debugging:', mockData?.length || 0);
+      
+      // Continue with normal app initialization
+      initApp();
+    });
+});
