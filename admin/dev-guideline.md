@@ -27,7 +27,7 @@ This guide ensures that every team member understands:
 - `dev`: Integrates all features before merging to `main`.
 
 ### 🌿 Feature Branch Naming
-- Each task/feature gets a branch: `feature/feature-name`, `bugfix/issue-name`
+- Each task/feature gets a branch: `team/feature/feature-name`, `bugfix/issue-name`
 
 ### ✍️ Meaningful, consistent commit messages:
 - `feat: add login screen`
