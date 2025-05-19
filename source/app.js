@@ -103,7 +103,7 @@ sortSelect.addEventListener('change', () => {
 });
 
 // ==========================
-// Filtering + Sorting Logic
+// Filtering
 // ==========================
 function updateVisibleCards() {
   const activeFilters = Array.from(document.querySelectorAll('.filter-btn'))
