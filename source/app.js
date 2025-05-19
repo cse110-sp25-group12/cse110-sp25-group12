@@ -115,6 +115,12 @@ function updateVisibleCards() {
     filtered = filtered.filter(job => activeFilters.includes(job.position));
   }
 
+  if (currentSort === "company") {
+    filtered.sort((a, b) => a.company.localeCompare(b.company));
+  } else if (currentSort === "position") {
+    filtered.sort((a, b) => a.position.localeCompare(b.position));
+  }
+
   if (filtered.length === 0) {
     main.innerHTML = '<p style="padding: 1rem; color: #888;">No applications match the selected filters.</p>';
     return;
