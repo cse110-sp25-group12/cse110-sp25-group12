@@ -39,6 +39,7 @@ class JobCard {
         id: this.id,
         company: this.company,
         jobPosition: this.jobPosition,
+        position: this.position,
         salary: this.salary,
         location: this.location,
         contact: this.contact,
@@ -54,40 +55,40 @@ class JobCard {
 import './components/job-card.js'; // Ensure the component is registered
 import { JobApplicationForm } from './components/job-application-form.js';
 
-const jobData = [
-  {
-    company: "Acme Corp",
-    title: "Senior UX Designer",
-    position: "Full-Time",
-    logo: "https://example.com/logo1.png",
-    requirements: [
-      "5+ years experience",
-      "Portfolio",
-      "Good communication"
-    ]
-  },
-  {
-    company: "Globex Inc.",
-    title: "Frontend Developer",
-    position: "Remote",
-    logo: "https://example.com/logo2.png",
-    requirements: [
-      "React",
-      "JavaScript",
-      "CSS"
-    ]
-  }
-];
+let applicatoinData = [];
 
-// Add cards to <main>
-const main = document.querySelector('main');
-if (main) {
-  jobData.forEach(job => {
-    const card = document.createElement('job-app-card');
-    card.data = job;
-    main.appendChild(card);
-  });
-}
+// This get applications.json and transform it to the applicatoinData = [
+fetch('./data/applications.json')
+  .then(response => response.json())
+  .then(applications => {
+    applicatoinData = applications;
+    // Transform JSON data to match job-card component expectations
+    const jobData = applications.map(app => ({
+      company: app.company,
+      title: app.jobPosition,  // Map from jobPosition to title
+      position: app.position || "Full-Time", // Use position if available
+      logo: app.logo || "https://via.placeholder.com/64", // Fallback logo
+      requirements: [
+        app.location,
+        app.status ? `Status: ${app.status}` : null,
+        app.salary ? `Salary: $${app.salary}` : null
+      ].filter(Boolean) // Remove null items
+    }));
+
+    // Add cards to <main>
+    const main = document.querySelector('main');
+    if (main) {
+      jobData.forEach(job => {
+        const card = document.createElement('job-app-card');
+        card.data = job;
+        main.appendChild(card);
+      });
+    }
+  })
+  .catch(error => console.error('Error loading applications:', error));
+
+
+  
 // Initialize form if exists
 const jobForm = document.getElementById('jobApplicationForm');
 if (jobForm) {
