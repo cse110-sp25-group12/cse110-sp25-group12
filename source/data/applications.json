@@ -3,7 +3,7 @@
     "id": 1,
     "company": "Apple",
     "jobPosition": "Machine Learning Engineer",
-    "position": "Full-Time",
+    "positionType": "Full-Time",
     "salary": 265000,
     "location": "San Francisco, CA",
     "contact": {
@@ -23,7 +23,7 @@
     "id": 2,
     "company": "Google",
     "jobPosition": "Software Developer",
-    "position": "Part-Time",
+    "positionType": "Part-Time",
     "salary": 120000,
     "location": "San Diego, CA",
     "contact": {
@@ -42,7 +42,7 @@
     "id": 3,
     "company": "Netflix",
     "jobPosition": "Product Designer",
-    "position": "Internship",
+    "positionType": "Internship",
     "salary": 145000,
     "location": "Chicago, IL",
     "contact": {
