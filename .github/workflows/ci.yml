@@ -38,7 +38,7 @@ jobs:
           done
 
   eslint:
-    name: ESLint and stylisticJS plugin
+    name: ESLint and stylisticJS plugin linter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

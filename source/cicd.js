@@ -19,13 +19,13 @@ function wrongSum(a1, a2) {
 }
 
 function badCodeFormat(a1, a2) {
-  const constantVariable = 123
-  var inconsistent_naming_conventions = 234
+  const constantVariable = 123;
+  var inconsistent_naming_conventions = 234;
 
-  let letter = 'bcd'
+  let letter = 'bcd';
 
   if (inconsistent_naming_conventions = constantVariable) {
-    console.log('uh oh')
+    console.log('uh oh');
   }
 }
 

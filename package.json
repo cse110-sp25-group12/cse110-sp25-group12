@@ -11,6 +11,7 @@
   "scripts": {
     "test": "jest --passWithNoTests",
     "docs": "jsdoc source -r -d docs",
-    "lint": "eslint . --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   }
 }
