@@ -1,0 +1,163 @@
+/* applications-page.css */
+
+/* Styles for the sorting and filter controls on the applications page */
+.applications-controls {
+    display: flex;
+    gap: 16px; /* Increased gap for better spacing */
+    margin-bottom: 24px;
+    align-items: center;
+    flex-wrap: wrap; 
+    padding: 12px; /* Add some padding around the controls */
+    background-color: var(--md-sys-color-surface-container-low); /* Slight background */
+    border-radius: 8px;
+    border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.applications-controls label {
+    font-size: 0.875rem; /* 14px */
+    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 500;
+    margin-right: -8px; /* Pull select closer to label */
+}
+
+.applications-controls select,
+.applications-controls button { /* General styling for form elements in controls */
+    padding: 10px 14px; /* Slightly more padding */
+    border-radius: 20px; /* Pill shape for select/buttons */
+    border: 1px solid var(--md-sys-color-outline);
+    background-color: var(--md-sys-color-surface-container-highest); /* Use a distinct surface */
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    outline: none; /* Remove default outline */
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.applications-controls select:focus,
+.applications-controls button:focus {
+    border-color: var(--md-sys-color-primary); /* Highlight on focus */
+}
+
+.applications-controls button {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.applications-controls button:hover {
+    background-color: var(--md-sys-color-secondary);
+    color: var(--md-sys-color-on-secondary);
+}
+
+
+/* ==== Material Symbols Styling ==== */
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+/* ==== Filter Icon Button ==== */
+.filter-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: 1rem;
+  font-size: 1.8rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+.filter-icon-btn:hover {
+  color: #000;
+}
+
+/* ==== Dropdown Menu ==== */
+.dropdown {
+  position: absolute;
+  top: 60px;
+  left: 1rem;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.dropdown label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ==== Filter Bar and Buttons ==== */
+#filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.filter-btn:hover {
+  background-color: #d6d6d6;
+}
+
+.filter-btn .remove-icon {
+  margin-left: 8px;
+  color: #888;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.filter-btn .remove-icon:hover {
+  color: #e53935;
+}
+
+/* ==== Sort Controls ==== */
+#sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  margin-top: 1rem;
+}
+
+#sort-controls .material-symbols-outlined {
+  vertical-align: middle;
+  margin-right: 4px;
+  color: #555;
+  font-size: 20px;
+}
+
+#sort-select {
+  padding: 0.4rem;
+  border-radius: 5px;
+  font-size: 0.95rem;
+}
+
+
