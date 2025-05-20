@@ -1,4 +1,4 @@
-const { sum, wrongSum } = require('../source/cicd');
+import { sum, wrongSum } from '../source/cicd.js';
 
 //Both tests should pass
 test('sum: 1 + 1 = 2', () => {
