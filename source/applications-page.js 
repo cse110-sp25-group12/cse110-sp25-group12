@@ -2,7 +2,6 @@
 // IIFE to encapsulate the script for the applications page
 (function() {
     // --- Sample Data for Applications ---
-    // In a real application, this would likely be fetched from an API
     let sampleApplicationsData = [
         { id: 1, jobTitle: "Software Engineer", companyName: "Tech Solutions Inc.", dateApplied: "2025-05-15", status: "Applied", location: "Remote", notes: "Referred by Jane Doe.", logoUrl: "https://placehold.co/64x64/D3E3FF/001C39?text=TS", applicationUrl: "#", isFavorited: false, positionType: "Full-time" },
         { id: 2, jobTitle: "Frontend Developer", companyName: "Web Wizards LLC", dateApplied: "2025-05-10", status: "Interviewing", location: "New York, NY", notes: "First interview went well.", logoUrl: "https://placehold.co/64x64/D8E3F8/111C2B?text=WW", applicationUrl: "#", isFavorited: true, positionType: "Contract" },
@@ -16,7 +15,6 @@
     function renderApplicationCards(applications) {
         const container = document.getElementById('applicationCardsContainer');
         if (!container) {
-            // console.warn("#applicationCardsContainer not found on this page.");
             return; 
         }
         container.innerHTML = ''; // Clear existing cards
@@ -26,23 +24,18 @@
             cardElement.data = app; 
             container.appendChild(cardElement);
 
-            // Listen for favorite toggled event from the card component
             cardElement.addEventListener('favorite-toggled', (event) => {
                 console.log('Favorite Toggled on applications page:', event.detail);
                 const targetApp = sampleApplicationsData.find(a => String(a.id) === String(event.detail.id));
                 if (targetApp) {
                     targetApp.isFavorited = event.detail.favorited;
-                    // In a real app, you'd persist this change (e.g., to localStorage or a server)
-                    // For now, we just update the in-memory array.
-                    // If you want to see the change reflected immediately without re-sorting, 
-                    // you might need more complex state management or re-render.
                 }
             });
         });
     }
 
     function sortApplications(criteria) {
-        // Create a copy to sort, to avoid modifying the original if not desired
+        console.log("Sorting by criteria:", criteria); // DEBUG: Log the received criteria
         let sortedApps = [...sampleApplicationsData]; 
 
         switch (criteria) {
@@ -59,14 +52,14 @@
                 sortedApps.sort((a, b) => b.companyName.localeCompare(a.companyName));
                 break;
             case 'status':
-                // Example: Define a custom order for statuses
                 const statusOrder = { "Offer": 1, "Interviewing": 2, "Applied": 3, "Screening": 4, "Ghosted": 5, "Rejected": 6 };
                 sortedApps.sort((a, b) => (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99));
                 break;
             default:
-                // No sort or default sort
+                console.warn("Unknown sorting criteria:", criteria); // DEBUG: Log if criteria is unexpected
                 break;
         }
+        console.log("Sorted apps:", sortedApps.map(app => app.jobTitle + ' - ' + app.companyName)); // DEBUG: Log sorted titles
         renderApplicationCards(sortedApps);
     }
     
@@ -75,26 +68,28 @@
         const appSortingControls = document.getElementById('appSortingControls');
         const applicationCardsContainer = document.getElementById('applicationCardsContainer');
 
-        if (applicationCardsContainer) { // Only proceed if the main container for this page exists
-            renderApplicationCards(sampleApplicationsData); // Initial render of cards
+        if (applicationCardsContainer) { 
+            renderApplicationCards(sampleApplicationsData); 
         }
 
         if (appSortingControls) {
             appSortingControls.addEventListener('sort-changed', (event) => {
-                sortApplications(event.detail.value);
+                // **** CRITICAL DEBUGGING STEP ****
+                console.log("Event 'sort-changed' received in applications-page.js. Detail:", event.detail); 
+                if (event.detail && event.detail.value) {
+                    sortApplications(event.detail.value);
+                } else {
+                    console.error("Sort event received without expected detail.value:", event);
+                }
             });
         } else {
-            // console.warn("#appSortingControls not found on this page.");
+            // console.warn("#appSortingControls not found on this page. Sorting will not work.");
         }
     }
 
-    // Wait for the DOM to be fully loaded before running the initialization
-    // This ensures that if app.js also has a DOMContentLoaded, they run independently
-    // but this script only acts if its specific elements are found.
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeApplicationsPage);
     } else {
-        // DOMContentLoaded has already fired
         initializeApplicationsPage();
     }
 

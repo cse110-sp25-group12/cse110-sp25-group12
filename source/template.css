@@ -9,7 +9,7 @@ html, body.app-layout {
 body.app-layout { 
     display: flex; 
     overflow: hidden; /* Prevents scrollbars on body if children manage their own scroll */
-    font-family: 'Roboto', sans-serif; /* Moved from style.css for template consistency */
+    font-family: 'Roboto', sans-serif; 
     background-color: var(--md-sys-color-background); 
     color: var(--md-sys-color-on-background); 
     transition: background-color 0.3s ease, color 0.3s ease; 
@@ -26,7 +26,7 @@ body.app-layout {
     padding: 16px; 
     display: flex; 
     flex-direction: column; 
-    height: 100vh; 
+    height: 100vh; /* Sidebar takes full viewport height */
     overflow-x: hidden; 
     overflow-y: auto;   
     transition: width 0.3s ease-in-out, background-color 0.3s ease, border-color 0.3s ease, padding 0.3s ease-in-out;
@@ -233,10 +233,12 @@ html[data-sidebar-collapsed="true"] .add-application-button {
    Main Content Area (Common Template Structure)
    ========================================================================== */
 .main-content-page { 
-    flex-grow: 1; 
+    flex-grow: 1; /* Allows this to take up remaining space */
     padding: 24px; 
-    height: 100vh; 
-    overflow-y: auto; 
+    /* Removed height: 100vh; Let flexbox determine height */
+    overflow-y: auto; /* This will allow scrolling if content exceeds available height */
+    display: flex; /* Added to manage internal layout better, e.g., sticky footer if needed */
+    flex-direction: column; /* Stack header and form/content vertically */
     transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
@@ -245,6 +247,7 @@ html[data-sidebar-collapsed="true"] .add-application-button {
     justify-content: flex-start; 
     align-items: center; 
     margin-bottom: 24px; 
+    flex-shrink: 0; /* Prevent header from shrinking */
 } 
 .main-header h1 { 
     font-size: 1.75rem; 
@@ -263,6 +266,7 @@ html[data-sidebar-collapsed="true"] .add-application-button {
     display: flex; 
     align-items: center; 
     justify-content: center; 
+    flex-shrink: 0; /* Prevent button from shrinking */
 }
 .sidebar-toggle-button:hover { 
     background-color: var(--md-sys-color-surface-container-high); 
@@ -270,6 +274,14 @@ html[data-sidebar-collapsed="true"] .add-application-button {
 .sidebar-toggle-button .material-symbols-outlined { 
     font-size: 28px; 
 }
+
+/* Ensure the form itself can grow if main-content-page is flex, and scroll if needed,
+   though the scroll is primarily on main-content-page */
+#addApplicationForm { /* Or a more generic class for page content wrappers */
+    flex-grow: 1; /* Allows form to take available vertical space if main-content-page is flex */
+    /* If the form itself needs to scroll independently of the header, add overflow-y: auto here */
+}
+
 
 /* Responsive adjustments for the template itself */
 @media (max-width: 768px) {

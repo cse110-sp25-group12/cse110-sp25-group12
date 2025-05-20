@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JobTrack - Applications</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/colors.css"> 
-    <link rel="stylesheet" href="./styles/style.css"> 
-    <link rel="stylesheet" href="./components/applications.css"> </head>
+    <link rel="stylesheet" href="template.css"> 
+    <link rel="stylesheet" href="./components/applications.css"> 
+    <link rel="stylesheet" href="./components/job-card.css">
+    <script src="./components/job-card.js" type="module"></script>
+</head>
 <body class="app-layout"> 
     <aside class="sidebar">
         <header class="sidebar-header">
@@ -80,10 +83,17 @@
         <sorting-controls id="appSortingControls" class="applications-controls"></sorting-controls>
         
         <div id="applicationCardsContainer" class="content-grid">
+            <job-app-card>
+                
+                </job-app-card>
+            <job-app-card>
+                </job-app-card>
+            
             </div>
     </main>
-    <script src="app.js" defer></script>
-    <script type="module" src="./styles/job-card.js" defer></script> 
-    <script type="module" src="applications-page.js" defer></script> 
+    <script type="module" src="job-card-component.js"></script> 
+    <script type="module" src="sorting-controls.js"></script> 
+    <script src="template.js" defer></script>
+    <script src="applications-page.js" defer></script> 
 </body>
 </html>

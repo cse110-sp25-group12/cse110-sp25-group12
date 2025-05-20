@@ -6,8 +6,8 @@
     <title>JobTrack - Add Application</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles/colors.css"> 
     <link rel="stylesheet" href="template.css"> 
+    <link rel="stylesheet" href="./styles/colors.css"> 
     <link rel="stylesheet" href="./components/add-application.css"> 
 </head>
 <body class="app-layout"> 
@@ -25,20 +25,14 @@
             <ul class="nav-list">
                 <li class="nav-item"><a href="dashboard.html" class="nav-link"><span class="material-symbols-outlined">dashboard</span><span class="link-text">Dashboard</span></a></li>
                 <li class="nav-item"><a href="applications.html" class="nav-link"><span class="material-symbols-outlined">view_list</span><span class="link-text">Applications</span></a></li>
-                <li class="nav-item"><a href="interviews.html" class="nav-link"><span class="material-symbols-outlined">calendar_month</span><span class="link-text">Interviews</span></a></li>
-                <li class="nav-item"><a href="tasks.html" class="nav-link"><span class="material-symbols-outlined">task_alt</span><span class="link-text">Tasks</span></a></li>
-                <li class="nav-item"><a href="settings.html" class="nav-link"><span class="material-symbols-outlined">settings</span><span class="link-text">Settings</span></a></li>
-            </ul>
+                
         </nav>
         <footer class="sidebar-footer">
             <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
                 <span class="material-symbols-outlined" id="themeToggleIcon">light_mode</span>
                 <span class="theme-label" id="themeToggleLabel">Light Mode</span>
             </button>
-            <a href="#" class="user-profile"> 
-                 <span class="material-symbols-outlined">account_circle</span>
-                 <span class="profile-text">User Name</span>
-            </a>
+            
         </footer>
     </aside>
 
@@ -55,15 +49,13 @@
                 <h2 class="form-section-title">Job Details</h2>
                 <div class="form-grid">
                     <div class="form-field">
-                        <label for="companyName">Company Name</label>
-                        <input type="text" id="companyName" name="companyName" required>
+                        <input type="text" id="companyName" name="companyName" required placeholder=" "> <label for="companyName">Company Name</label>
                     </div>
                     <div class="form-field">
+                        <input type="text" id="jobPosition" name="jobPosition" required placeholder=" ">
                         <label for="jobPosition">Job Position / Title</label>
-                        <input type="text" id="jobPosition" name="jobPosition" required>
                     </div>
                     <div class="form-field">
-                        <label for="positionType">Position Type</label>
                         <select id="positionType" name="positionType">
                             <option value="Full-Time">Full-Time</option>
                             <option value="Part-Time">Part-Time</option>
@@ -71,17 +63,17 @@
                             <option value="Internship">Internship</option>
                             <option value="Temporary">Temporary</option>
                         </select>
+                        <label for="positionType">Position Type</label>
                     </div>
                     <div class="form-field">
+                        <input type="number" id="salary" name="salary" placeholder=" ">
                         <label for="salary">Salary (Optional)</label>
-                        <input type="number" id="salary" name="salary" placeholder="e.g., 95000">
                     </div>
                     <div class="form-field">
+                        <input type="text" id="location" name="location" placeholder=" ">
                         <label for="location">Location</label>
-                        <input type="text" id="location" name="location" placeholder="e.g., San Francisco, CA or Remote">
                     </div>
                     <div class="form-field">
-                        <label for="status">Status</label>
                         <select id="status" name="status" required>
                             <option value="Wishlist">Wishlist</option>
                             <option value="Applied" selected>Applied</option>
@@ -92,6 +84,7 @@
                             <option value="Ghosted">Ghosted</option>
                             <option value="Withdrawn">Withdrawn</option>
                         </select>
+                        <label for="status">Status</label>
                     </div>
                 </div>
             </section>
@@ -100,16 +93,16 @@
                 <h2 class="form-section-title">Contact Information (Optional)</h2>
                 <div class="form-grid">
                     <div class="form-field">
+                        <input type="text" id="contactName" name="contactName" placeholder=" ">
                         <label for="contactName">Contact Name</label>
-                        <input type="text" id="contactName" name="contactName">
                     </div>
                     <div class="form-field">
+                        <input type="email" id="contactEmail" name="contactEmail" placeholder=" ">
                         <label for="contactEmail">Contact Email</label>
-                        <input type="email" id="contactEmail" name="contactEmail">
                     </div>
                     <div class="form-field">
+                        <input type="tel" id="contactPhone" name="contactPhone" placeholder=" ">
                         <label for="contactPhone">Contact Phone</label>
-                        <input type="tel" id="contactPhone" name="contactPhone">
                     </div>
                 </div>
             </section>
@@ -118,15 +111,19 @@
                 <h2 class="form-section-title">Dates</h2>
                 <div class="form-grid">
                     <div class="form-field">
-                        <label for="dateApplied">Date Applied</label>
-                        <input type="date" id="dateApplied" name="dateApplied" required>
+                        <input type="date" id="dateApplied" name="dateApplied" required placeholder=" "> <label for="dateApplied">Date Applied</label>
                     </div>
                 </div>
-                <h3 style="font-size: 1rem; font-weight: 500; margin-top: 20px; margin-bottom: 8px; color: var(--md-sys-color-on-surface-variant);">Important Dates (Optional)</h3>
+                <h3 class="important-dates-group-title">Important Dates (Optional)</h3>
                 <div id="importantDatesContainer" class="important-dates-group">
                     <div class="important-date-entry">
-                        <input type="text" name="importantDateLabel[]" placeholder="Date Label (e.g., Phone Interview)">
-                        <input type="date" name="importantDateValue[]">
+                        <div class="form-field">
+                           <input type="text" name="importantDateLabel[]" placeholder=" ">
+                           <label>Date Label (e.g., Phone Interview)</label>
+                        </div>
+                        <div class="form-field">
+                           <input type="date" name="importantDateValue[]" placeholder=" ">
+                           <label>Date</label> </div>
                         <button type="button" class="remove-date-btn" aria-label="Remove date" style="display: none;">
                             <span class="material-symbols-outlined">remove_circle_outline</span>
                         </button>
@@ -140,8 +137,8 @@
             <section class="form-section">
                 <h2 class="form-section-title">Notes (Optional)</h2>
                 <div class="form-field">
+                    <textarea id="notes" name="notes" rows="6" placeholder=" "></textarea>
                     <label for="notes">Notes, Job Description, Links, etc.</label>
-                    <textarea id="notes" name="notes" rows="6"></textarea>
                 </div>
             </section>
 
@@ -152,5 +149,6 @@
 
     </main>
     <script src="template.js" defer></script>
-    </body>
+    <script src="add-application-page.js" defer></script> 
+</body>
 </html>
