@@ -6,5 +6,5 @@ How to contribute: [Dev Guidline](/HOW-TO-CONTRIBUTE.md)
 
 
 ## Sprint 1 Status Video
-- [YouTube Video Link](https://youtube.com/yourlink)
+- [YouTube Video Link](https://youtu.be/rx9DWWrCZfE)
 - [Github Video Link ](admin/videos/statusvideo1.mp4)
