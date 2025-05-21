@@ -1,67 +1,24 @@
-/* ==========================================================================
-   2. Global Styles & Resets
-   ========================================================================== */
-        
-/* 2.1 Universal Box Sizing and Reset
-   -------------------------------------------------------------------------- */
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-}
+/* template.css - Common Layout and Template Styles */
 
-/* 2.2 HTML & Body Defaults
-   -------------------------------------------------------------------------- */
-html, body.app-layout { /* Apply height only when app-layout is on body */
+/* ==========================================================================
+   Base Layout & Body
+   ========================================================================== */
+html, body.app-layout {
     height: 100%; 
 }
-body { /* General body styles */
+body.app-layout { 
+    display: flex; 
+    overflow: hidden; /* Prevents scrollbars on body if children manage their own scroll */
     font-family: 'Roboto', sans-serif; 
     background-color: var(--md-sys-color-background); 
     color: var(--md-sys-color-on-background); 
     transition: background-color 0.3s ease, color 0.3s ease; 
-    margin: 0; /* Ensure no default body margin */
-}
-
-/* 2.3 Google Material Symbols Base Styling
-   -------------------------------------------------------------------------- */
-.material-symbols-outlined { 
-    font-family: 'Material Symbols Outlined'; 
-    font-weight: normal; 
-    font-style: normal; 
-    font-size: 24px; 
-    line-height: 1; 
-    letter-spacing: normal; 
-    text-transform: none; 
-    display: inline-block; 
-    white-space: nowrap; 
-    word-wrap: normal; 
-    direction: ltr; 
-    -webkit-font-smoothing: antialiased; 
-    text-rendering: optimizeLegibility; 
-    -moz-osx-font-smoothing: grayscale; 
-    font-feature-settings: 'liga'; 
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
-    transition: margin 0.3s ease-in-out; 
+    margin: 0;
 }
 
 /* ==========================================================================
-   3. Main Application Layout
+   Sidebar Styles (Common Template Element)
    ========================================================================== */
-
-/* 3.1 App Layout Container (Applied to BODY element)
-   -------------------------------------------------------------------------- */
-body.app-layout { 
-    display: flex; 
-    overflow: hidden; /* Prevents scrollbars on body if children manage their own scroll */
-}
-
-/* ==========================================================================
-   4. Sidebar Styles
-   ========================================================================== */
-
-/* 4.1 Sidebar Base
-   -------------------------------------------------------------------------- */
 .sidebar { 
     width: var(--sidebar-width); 
     background-color: var(--md-sys-color-surface-container-low); 
@@ -69,15 +26,13 @@ body.app-layout {
     padding: 16px; 
     display: flex; 
     flex-direction: column; 
-    height: 100vh; 
+    height: 100vh; /* Sidebar takes full viewport height */
     overflow-x: hidden; 
     overflow-y: auto;   
     transition: width 0.3s ease-in-out, background-color 0.3s ease, border-color 0.3s ease, padding 0.3s ease-in-out;
     flex-shrink: 0; 
 }
 
-/* 4.2 Sidebar Header (Logo Area)
-   -------------------------------------------------------------------------- */
 .sidebar-header { 
     padding-bottom: 16px; 
     display: flex; 
@@ -105,9 +60,7 @@ body.app-layout {
     transition: opacity 0.2s ease-in-out; 
 }
 
-/* 4.3 Add Application Button (Sidebar)
-   -------------------------------------------------------------------------- */
-.add-application-button { 
+.add-application-button { /* Common button in sidebar */
     display: flex; 
     align-items: center; 
     justify-content: center; 
@@ -125,7 +78,7 @@ body.app-layout {
     transition: background-color 0.2s ease, color 0.2s ease, width 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, border-radius 0.3s ease-in-out; 
     overflow: hidden; 
     white-space: nowrap; 
-    text-decoration: none; /* If it were an anchor */
+    text-decoration: none; 
 }
 .add-application-button:hover { 
     background-color: var(--md-sys-color-primary); 
@@ -141,8 +94,6 @@ body.app-layout {
     transition: opacity 0.2s ease-in-out; 
 }
 
-/* 4.4 Navigation List & Items
-   -------------------------------------------------------------------------- */
 .nav-list { 
     list-style: none; 
     padding: 0; 
@@ -188,8 +139,6 @@ body.app-layout {
     color: var(--md-sys-color-on-secondary-container); 
 }
 
-/* 4.5 Sidebar Footer (Theme Toggle, User Profile)
-   -------------------------------------------------------------------------- */
 .sidebar-footer { 
     padding-top: 8px; 
     margin-top: auto; 
@@ -214,7 +163,7 @@ body.app-layout {
     font-weight: 500; 
     transition: background-color 0.2s ease, color 0.2s ease, width 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, border-radius 0.3s ease-in-out; 
     white-space: nowrap; 
-    text-decoration: none; /* For user-profile link */
+    text-decoration: none; 
 }
 .theme-toggle-button { 
     margin-bottom: 8px; 
@@ -235,20 +184,12 @@ body.app-layout {
     transition: opacity 0.2s ease-in-out; 
 }
 
-/* ==========================================================================
-   5. Collapsed Sidebar Styles (Navigation Rail)
-   ========================================================================== */
-
-/* 5.1 Sidebar Rail State
-   -------------------------------------------------------------------------- */
+/* Collapsed Sidebar Styles (Navigation Rail) */
 html[data-sidebar-collapsed="true"] .sidebar { 
     --sidebar-width: var(--sidebar-collapsed-width); 
     padding: 16px 0; 
     align-items: center; 
 }
-
-/* 5.2 Hiding Text Labels in Rail Mode
-   -------------------------------------------------------------------------- */
 html[data-sidebar-collapsed="true"] .sidebar-logo .logo-text,
 html[data-sidebar-collapsed="true"] .add-application-button .button-text,
 html[data-sidebar-collapsed="true"] .nav-link .link-text,
@@ -258,9 +199,6 @@ html[data-sidebar-collapsed="true"] .user-profile .profile-text {
     width: 0; 
     pointer-events: none; 
 }
-
-/* 5.3 Centering Icons in Rail Mode Items
-   -------------------------------------------------------------------------- */
 html[data-sidebar-collapsed="true"] .sidebar-header,
 html[data-sidebar-collapsed="true"] .add-application-button,
 html[data-sidebar-collapsed="true"] .nav-link,
@@ -270,9 +208,6 @@ html[data-sidebar-collapsed="true"] .user-profile {
     padding-left: 0;         
     padding-right: 0;        
 }
-
-/* 5.4 Removing Icon Margins in Rail Mode
-   -------------------------------------------------------------------------- */
 html[data-sidebar-collapsed="true"] .sidebar-logo .material-symbols-outlined,
 html[data-sidebar-collapsed="true"] .add-application-button .material-symbols-outlined,
 html[data-sidebar-collapsed="true"] .nav-link .material-symbols-outlined,
@@ -280,9 +215,6 @@ html[data-sidebar-collapsed="true"] .theme-toggle-button .material-symbols-outli
 html[data-sidebar-collapsed="true"] .user-profile .material-symbols-outlined {
     margin-right: 0; 
 }
-
-/* 5.5 Styling Interactive Items as Circular Icon Buttons in Rail Mode
-   -------------------------------------------------------------------------- */
 html[data-sidebar-collapsed="true"] .add-application-button,
 html[data-sidebar-collapsed="true"] .nav-link,
 html[data-sidebar-collapsed="true"] .theme-toggle-button,
@@ -298,26 +230,24 @@ html[data-sidebar-collapsed="true"] .add-application-button {
 }
 
 /* ==========================================================================
-   6. Main Content Area Styles
+   Main Content Area (Common Template Structure)
    ========================================================================== */
-
-/* 6.1 Main Content Base
-   -------------------------------------------------------------------------- */
 .main-content-page { 
-    flex-grow: 1; 
+    flex-grow: 1; /* Allows this to take up remaining space */
     padding: 24px; 
-    height: 100vh; /* Ensure it can fill the main area */
-    overflow-y: auto; 
+    /* Removed height: 100vh; Let flexbox determine height */
+    overflow-y: auto; /* This will allow scrolling if content exceeds available height */
+    display: flex; /* Added to manage internal layout better, e.g., sticky footer if needed */
+    flex-direction: column; /* Stack header and form/content vertically */
     transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
-/* 6.2 Main Content Header
-   -------------------------------------------------------------------------- */
 .main-header { 
     display: flex; 
     justify-content: flex-start; 
     align-items: center; 
     margin-bottom: 24px; 
+    flex-shrink: 0; /* Prevent header from shrinking */
 } 
 .main-header h1 { 
     font-size: 1.75rem; 
@@ -326,8 +256,6 @@ html[data-sidebar-collapsed="true"] .add-application-button {
     margin-left: 16px; 
 }
 
-/* 6.3 Sidebar Toggle Button (in Main Header)
-   -------------------------------------------------------------------------- */
 .sidebar-toggle-button { 
     background: none; 
     border: none; 
@@ -338,6 +266,7 @@ html[data-sidebar-collapsed="true"] .add-application-button {
     display: flex; 
     align-items: center; 
     justify-content: center; 
+    flex-shrink: 0; /* Prevent button from shrinking */
 }
 .sidebar-toggle-button:hover { 
     background-color: var(--md-sys-color-surface-container-high); 
@@ -346,140 +275,15 @@ html[data-sidebar-collapsed="true"] .add-application-button {
     font-size: 28px; 
 }
 
-/* ==========================================================================
-   7. Dashboard & Applications Page Specific Styles
-   ========================================================================== */
-
-/* 7.1 Content Grid Layout (for cards)
-   -------------------------------------------------------------------------- */
-.content-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-    gap: 24px; 
+/* Ensure the form itself can grow if main-content-page is flex, and scroll if needed,
+   though the scroll is primarily on main-content-page */
+#addApplicationForm { /* Or a more generic class for page content wrappers */
+    flex-grow: 1; /* Allows form to take available vertical space if main-content-page is flex */
+    /* If the form itself needs to scroll independently of the header, add overflow-y: auto here */
 }
 
-/* 7.2 Content Card Styling (Dashboard & Application Cards)
-   -------------------------------------------------------------------------- */
-.content-card { 
-    background-color: var(--md-sys-color-surface-container); 
-    border-radius: 12px; 
-    padding: 20px; 
-    box-shadow: 0 1px 2px 0 rgba(var(--md-sys-color-shadow), 0.1), 0 1px 3px 0 rgba(var(--md-sys-color-shadow), 0.1); 
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
-    display: flex; 
-    flex-direction: column; 
-}
-.content-card:hover { 
-    box-shadow: 0 2px 4px 0 rgba(var(--md-sys-color-shadow), 0.1), 0 3px 6px 0 rgba(var(--md-sys-color-shadow), 0.1); 
-}
-.content-card-title { 
-    font-size: 1.125rem; 
-    font-weight: 500; 
-    color: var(--md-sys-color-on-primary-container); 
-    margin-bottom: 8px; 
-}
-.content-card-subtitle { 
-    font-size: 0.875rem;
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: 12px;
-}
-.content-card-stat { 
-    font-size: 2.5rem; 
-    font-weight: 500; 
-    color: var(--md-sys-color-primary); 
-    margin-bottom: 16px; 
-}
-.content-card-details { 
-    font-size: 0.875rem;
-    color: var(--md-sys-color-on-surface);
-    line-height: 1.6;
-    margin-bottom: 4px; 
-}
-.content-card-details .material-symbols-outlined {
-    font-size: 16px; 
-    margin-right: 8px;
-    vertical-align: text-bottom; 
-}
-.content-card-actions { 
-    margin-top: auto; 
-    padding-top: 16px;
-    display: flex;
-    gap: 8px;
-}
-.content-card-actions button {
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-.content-card-actions button:hover {
-    background-color: var(--md-sys-color-secondary);
-    color: var(--md-sys-color-on-secondary);
-}
 
-/* 7.3 Chart Container Styling
-   -------------------------------------------------------------------------- */
-.chart-container { 
-    position: relative; 
-    height: 250px; 
-    width: 100%; 
-    margin-top: 16px; 
-}
-
-/* 7.4 Applications Page Specifics - Sorting Controls
-   -------------------------------------------------------------------------- */
-.applications-controls {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
-    align-items: center;
-    flex-wrap: wrap; 
-}
-.applications-controls label {
-    font-size: 0.875rem;
-    color: var(--md-sys-color-on-surface-variant);
-    font-weight: 500;
-}
-.applications-controls select,
-.applications-controls button {
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--md-sys-color-outline);
-    background-color: var(--md-sys-color-surface-container-high);
-    color: var(--md-sys-color-on-surface-variant);
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.875rem;
-}
-.applications-controls button {
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    border: none;
-    cursor: pointer;
-}
-.applications-controls button:hover {
-    background-color: var(--md-sys-color-secondary);
-    color: var(--md-sys-color-on-secondary);
-}
-
-/* ==========================================================================
-   8. Responsive Media Queries
-   ========================================================================== */
-
-/* 8.1 Medium Screens (e.g., Tablets)
-   -------------------------------------------------------------------------- */
-@media (max-width: 960px) { 
-     .content-grid { 
-         grid-template-columns: 1fr; 
-     }
-}
-
-/* 8.2 Small Screens (e.g., Mobile)
-   -------------------------------------------------------------------------- */
+/* Responsive adjustments for the template itself */
 @media (max-width: 768px) {
     html[data-sidebar-collapsed="false"] .sidebar, 
     html[data-sidebar-collapsed="true"] .sidebar {

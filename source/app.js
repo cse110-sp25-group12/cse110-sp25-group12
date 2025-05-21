@@ -57,7 +57,7 @@ import { JobApplicationForm } from './components/job-application-form.js';
 import { 
   loadApplications, 
   createApplication, 
-  updateApplication, 
+  //updateApplication, 
   deleteApplication,
   getAllApplications
 } from './controllers/applicationController.js';
