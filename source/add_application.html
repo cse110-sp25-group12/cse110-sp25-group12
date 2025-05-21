@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-sidebar-collapsed="false"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobTrack - Add Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="template.css"> 
+    <link rel="stylesheet" href="./styles/colors.css"> 
+    <link rel="stylesheet" href="./components/add-application.css"> 
+</head>
+<body class="app-layout"> 
+    <aside class="sidebar">
+        <header class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-logo">
+                <span class="material-symbols-outlined">work_history</span>
+                <span class="logo-text">JobTrack</span>
+            </a>
+        </header>
+        <a href="add_application.html" class="add-application-button active"> <span class="material-symbols-outlined">add_circle</span>
+            <span class="button-text">Add Application</span>
+        </a>
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link"><span class="material-symbols-outlined">dashboard</span><span class="link-text">Dashboard</span></a></li>
+                <li class="nav-item"><a href="applications.html" class="nav-link"><span class="material-symbols-outlined">view_list</span><span class="link-text">Applications</span></a></li>
+                
+        </nav>
+        <footer class="sidebar-footer">
+            <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
+                <span class="material-symbols-outlined" id="themeToggleIcon">light_mode</span>
+                <span class="theme-label" id="themeToggleLabel">Light Mode</span>
+            </button>
+            
+        </footer>
+    </aside>
+
+    <main class="main-content-page"> 
+        <header class="main-header">
+            <button class="sidebar-toggle-button" id="sidebarToggle" aria-label="Toggle sidebar">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <h1>Add New Job Application</h1>
+        </header>
+        
+        <form id="addApplicationForm">
+            <section class="form-section">
+                <h2 class="form-section-title">Job Details</h2>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <input type="text" id="companyName" name="companyName" required placeholder=" "> <label for="companyName">Company Name</label>
+                    </div>
+                    <div class="form-field">
+                        <input type="text" id="jobPosition" name="jobPosition" required placeholder=" ">
+                        <label for="jobPosition">Job Position / Title</label>
+                    </div>
+                    <div class="form-field">
+                        <select id="positionType" name="positionType">
+                            <option value="Full-Time">Full-Time</option>
+                            <option value="Part-Time">Part-Time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Internship">Internship</option>
+                            <option value="Temporary">Temporary</option>
+                        </select>
+                        <label for="positionType">Position Type</label>
+                    </div>
+                    <div class="form-field">
+                        <input type="number" id="salary" name="salary" placeholder=" ">
+                        <label for="salary">Salary (Optional)</label>
+                    </div>
+                    <div class="form-field">
+                        <input type="text" id="location" name="location" placeholder=" ">
+                        <label for="location">Location</label>
+                    </div>
+                    <div class="form-field">
+                        <select id="status" name="status" required>
+                            <option value="Wishlist">Wishlist</option>
+                            <option value="Applied" selected>Applied</option>
+                            <option value="Screening">Screening</option>
+                            <option value="Interviewing">Interviewing</option>
+                            <option value="Offer">Offer</option>
+                            <option value="Rejected">Rejected</option>
+                            <option value="Ghosted">Ghosted</option>
+                            <option value="Withdrawn">Withdrawn</option>
+                        </select>
+                        <label for="status">Status</label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <h2 class="form-section-title">Contact Information (Optional)</h2>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <input type="text" id="contactName" name="contactName" placeholder=" ">
+                        <label for="contactName">Contact Name</label>
+                    </div>
+                    <div class="form-field">
+                        <input type="email" id="contactEmail" name="contactEmail" placeholder=" ">
+                        <label for="contactEmail">Contact Email</label>
+                    </div>
+                    <div class="form-field">
+                        <input type="tel" id="contactPhone" name="contactPhone" placeholder=" ">
+                        <label for="contactPhone">Contact Phone</label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <h2 class="form-section-title">Dates</h2>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <input type="date" id="dateApplied" name="dateApplied" required placeholder=" "> <label for="dateApplied">Date Applied</label>
+                    </div>
+                </div>
+                <h3 class="important-dates-group-title">Important Dates (Optional)</h3>
+                <div id="importantDatesContainer" class="important-dates-group">
+                    <div class="important-date-entry">
+                        <div class="form-field">
+                           <input type="text" name="importantDateLabel[]" placeholder=" ">
+                           <label>Date Label (e.g., Phone Interview)</label>
+                        </div>
+                        <div class="form-field">
+                           <input type="date" name="importantDateValue[]" placeholder=" ">
+                           <label>Date</label> </div>
+                        <button type="button" class="remove-date-btn" aria-label="Remove date" style="display: none;">
+                            <span class="material-symbols-outlined">remove_circle_outline</span>
+                        </button>
+                    </div>
+                </div>
+                <button type="button" id="addImportantDateBtn" class="add-date-btn">
+                    <span class="material-symbols-outlined">add</span> Add Another Date
+                </button>
+            </section>
+
+            <section class="form-section">
+                <h2 class="form-section-title">Notes (Optional)</h2>
+                <div class="form-field">
+                    <textarea id="notes" name="notes" rows="6" placeholder=" "></textarea>
+                    <label for="notes">Notes, Job Description, Links, etc.</label>
+                </div>
+            </section>
+
+            <div class="form-actions">
+                <button type="submit">Save Application</button>
+            </div>
+        </form>
+
+    </main>
+    <script src="template.js" defer></script>
+    <script src="add-application-page.js" defer></script> 
+</body>
+</html>

@@ -1,0 +1,226 @@
+/* add-application-page.css */
+
+/* Form container and general form styling */
+#addApplicationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 24px; 
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+.form-section {
+    background-color: var(--md-sys-color-surface-container-low); 
+    padding: 24px; /* Increased padding */
+    border-radius: 12px;
+    border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.form-section-title {
+    font-size: 1.125rem; /* 18px - M3 Title Medium */
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface); /* More prominent */
+    margin-bottom: 20px; /* Increased space */
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px 24px; /* Row gap, Column gap */
+}
+
+/* Material Design Outlined Text Field Style */
+.form-field {
+    position: relative; /* For label positioning */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px; /* Add some bottom margin */
+}
+
+.form-field label {
+    position: absolute;
+    left: 16px;
+    top: 14px; /* Adjust for padding in input */
+    font-size: 1rem; /* 16px */
+    color: var(--md-sys-color-on-surface-variant);
+    pointer-events: none;
+    transition: all 0.2s ease-out;
+    background-color: var(--md-sys-color-surface-container-low); /* Match section bg for floating effect */
+    padding: 0 4px; /* Create space around label text when it floats */
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="tel"],
+.form-field input[type="number"],
+.form-field input[type="date"],
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 16px; /* M3 standard padding */
+    border-radius: 4px; /* M3 text field corner radius */
+    border: 1px solid var(--md-sys-color-outline);
+    background-color: transparent; /* Or var(--md-sys-color-surface-container-highest) if you want a slight fill */
+    color: var(--md-sys-color-on-surface);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem; 
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+    line-height: 1.5; /* Ensure text is vertically centered */
+}
+
+/* Adjust label position when input has content or is focused */
+.form-field input:focus + label,
+.form-field input:not(:placeholder-shown) + label,
+.form-field textarea:focus + label,
+.form-field textarea:not(:placeholder-shown) + label,
+.form-field select:focus + label,
+.form-field select:not(:empty) + label { /* For select, :not(:empty) might not work universally, JS might be needed for perfect select label floating */
+    top: -10px; /* Float above */
+    font-size: 0.75rem; /* 12px */
+    color: var(--md-sys-color-primary);
+}
+/* Special handling for select as :not(:placeholder-shown) doesn't apply */
+.form-field select + label { /* Default position for select label */
+    top: 14px; 
+}
+.form-field select:focus + label,
+.form-field select.has-value + label { /* Add .has-value class with JS for selects */
+    top: -10px;
+    font-size: 0.75rem;
+    color: var(--md-sys-color-primary);
+}
+
+
+/* Add placeholder to prevent label overlap initially if needed, or use JS to manage label state */
+.form-field input::placeholder {
+    color: transparent; /* Hide placeholder if using floating label technique */
+}
+
+
+.form-field input[type="text"]:focus,
+.form-field input[type="email"]:focus,
+.form-field input[type="tel"]:focus,
+.form-field input[type="number"]:focus,
+.form-field input[type="date"]:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px; /* Thicker border on focus */
+    padding: 15px; /* Adjust padding to account for thicker border */
+}
+
+.form-field textarea {
+    min-height: 120px; /* Increased height */
+    resize: vertical;
+}
+
+/* Styling for important dates section */
+.important-dates-group-title { /* Replaces the h3 for consistency */
+    font-size: 1rem; /* 16px */
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+.important-dates-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Increased gap */
+}
+.important-date-entry {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto; 
+    gap: 16px; /* Increased gap */
+    align-items: center; /* Align items vertically in the middle */
+}
+/* Inputs within important-date-entry should not have their own label floating logic if they are part of a group */
+.important-date-entry .form-field {
+    margin-bottom: 0; /* Remove bottom margin from individual fields in the entry */
+}
+.important-date-entry .form-field label {
+    display: none; /* Hide individual labels if the placeholder is descriptive enough */
+}
+.important-date-entry input[type="text"],
+.important-date-entry input[type="date"] {
+    margin-bottom: 0;
+    padding: 12px 16px; /* Slightly less padding for these sub-inputs */
+}
+.important-date-entry input[type="text"]:focus,
+.important-date-entry input[type="date"]:focus {
+    padding: 11px 15px; /* Adjust for 2px border */
+}
+
+
+.remove-date-btn {
+    background-color: transparent;
+    color: var(--md-sys-color-error);
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    margin-top: 0; /* Align with inputs */
+}
+.remove-date-btn:hover {
+    background-color: var(--md-sys-color-error-container);
+}
+.remove-date-btn .material-symbols-outlined {
+    font-size: 24px; /* Standard icon size */
+}
+
+.add-date-btn {
+    background-color: var(--md-sys-color-tertiary-container); /* Use tertiary for add actions */
+    color: var(--md-sys-color-on-tertiary-container);
+    border: none;
+    padding: 10px 20px; /* M3 button padding */
+    border-radius: 20px; /* M3 button radius */
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: inline-flex; 
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start; 
+    margin-top: 8px; /* Space above button */
+}
+.add-date-btn:hover {
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
+}
+
+/* Form actions (submit button) */
+.form-actions {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 24px; 
+    padding-top: 16px;
+    border-top: 1px solid var(--md-sys-color-outline-variant); /* Separator before actions */
+}
+
+.form-actions button[type="submit"] {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    border: none;
+    padding: 12px 28px; /* M3 button padding */
+    border-radius: 24px; 
+    font-size: 0.875rem; /* 14px M3 label large */
+    font-weight: 500;
+    text-transform: none; /* M3 buttons are typically sentence case */
+    letter-spacing: 0.01rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 2px rgba(var(--md-sys-color-shadow), 0.15), 0 1px 3px rgba(var(--md-sys-color-shadow), 0.3); /* M3 elevation */
+}
+
+.form-actions button[type="submit"]:hover {
+    background-color: var(--md-sys-color-primary-container); 
+    color: var(--md-sys-color-on-primary-container);
+    box-shadow: 0 2px 4px rgba(var(--md-sys-color-shadow), 0.2), 0 3px 6px rgba(var(--md-sys-color-shadow), 0.3);
+}
