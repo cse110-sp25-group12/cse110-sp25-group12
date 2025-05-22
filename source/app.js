@@ -2,25 +2,25 @@ import './components/job-card.js'; // Ensure the component is registered
 
 const jobData = [
   {
-    company: "Acme Corp",
-    title: "Senior UX Designer",
-    position: "Full-Time",
-    logo: "https://example.com/logo1.png",
+    company: 'Acme Corp',
+    title: 'Senior UX Designer',
+    position: 'Full-Time',
+    logo: 'https://example.com/logo1.png',
     requirements: [
-      "5+ years experience",
-      "Portfolio",
-      "Good communication"
+      '5+ years experience',
+      'Portfolio',
+      'Good communication'
     ]
   },
   {
-    company: "Globex Inc.",
-    title: "Frontend Developer",
-    position: "Remote",
-    logo: "https://example.com/logo2.png",
+    company: 'Globex Inc.',
+    title: 'Frontend Developer',
+    position: 'Remote',
+    logo: 'https://example.com/logo2.png',
     requirements: [
-      "React",
-      "JavaScript",
-      "CSS"
+      'React',
+      'JavaScript',
+      'CSS'
     ]
   }
 ];
@@ -115,9 +115,9 @@ function updateVisibleCards() {
     filtered = filtered.filter(job => activeFilters.includes(job.position));
   }
 
-  if (currentSort === "company") {
+  if (currentSort === 'company') {
     filtered.sort((a, b) => a.company.localeCompare(b.company));
-  } else if (currentSort === "position") {
+  } else if (currentSort === 'position') {
     filtered.sort((a, b) => a.position.localeCompare(b.position));
   }
 
