@@ -1,9 +1,7 @@
 
-export function createCard(event) {
-  //prevent default form behavior
-  event.preventDefault();
-
+export function createApplication() {
   //Create new card object that mirrors existing card object format
+  //HARDCODED, but eventually migrate to using formdata
   const newCard = {
     company: 'Example',
     jobPosition: 'Example',
@@ -17,7 +15,6 @@ export function createCard(event) {
   cards.push(newCard);
   localStorage.setItem('applications', JSON.stringify(cards));
 
-  //Redirect to applications page
-  window.location.pathname = 'source/applications.html';
+  return newCard;
 }
 
