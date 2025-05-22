@@ -52,7 +52,9 @@ We will adopt a feature branching strategy. To take on an issue:
 Here's a short description of the CI/CD pipeline and what it does:
 
 ### On every pull request into main:
-1. HTML Validation (W3C). All HTML files fed to W3C validator. Any errors will cause the workflow to fail. The errors are hard to understand. but ```"lastLine":25``` tells you which line of the HTML file caused the error.
+1. HTML Validation (W3C). All HTML files fed to W3C validator. Any errors will cause the workflow to fail.
+   1. The errors are hard to understand. ```"lastLine":25``` tells you which line of the HTML file caused the error.
+   2. For easier debugging, just chuck the contents of the failed HTML file into [W3C's website](https://validator.w3.org/#validate_by_input)
 
   
 2. ESLint and SylisticJS plugin. All JS files will be linted for errors and style warnings. Run ```npm run lint``` to lint locally. Run ```npm run lint:fix``` to lint and auto-format code locally. Current style guidelines are listed below:
