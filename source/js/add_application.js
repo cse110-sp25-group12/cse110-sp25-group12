@@ -5,8 +5,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('addApplicationForm');
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    createApplication();
+
+    const formData = new FormData(form);
+    const cardData = {};
+    for (const [key, value] of formData.entries()) {
+      //console.log(key, value);
+      cardData[key] = value;
+    }
+    createApplication(cardData);
+
     //Redirect to applications page
-    window.location.pathname = 'source/pages/applications.html';
+    // setTimeout(() => {
+    //   window.location.pathname = 'source/pages/applications.html';
+    // }, 100);
   });
 });
