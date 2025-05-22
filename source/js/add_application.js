@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         email: document.getElementById('contactEmail').value
       }
     };
-    createApplication(cardData);
+    createApplication(formData);
 
     //Redirect to applications page
     // setTimeout(() => {
