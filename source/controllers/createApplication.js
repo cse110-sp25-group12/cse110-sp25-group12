@@ -3,15 +3,13 @@
  * Create application controller
  * @returns {Object} Created card object
  */
-export function createApplication() {
+export function createApplication(formData) {
   //Create new card object that mirrors existing card object format
   //HARDCODED, but eventually migrate to using formdata
   const newCard = {
-    company: 'Example',
-    jobPosition: 'Example',
-    dateApplied: '2025-03-19',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg',
-    contact: { email: 'mark.spears@apple.com' },
+    id: crypto.randomUUID(),
+    ...formData,
+    logo: formData.logo 
   };
 
   //Save card to localStorage
