@@ -1,4 +1,4 @@
-import { createApplication } from './controllers/createApplication.js';
+import { createApplication } from '../controllers/createApplication.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   //add event listener to form
@@ -7,6 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     event.preventDefault();
     createApplication();
     //Redirect to applications page
-    window.location.pathname = 'source/applications.html';
+    window.location.pathname = 'source/pages/applications.html';
   });
 });

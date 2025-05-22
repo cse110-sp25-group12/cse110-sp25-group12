@@ -1,4 +1,4 @@
-import './components/job-card.js';
+import '../components/job-card.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   if (localStorage.getItem('applications') === null) {
