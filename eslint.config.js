@@ -19,6 +19,7 @@ export default defineConfig([
       '@stylistic/js': stylisticJs,
     },
     rules: {
+      '@stylistic/js/indent': ['warn', 2],
       '@stylistic/js/linebreak-style': ['warn', 'unix'],
       '@stylistic/js/quotes': ['warn', 'single'],
       '@stylistic/js/semi': ['warn', 'always'],

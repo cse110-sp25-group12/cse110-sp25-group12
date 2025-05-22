@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JobTrack - Add Application</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="template.css"> 
     <link rel="stylesheet" href="./styles/colors.css"> 
@@ -25,7 +25,7 @@
             <ul class="nav-list">
                 <li class="nav-item"><a href="dashboard.html" class="nav-link"><span class="material-symbols-outlined">dashboard</span><span class="link-text">Dashboard</span></a></li>
                 <li class="nav-item"><a href="applications.html" class="nav-link"><span class="material-symbols-outlined">view_list</span><span class="link-text">Applications</span></a></li>
-                
+            </ul>
         </nav>
         <footer class="sidebar-footer">
             <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
@@ -75,8 +75,9 @@
                     </div>
                     <div class="form-field">
                         <select id="status" name="status" required>
+                            <option value="" disabled selected hidden>Select status</option>
                             <option value="Wishlist">Wishlist</option>
-                            <option value="Applied" selected>Applied</option>
+                            <option value="Applied">Applied</option>
                             <option value="Screening">Screening</option>
                             <option value="Interviewing">Interviewing</option>
                             <option value="Offer">Offer</option>
@@ -111,7 +112,7 @@
                 <h2 class="form-section-title">Dates</h2>
                 <div class="form-grid">
                     <div class="form-field">
-                        <input type="date" id="dateApplied" name="dateApplied" required placeholder=" "> <label for="dateApplied">Date Applied</label>
+                        <input type="date" id="dateApplied" name="dateApplied" required> <label for="dateApplied">Date Applied</label>
                     </div>
                 </div>
                 <h3 class="important-dates-group-title">Important Dates (Optional)</h3>
@@ -122,7 +123,7 @@
                            <label>Date Label (e.g., Phone Interview)</label>
                         </div>
                         <div class="form-field">
-                           <input type="date" name="importantDateValue[]" placeholder=" ">
+                           <input type="date" name="importantDateValue[]">
                            <label>Date</label> </div>
                         <button type="button" class="remove-date-btn" aria-label="Remove date" style="display: none;">
                             <span class="material-symbols-outlined">remove_circle_outline</span>
