@@ -1,3 +1,6 @@
+import { Chart } from 'chart.js';
+
+
 (function() {
   // Declare variables that will hold DOM element references
   let htmlElement,
