@@ -1,4 +1,4 @@
-import './components/job-card.js';
+import '../components/job-card.js';
 
 const jobs = [
   {

@@ -1,4 +1,4 @@
-import './components/job-card.js'; // Ensure the component is registered
+import '../components/job-card.js'; // Ensure the component is registered
 
 const jobData = [
   {
