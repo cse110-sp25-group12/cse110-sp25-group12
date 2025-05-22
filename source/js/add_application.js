@@ -6,13 +6,15 @@ document.addEventListener('DOMContentLoaded', function() {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const formData = new FormData(form);
-    const cardData = {};
-    for (const [key, value] of formData.entries()) {
-      //console.log(key, value);
-      cardData[key] = value;
-    }
-    createApplication(cardData);
+    const formData = {
+      company: document.getElementById('companyName').value,
+      jobPosition: document.getElementById('jobPosition').value,
+      dateApplied: document.getElementById('dateApplied').value,
+      contact: {
+        email: document.getElementById('contactEmail').value
+      }
+    };
+    createApplication(formData);
 
     //Redirect to applications page
     // setTimeout(() => {
