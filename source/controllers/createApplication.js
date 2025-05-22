@@ -17,6 +17,7 @@ export function createCard(event) {
   cards.push(newCard);
   localStorage.setItem('applications', JSON.stringify(cards));
 
-  //renderCards();
+  //Redirect to applications page
+  window.location.pathname = 'source/applications.html';
 }
 
