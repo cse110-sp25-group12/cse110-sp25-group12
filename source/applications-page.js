@@ -1,5 +1,12 @@
 import './components/job-card.js';
 
+document.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('applications') === null) {
+    localStorage.setItem('applications', JSON.stringify(jobs));
+  }
+  renderCards();
+});
+
 const jobs = [
   {
     company: 'Apple',
@@ -24,9 +31,17 @@ const jobs = [
   },
 ];
 
-const container = document.getElementById('applicationCardsContainer');
-jobs.forEach(job => {
-  const card = document.createElement('job-app-card');
-  card.data = job;
-  container.appendChild(card);
-});
+function renderCards() {
+  const container = document.getElementById('applicationCardsContainer');
+
+  const cards = JSON.parse(localStorage.getItem('applications'));
+  for (const card of cards) {
+    const cardElem = document.createElement('job-app-card');
+    cardElem.data = card;
+    container.appendChild(cardElem);
+  };
+}
+
+export {
+  renderCards
+};
