@@ -1,51 +1,51 @@
 class JobAppCard extends HTMLElement {
-	constructor() {
-		super();
+  constructor() {
+    super();
 
-		const shadow = this.attachShadow({ mode: 'open' });
+    const shadow = this.attachShadow({ mode: 'open' });
 
-		// Load Material Symbols icon font inside Shadow DOM
-		const fontLink = document.createElement('link');
-		fontLink.setAttribute('rel', 'stylesheet');
-		fontLink.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+    // Load Material Symbols icon font inside Shadow DOM
+    const fontLink = document.createElement('link');
+    fontLink.setAttribute('rel', 'stylesheet');
+    fontLink.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
 
-		// Create card
-		const card = document.createElement('a');
-		card.classList.add('card');
+    // Create card
+    const card = document.createElement('a');
+    card.classList.add('card');
 
-		const favoriteBtn = document.createElement('button');
-		favoriteBtn.classList.add('favorite');
-		favoriteBtn.title = 'Bookmark';
+    const favoriteBtn = document.createElement('button');
+    favoriteBtn.classList.add('favorite');
+    favoriteBtn.title = 'Bookmark';
 
-		const icon = document.createElement('span');
-		icon.classList.add('material-symbols-outlined');
-		icon.textContent = 'bookmark';
+    const icon = document.createElement('span');
+    icon.classList.add('material-symbols-outlined');
+    icon.textContent = 'bookmark';
 
-		const logo = document.createElement('img');
-		logo.classList.add('logo');
+    const logo = document.createElement('img');
+    logo.classList.add('logo');
 
-		const header = document.createElement('header');
-		const title = document.createElement('h2');
-		title.classList.add('title');
+    const header = document.createElement('header');
+    const title = document.createElement('h2');
+    title.classList.add('title');
 
-		const company = document.createElement('h3');
-		company.classList.add('company');
+    const company = document.createElement('h3');
+    company.classList.add('company');
 
-		const date = document.createElement('p');
-		date.classList.add('date');
+    const date = document.createElement('p');
+    date.classList.add('date');
 
-		const email = document.createElement('p');
-		email.classList.add('email');
+    const email = document.createElement('p');
+    email.classList.add('email');
 
-		// Build structure
-		favoriteBtn.appendChild(icon);
-		header.appendChild(title);
-		header.appendChild(company);
-		card.append(favoriteBtn, logo, header, date, email);
+    // Build structure
+    favoriteBtn.appendChild(icon);
+    header.appendChild(title);
+    header.appendChild(company);
+    card.append(favoriteBtn, logo, header, date, email);
 
-		// Styles
-		const style = document.createElement('style');
-		style.textContent = `
+    // Styles
+    const style = document.createElement('style');
+    style.textContent = `
 			* {
 				font-family: system-ui, sans-serif;
 			}
@@ -110,39 +110,39 @@ class JobAppCard extends HTMLElement {
 			}
 		`;
 
-		// Add to shadow root
-		shadow.append(fontLink, style, card);
+    // Add to shadow root
+    shadow.append(fontLink, style, card);
 
-		// Save elements for data binding
-		this._elements = { logo, title, company, date, email, icon, favoriteBtn };
-	}
+    // Save elements for data binding
+    this._elements = { logo, title, company, date, email, icon, favoriteBtn };
+  }
 
-	set data(data) {
-		if (!data) return;
+  set data(data) {
+    if (!data) return;
 
-		const { logo, title, company, date, email, icon, favoriteBtn } = this._elements;
+    const { logo, title, company, date, email, icon, favoriteBtn } = this._elements;
 
-		logo.src = data.logo || 'https://via.placeholder.com/64x64?text=Logo';
-		logo.alt = `${data.company || ''} Logo`;
+    logo.src = data.logo || 'https://via.placeholder.com/64x64?text=Logo';
+    logo.alt = `${data.company || ''} Logo`;
 
-		title.textContent = data.jobPosition || 'Untitled Position';
-		company.textContent = data.company || 'Unknown Company';
-		date.textContent = `📅 Applied: ${data.dateApplied || '-'}`;
-		email.textContent = `📧 ${data.contact?.email || 'No email'}`;
+    title.textContent = data.jobPosition || 'Untitled Position';
+    company.textContent = data.company || 'Unknown Company';
+    date.textContent = `📅 Applied: ${data.dateApplied || '-'}`;
+    email.textContent = `📧 ${data.contact?.email || 'No email'}`;
 
-		favoriteBtn.addEventListener('mouseenter', () => {
-			if (!favoriteBtn.classList.contains('active')) icon.textContent = 'bookmark_add';
-		});
-		favoriteBtn.addEventListener('mouseleave', () => {
-			if (!favoriteBtn.classList.contains('active')) icon.textContent = 'bookmark';
-		});
-		favoriteBtn.addEventListener('click', () => {
-			const isActive = favoriteBtn.classList.toggle('active');
-			icon.textContent = isActive ? 'bookmark_added' : 'bookmark';
-			favoriteBtn.classList.add('bounced');
-			setTimeout(() => favoriteBtn.classList.remove('bounced'), 400);
-		});
-	}
+    favoriteBtn.addEventListener('mouseenter', () => {
+      if (!favoriteBtn.classList.contains('active')) icon.textContent = 'bookmark_add';
+    });
+    favoriteBtn.addEventListener('mouseleave', () => {
+      if (!favoriteBtn.classList.contains('active')) icon.textContent = 'bookmark';
+    });
+    favoriteBtn.addEventListener('click', () => {
+      const isActive = favoriteBtn.classList.toggle('active');
+      icon.textContent = isActive ? 'bookmark_added' : 'bookmark';
+      favoriteBtn.classList.add('bounced');
+      setTimeout(() => favoriteBtn.classList.remove('bounced'), 400);
+    });
+  }
 }
 
 customElements.define('job-app-card', JobAppCard);
