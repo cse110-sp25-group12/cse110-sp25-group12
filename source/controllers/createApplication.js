@@ -1,4 +1,8 @@
 
+/**
+ * Create application controller
+ * @returns {Object} Created card object
+ */
 export function createApplication() {
   //Create new card object that mirrors existing card object format
   //HARDCODED, but eventually migrate to using formdata
