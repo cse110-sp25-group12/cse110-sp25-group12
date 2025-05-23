@@ -1,7 +1,7 @@
 import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   if (localStorage.getItem('applications') === null) {
     localStorage.setItem('applications', JSON.stringify(jobs));
   }
@@ -32,27 +32,36 @@ const jobs = [
     dateApplied: '2025-04-24',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg',
     contact: { email: 'peter.movie@netflix.com' }
-  },
+  }
 ];
 
 function renderCards() {
   const container = document.getElementById('applicationCardsContainer');
-
   const cards = JSON.parse(localStorage.getItem('applications'));
+
   for (const card of cards) {
+    // Create wrapper div
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('application-wrapper');
+
+    // Create job card
     const cardElem = document.createElement('job-app-card');
     cardElem.data = card;
     cardElem.dataset.id = card.id;
 
-    // Add a delete button to each card
+    // Create delete button
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('delete-btn');
     deleteBtn.textContent = 'Delete';
     deleteBtn.dataset.id = card.id;
 
-    cardElem.appendChild(deleteBtn);
-    container.appendChild(cardElem);
-  };
+    // Append card and button to wrapper
+    wrapper.appendChild(cardElem);
+    wrapper.appendChild(deleteBtn);
+
+    // Add to DOM
+    container.appendChild(wrapper);
+  }
 }
 
 // Delegate delete clicks
