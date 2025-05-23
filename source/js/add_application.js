@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     event.preventDefault();
 
     const formData = {
-      company: document.getElementById('companyName').value,
+      company: document.getElementById('company').value,
       jobPosition: document.getElementById('jobPosition').value,
       dateApplied: document.getElementById('dateApplied').value,
       contact: {
@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     createApplication(formData);
 
-    //Redirect to applications page
-    // setTimeout(() => {
-    //   window.location.pathname = 'source/pages/applications.html';
-    // }, 100);
+  //Redirect to applications page
+    setTimeout(() => {
+      window.location.pathname = 'source/pages/applications.html';
+    }, 100);
   });
 });

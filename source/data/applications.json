@@ -3,6 +3,7 @@
     "id": 1,
     "company": "Apple",
     "jobPosition": "Machine Learning Engineer",
+    "jobType": "Full-time",
     "salary": 265000,
     "location": "San Francisco, CA",
     "contact": {
@@ -22,6 +23,7 @@
     "id": 2,
     "company": "Google",
     "jobPosition": "Software Developer",
+    "jobType": "Full-time",
     "salary": 120000,
     "location": "San Diego, CA",
     "contact": {
@@ -40,6 +42,7 @@
     "id": 3,
     "company": "Netflix",
     "jobPosition": "Product Designer",
+    "jobType": "Full-time",
     "salary": 145000,
     "location": "Chicago, IL",
     "contact": {
