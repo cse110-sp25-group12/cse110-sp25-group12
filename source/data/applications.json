@@ -22,6 +22,7 @@
     "id": 2,
     "company": "Google",
     "jobPosition": "Software Developer",
+    "jobType": "Full-time",
     "salary": 120000,
     "location": "San Diego, CA",
     "contact": {
@@ -40,6 +41,7 @@
     "id": 3,
     "company": "Netflix",
     "jobPosition": "Product Designer",
+    "jobType": "Full-time",
     "salary": 145000,
     "location": "Chicago, IL",
     "contact": {
