@@ -4,9 +4,9 @@
  */
 
 export function deleteApplication(applicationId){
-    const cards = JSON.parse(localStorage.getItem('applications')) || [];
-    const updatedCards = cards.filter(card => card.id !== applicationId);
-    localStorage.setItem('applications', JSON.stringify(updatedCards));
+  const cards = JSON.parse(localStorage.getItem('applications')) || [];
+  const updatedCards = cards.filter(card => card.id !== applicationId);
+  localStorage.setItem('applications', JSON.stringify(updatedCards));
 
     // Remove the entire wrapper that contains both the card and delete button
     const wrapper = document.querySelector(`.application-wrapper[data-id="${applicationId}"]`);
