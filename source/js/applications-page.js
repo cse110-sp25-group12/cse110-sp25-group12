@@ -39,10 +39,14 @@ function renderCards() {
   const container = document.getElementById('applicationCardsContainer');
   const cards = JSON.parse(localStorage.getItem('applications'));
 
+  // Clear existing cards to prevent duplicates
+  container.innerHTML = '';
+
   for (const card of cards) {
     // Create wrapper div
     const wrapper = document.createElement('div');
     wrapper.classList.add('application-wrapper');
+    wrapper.dataset.id = card.id;
 
     // Create job card
     const cardElem = document.createElement('job-app-card');
