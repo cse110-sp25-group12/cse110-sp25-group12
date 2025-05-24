@@ -3,6 +3,7 @@
     "id": 1,
     "company": "Apple",
     "jobPosition": "Machine Learning Engineer",
+    "jobType": "Full-time",
     "salary": 265000,
     "location": "San Francisco, CA",
     "contact": {

@@ -4,7 +4,7 @@ parent: Decisions
 nav_order: 001
 title: JavaScript File Structure and Coding Style Standards
 status: "proposed"
-date: 05-25-2025
+date: 05-21-2025
 
 ---
 
