@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     createApplication(formData);
 
-  //Redirect to applications page
+    //Redirect to applications page
     setTimeout(() => {
       window.location.pathname = 'source/pages/applications.html';
     }, 100);
