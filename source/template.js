@@ -12,19 +12,6 @@
     function applyTheme(theme) {
         if (!htmlElement) htmlElement = document.documentElement; 
         htmlElement.setAttribute('data-theme', theme);
-        
-        if (themeToggleIcon && themeToggleLabel) { 
-            if (theme === 'dark') {
-                themeToggleIcon.textContent = 'dark_mode';
-                themeToggleLabel.textContent = 'Dark Mode';
-            } else {
-                themeToggleIcon.textContent = 'light_mode';
-                themeToggleLabel.textContent = 'Light Mode';
-            }
-        }
-        // If charts exist on the current page (handled by page-specific JS),
-        // they might need a separate trigger or listen for theme changes.
-        // For now, this global script doesn't directly interact with charts.
     }
 
     function toggleTheme() {
@@ -36,14 +23,12 @@
     }
 
     // --- Sidebar Toggle Functions ---
+    // ...existing code...
+    // --- Sidebar Toggle Functions ---
     function applySidebarState(collapsed) {
         if (!htmlElement) htmlElement = document.documentElement;
         htmlElement.setAttribute('data-sidebar-collapsed', collapsed ? 'true' : 'false');
-        
-        const newWidth = collapsed 
-                       ? getComputedStyle(htmlElement).getPropertyValue('--sidebar-collapsed-width') 
-                       : getComputedStyle(htmlElement).getPropertyValue('--sidebar-expanded-width');
-        htmlElement.style.setProperty('--sidebar-width', newWidth.trim()); 
+        // The component <app-sidebar> will observe this attribute and adjust its own width.
     }
 
     function toggleSidebar() {
@@ -54,34 +39,13 @@
     }
     
     // --- Set Active Navigation Link ---
-    function setActiveNavLink() {
-        if (!navLinks) navLinks = document.querySelectorAll('.sidebar .nav-link');
-        const currentPage = window.location.pathname.split('/').pop(); 
-
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPage) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    }
-
+    // function setActiveNavLink() { ... } // This logic is now in app-sidebar.js
+    
     // --- Global Event Listeners and Initial Setup ---
     function initializeTemplateApp() {
         htmlElement = document.documentElement;
-        themeToggleButton = document.getElementById('themeToggle');
-        themeToggleIcon = document.getElementById('themeToggleIcon');
-        themeToggleLabel = document.getElementById('themeToggleLabel');
-        sidebarToggleButton = document.getElementById('sidebarToggle');
-        navLinks = document.querySelectorAll('.sidebar .nav-link');
 
-        if (themeToggleButton) {
-            themeToggleButton.addEventListener('click', toggleTheme);
-        }
-        if (sidebarToggleButton) {
-            sidebarToggleButton.addEventListener('click', toggleSidebar);
-        }
+        document.body.addEventListener('request-theme-toggle', toggleTheme); 
         
         const savedTheme = localStorage.getItem('appTheme');
         const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -97,10 +61,10 @@
             const savedSidebarState = localStorage.getItem('sidebarCollapsed') === 'true';
             applySidebarState(savedSidebarState);
         } else {
-            applySidebarState(true); 
+            applySidebarState(true); // Collapse sidebar on smaller screens by default
         }
 
-        setActiveNavLink(); 
+        // setActiveNavLink(); // Removed, handled by app-sidebar
     }
 
     // Wait for the DOM to be fully loaded before running the global initialization
