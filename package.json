@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "@stylistic/eslint-plugin-js": "^4.2.0",
+    "eslint": "^9.27.0",
+    "globals": "^16.1.0",
+    "jest": "^29.7.0",
+    "jsdoc": "^4.0.4"
+  },
+  "scripts": {
+    "test": "jest --passWithNoTests",
+    "docs": "jsdoc source -r -d docs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  }
+}
