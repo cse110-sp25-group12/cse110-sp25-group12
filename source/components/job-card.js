@@ -1,57 +1,53 @@
 class JobAppCard extends HTMLElement {
-	constructor() {
-		super();
+  constructor() {
+    super();
 
-		// Attach shadow DOM
-		const shadow = this.attachShadow({ mode: 'open' });
+    const shadow = this.attachShadow({ mode: 'open' });
 
-    // Add Material Symbols font link (needed inside Shadow DOM)
+    // Load Material Symbols icon font inside Shadow DOM
     const fontLink = document.createElement('link');
     fontLink.setAttribute('rel', 'stylesheet');
     fontLink.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
 
-		// Create the card structure (same as your HTML template)
-		const card = document.createElement('a');
-		card.classList.add('card');
+    // Create card
+    const card = document.createElement('a');
+    card.classList.add('card');
 
-		const favoriteBtn = document.createElement('button');
-		favoriteBtn.classList.add('favorite');
-		favoriteBtn.title = 'Bookmark';
+    const favoriteBtn = document.createElement('button');
+    favoriteBtn.classList.add('favorite');
+    favoriteBtn.title = 'Bookmark';
 
-		const icon = document.createElement('span');
-		icon.classList.add('material-symbols-outlined');
-		icon.textContent = 'bookmark';
+    const icon = document.createElement('span');
+    icon.classList.add('material-symbols-outlined');
+    icon.textContent = 'bookmark';
 
-		const logo = document.createElement('img');
-		logo.classList.add('logo');
+    const logo = document.createElement('img');
+    logo.classList.add('logo');
 
-		const header = document.createElement('header');
-		const title = document.createElement('h2');
-		title.classList.add('title');
+    const header = document.createElement('header');
+    const title = document.createElement('h2');
+    title.classList.add('title');
 
-		const company = document.createElement('h3');
-		company.classList.add('company');
+    const company = document.createElement('h3');
+    company.classList.add('company');
 
-		const position = document.createElement('p');
-		position.classList.add('position');
+    const date = document.createElement('p');
+    date.classList.add('date');
 
-		const requirements = document.createElement('ul');
-		requirements.classList.add('requirements');
+    const email = document.createElement('p');
+    email.classList.add('email');
 
-		// Build the structure
-		favoriteBtn.appendChild(icon);
-		header.appendChild(title);
-		header.appendChild(company);
-		card.append(favoriteBtn, logo, header, position, requirements);
+    // Build structure
+    favoriteBtn.appendChild(icon);
+    header.appendChild(title);
+    header.appendChild(company);
+    card.append(favoriteBtn, logo, header, date, email);
 
-		// Style tag (insert all CSS you had in job-card.css)
-		const style = document.createElement('style');
-		style.textContent = `
+    // Styles
+    const style = document.createElement('style');
+    style.textContent = `
 			* {
-				font-family: system-ui, -apple-system, BlinkMacSystemFont,
-					'Segoe UI', Roboto, Oxygen, Ubuntu,
-					Cantarell, 'Fira Sans', 'Droid Sans',
-					'Helvetica Neue', sans-serif;
+				font-family: system-ui, sans-serif;
 			}
 			.card {
 				display: flex;
@@ -64,13 +60,16 @@ class JobAppCard extends HTMLElement {
 				padding: 1rem;
 				margin: 1rem;
 				width: 15em;
-				aspect-ratio: 2 / 3;
+				text-align: center;
+				text-decoration: none;
 			}
 			img.logo {
-				width: 64px;
-				height: auto;
+			  	height: 64px;
+  				object-fit: contain;
+  				background-color: white;
+				border-radius: 8px;
+				padding: 0.25rem;
 				margin-bottom: 0.75rem;
-				object-fit: contain;
 			}
 			.favorite {
 				font-family: 'Material Symbols Outlined';
@@ -86,88 +85,64 @@ class JobAppCard extends HTMLElement {
 			.favorite.active {
 				color: #e91e63;
 			}
+			.favorite.bounced {
+				animation: material-pop 0.4s ease;
+			}
 			@keyframes material-pop {
 				0% { transform: scale(1); }
 				50% { transform: scale(1.4); }
 				100% { transform: scale(1); }
 			}
-			.favorite.bounced {
-				animation: material-pop 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-			}
-			header {
-				text-align: center;
-				margin: 0.5rem 0;
-			}
 			h2.title {
 				margin: 0;
-				font-size: 1.25rem;
+				font-size: 1.1rem;
 				color: #333;
 			}
 			h3.company {
 				margin: 0.25rem 0;
-				font-size: 1rem;
+				font-size: 0.95rem;
 				color: #666;
 			}
-			.position {
-				margin: 0.5rem 0 0;
-				font-size: 0.95rem;
-				color: #555;
-			}
-			ul.requirements {
-				width: 100%;
-        text-align: left;
-        padding-left: 1.25rem;
-        margin: 0.5rem 0 0;
-        align-self: flex-start;
-			}
-			ul.requirements > li {
+			.date, .email {
+				font-size: 0.85rem;
+				color: #444;
 				margin: 0.25rem 0;
-        text-align: left; 
 			}
 		`;
 
-		// Append to Shadow DOM
-		shadow.append(fontLink, style, card);
+    // Add to shadow root
+    shadow.append(fontLink, style, card);
 
-		// Store references for use in set data()
-		this._elements = { logo, title, company, position, requirements, icon, favoriteBtn };
-	}
+    // Save elements for data binding
+    this._elements = { logo, title, company, date, email, icon, favoriteBtn };
+  }
 
-	// Called when someone does: element.data = {...}
-	set data(data) {
-		if (!data) return;
+  set data(data) {
+    if (!data) return;
 
-		const { logo, title, company, position, requirements, icon, favoriteBtn } = this._elements;
+    const { logo, title, company, date, email, icon, favoriteBtn } = this._elements;
 
-		// Fill in content
-		logo.src = data.logo;
-		logo.alt = `${data.company} Logo`;
-		title.textContent = data.title;
-		company.textContent = data.company;
-		position.textContent = data.position;
+    logo.src = data.logo || 'https://via.placeholder.com/64x64?text=Logo';
+    logo.alt = `${data.company || ''} Logo`;
 
-		// Clear and populate requirements list
-		requirements.innerHTML = '';
-		data.requirements.forEach(item => {
-			const li = document.createElement('li');
-			li.textContent = item;
-			requirements.appendChild(li);
-		});
+    title.textContent = data.jobPosition || 'Untitled Position';
+    company.textContent = data.company || 'Unknown Company';
+    date.textContent = `📅 Applied: ${data.dateApplied || '-'}`;
+    email.textContent = `📧 ${data.contact?.email || 'No email'}`;
 
-		// Setup favorite icon behavior
-		favoriteBtn.addEventListener('mouseenter', () => {
-			if (!favoriteBtn.classList.contains('active')) icon.textContent = 'bookmark_add';
-		});
-		favoriteBtn.addEventListener('mouseleave', () => {
-			if (!favoriteBtn.classList.contains('active')) icon.textContent = 'bookmark';
-		});
-		favoriteBtn.addEventListener('click', () => {
-			const isActive = favoriteBtn.classList.toggle('active');
-			icon.textContent = isActive ? 'bookmark_added' : 'bookmark';
-			favoriteBtn.classList.add('bounced');
-			setTimeout(() => favoriteBtn.classList.remove('bounced'), 400);
-		});
-	}
+    favoriteBtn.addEventListener('mouseenter', () => {
+      if (!favoriteBtn.classList.contains('active')) icon.textContent = 'bookmark_add';
+    });
+    favoriteBtn.addEventListener('mouseleave', () => {
+      if (!favoriteBtn.classList.contains('active')) icon.textContent = 'bookmark';
+    });
+    favoriteBtn.addEventListener('click', () => {
+      const isActive = favoriteBtn.classList.toggle('active');
+      icon.textContent = isActive ? 'bookmark_added' : 'bookmark';
+      favoriteBtn.classList.add('bounced');
+      setTimeout(() => favoriteBtn.classList.remove('bounced'), 400);
+    });
+  }
 }
 
 customElements.define('job-app-card', JobAppCard);

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-sidebar-collapsed="false"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobTrack - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/colors.css"> 
+    <link rel="stylesheet" href="../styles/style.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-layout"> 
+    <aside class="sidebar">
+        <header class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-logo"> <span class="material-symbols-outlined">work_history</span>
+                <span class="logo-text">JobTrack</span>
+            </a>
+        </header>
+
+        <a href="add_application.html" class="add-application-button"> <span class="material-symbols-outlined">add_circle</span>
+            <span class="button-text">Add Application</span>
+        </a>
+
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link"> 
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <span class="link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="applications.html" class="nav-link"> 
+                        <span class="material-symbols-outlined">view_list</span>
+                        <span class="link-text">Applications</span>
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+        <footer class="sidebar-footer">
+            <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
+                <span class="material-symbols-outlined" id="themeToggleIcon">light_mode</span>
+                <span class="theme-label" id="themeToggleLabel">Light Mode</span>
+            </button>
+        </footer>
+    </aside>
+
+    <main class="main-content-page"> <header class="main-header">
+            <button class="sidebar-toggle-button" id="sidebarToggle" aria-label="Toggle sidebar">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <h1>Job Application Dashboard</h1>
+        </header>
+        
+        <div class="content-grid">
+            <article class="content-card">
+                <h2 class="content-card-title">Total Applications</h2>
+                <div class="content-card-stat">78</div>
+                <div class="content-card-details"><p>+5 this week</p></div>
+            </article>
+            <article class="content-card">
+                <h2 class="content-card-title">Interviews Scheduled</h2>
+                <div class="content-card-stat">12</div>
+                <div class="content-card-details"><p>2 upcoming</p></div>
+            </article>
+            <article class="content-card">
+                <h2 class="content-card-title">Active Processes</h2>
+                <div class="content-card-stat">25</div>
+                <div class="content-card-details"><p>Awaiting feedback for 8</p></div>
+            </article>
+             <article class="content-card">
+                <h2 class="content-card-title">Offers Received</h2>
+                <div class="content-card-stat">3</div>
+                <div class="content-card-details"><p>1 new offer!</p></div>
+            </article>
+
+            <article class="content-card">
+                <h2 class="content-card-title">Applications Over Time</h2>
+                <div class="chart-container">
+                    <canvas id="applicationsChart"></canvas> </div>
+            </article>
+            <article class="content-card">
+                <h2 class="content-card-title">Application Status Breakdown</h2>
+                <div class="chart-container">
+                    <canvas id="statusChart"></canvas> </div>
+            </article>
+        </div>
+    </main>
+    <script src="../components/material.js" defer></script>
+    <script src="../styles/template.js" defer></script>
+    <script src="../js/dashboard.js" defer></script>
+</body>
+</html>
