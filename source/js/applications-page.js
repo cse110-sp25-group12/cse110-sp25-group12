@@ -156,7 +156,7 @@ function loadMockData() {
   localStorage.setItem('applications', JSON.stringify(MOCK_APPLICATIONS));
   console.log('✅ Mock data loaded successfully!');
   console.log(`📊 Added ${MOCK_APPLICATIONS.length} applications to localStorage`);
-  
+
   // Re-render if on applications page
   if (typeof renderCards === 'function') {
     renderCards();
@@ -164,19 +164,16 @@ function loadMockData() {
   }
 }
 
-function showCurrentLocalStorage() {
-  const applications = JSON.parse(localStorage.getItem('applications'));
-  console.log(applications);
-}
+
 
 /**
- * Clear all applications from localStorage  
+ * Clear all applications from localStorage
  * Usage: Open browser console and call clearApplications()
  */
 function clearApplications() {
   localStorage.setItem('applications', JSON.stringify([]));
   console.log('🗑️ All applications cleared from localStorage');
-  
+
   // Re-render if on applications page
   if (typeof renderCards === 'function') {
     renderCards();
@@ -251,28 +248,28 @@ function renderCards() {
 document.addEventListener('click', (e) => {
   // Find the delete button (could be the button itself or a child element)
   const deleteBtn = e.target.closest('.delete-btn');
-  
+
   if (deleteBtn) {
     const appId = deleteBtn.dataset.id;
-    
+
     // Add confirmation for better UX
     if (confirm('Are you sure you want to delete this application?')) {
       console.log('🗑️ Deleting application:', appId);
-      
+
       // Call synchronous delete function
       deleteApplication(appId);
-      
+
       // After delete, check remaining count and update UI
       setTimeout(() => {
         const remainingCards = JSON.parse(localStorage.getItem('applications')) || [];
         const remainingCount = remainingCards.length;
-        
+
         // Update header count
         const header = document.querySelector('.main-header h1');
         if (header) {
           header.textContent = `All Applications (${remainingCount})`;
         }
-        
+
         // Show empty state if no applications remain
         if (remainingCount === 0) {
           const container = document.getElementById('applicationCardsContainer');
@@ -285,7 +282,7 @@ document.addEventListener('click', (e) => {
             </div>
           `;
         }
-        
+
         console.log('✅ Application deleted successfully');
       }, 350); // Wait for animation to complete
     }

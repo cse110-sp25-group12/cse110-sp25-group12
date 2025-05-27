@@ -29,26 +29,26 @@ export function sortApplications(applications, sortBy = 'date', direction = 'des
     let comparison = 0;
 
     switch (sortBy) {
-      case 'date':
-        const dateA = new Date(a.dateApplied || 0);
-        const dateB = new Date(b.dateApplied || 0);
-        comparison = dateA - dateB;
-        break;
-
-      case 'status':
-        const priorityA = STATUS_PRIORITY[a.status] || 0;
-        const priorityB = STATUS_PRIORITY[b.status] || 0;
-        comparison = priorityA - priorityB;
-        break;
-
-      case 'bookmarked':
-        const bookmarkedA = a.bookmarked ? 1 : 0;
-        const bookmarkedB = b.bookmarked ? 1 : 0;
-        comparison = bookmarkedA - bookmarkedB;
-        break;
-
-      default:
-        return 0;
+    case 'date': {
+      const dateA = new Date(a.dateApplied || 0);
+      const dateB = new Date(b.dateApplied || 0);
+      comparison = dateA - dateB;
+      break;
+    }
+    case 'status': {
+      const priorityA = STATUS_PRIORITY[a.status] || 0;
+      const priorityB = STATUS_PRIORITY[b.status] || 0;
+      comparison = priorityA - priorityB;
+      break;
+    }
+    case 'bookmarked': {
+      const bookmarkedA = a.bookmarked ? 1 : 0;
+      const bookmarkedB = b.bookmarked ? 1 : 0;
+      comparison = bookmarkedA - bookmarkedB;
+      break;
+    }
+    default:
+      return 0;
     }
 
     return direction === 'asc' ? comparison : -comparison;

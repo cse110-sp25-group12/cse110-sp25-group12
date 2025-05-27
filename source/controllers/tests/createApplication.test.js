@@ -88,9 +88,9 @@ describe('createApplication', function () {
   //not included the test for invalid input types (e.g., non-object or null formData)
   //it could be added if need↓
   //test('should throw if formData is not an object', () => {
-    //expect(() => createApplication('string')).toThrow();
-    //expect(() => createApplication(123)).toThrow();
-    //expect(() => createApplication([])).toThrow();
+  //expect(() => createApplication('string')).toThrow();
+  //expect(() => createApplication(123)).toThrow();
+  //expect(() => createApplication([])).toThrow();
   //});
 
 
