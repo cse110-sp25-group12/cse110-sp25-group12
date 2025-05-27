@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-const { deleteApplication } = require('../deleteApplication');
+import { deleteApplication } from '../deleteApplication.js';
 
 describe('deleteApplication', () => {
   beforeEach(() => {
@@ -29,25 +29,24 @@ describe('deleteApplication', () => {
     jest.useFakeTimers();
     deleteApplication('1');
 
-    const wrapper = document.querySelector(`.application-wrapper[data-id="1"]`);
-    expect(wrapper).not.toBeNull(); // still exists initially
+    const wrapper = document.querySelector('.application-wrapper[data-id="1"]');
+    expect(wrapper).not.toBeNull();
 
     jest.advanceTimersByTime(300);
 
-    const removed = document.querySelector(`.application-wrapper[data-id="1"]`);
-    expect(removed).toBeNull(); // should be gone
+    const removed = document.querySelector('.application-wrapper[data-id="1"]');
+    expect(removed).toBeNull();
+
     jest.useRealTimers();
   });
-});
 
-it('removes just the card element if wrapper is not found', () => {
-    // Set up the DOM with only a job-app-card element
+  it('removes just the card element if wrapper is not found', () => {
     document.body.innerHTML = `<job-app-card data-id="1"></job-app-card>`;
     localStorage.setItem('applications', JSON.stringify([{ id: '1', company: 'Test Co' }]));
 
     deleteApplication('1');
 
-    const card = document.querySelector(`job-app-card[data-id="1"]`);
+    const card = document.querySelector('job-app-card[data-id="1"]');
     expect(card).toBeNull();
   });
-
+});
