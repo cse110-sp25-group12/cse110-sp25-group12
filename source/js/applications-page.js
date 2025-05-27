@@ -163,10 +163,6 @@ function loadMockData() {
   // Save the combined list back to localStorage
   localStorage.setItem('applications', JSON.stringify(combinedApplications));
 
-  console.log('✅ Mock data added successfully!');
-  console.log(`📊 Added ${MOCK_APPLICATIONS.length} new applications to existing ${existingApplications.length}`);
-  console.log(`📈 Total applications: ${combinedApplications.length}`);
-
   // Re-render if on applications page
   if (typeof renderCards === 'function') {
     renderCards();
