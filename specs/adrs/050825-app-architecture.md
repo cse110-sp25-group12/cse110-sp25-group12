@@ -1,8 +1,8 @@
 ---
 parent: Decisions
 nav_order: 100
-title: ADR-0001 Adopt Modular 3-Tier Architecture
-status: proposed
+title: ADR-0001: Adopt Modular 3-Tier Architecture
+status: accepted
 date: 2025-05-08
 ---
 
