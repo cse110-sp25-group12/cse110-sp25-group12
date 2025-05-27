@@ -122,8 +122,16 @@ class JobAppCard extends HTMLElement {
 
     const { logo, title, company, date, email, icon, favoriteBtn } = this._elements;
 
-    logo.src = data.logo || 'https://via.placeholder.com/64x64?text=Logo';
+    // Use a data URL placeholder instead of external service
+    const fallbackLogo = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0yMCAyMEg0NFY0NEgyMFYyMFoiIGZpbGw9IiNDQ0MiLz4KPHN2Zz4K';
+    
+    logo.src = data.logo || fallbackLogo;
     logo.alt = `${data.company || ''} Logo`;
+    
+    // Add error handling for logo loading
+    logo.onerror = () => {
+      logo.src = fallbackLogo;
+    };
 
     title.textContent = data.jobPosition || 'Untitled Position';
     company.textContent = data.company || 'Unknown Company';
