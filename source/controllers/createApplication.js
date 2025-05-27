@@ -2,6 +2,9 @@ import { randomUUID } from 'crypto';
 
 /**
  * Generates a UUID, using crypto module in Node.js or browser crypto API
+ * @returns {string} A UUID string.
+ * @description Generates a UUID, using crypto module in Node.js or browser crypto API
+ * I have to use this function because the crypto module is not available in the browser, now it should pass the tests
  */
 function generateUUID() {
   // In Node.js environment (like Jest), use the imported randomUUID

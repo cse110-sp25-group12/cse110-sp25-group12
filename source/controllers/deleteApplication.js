@@ -11,6 +11,7 @@ export function deleteApplication(applicationId){
   // Remove the entire wrapper that contains both the card and delete button
   const wrapper = document.querySelector(`.application-wrapper[data-id="${applicationId}"]`);
   if (wrapper) {
+
     // Add fade-out animation before removing
     wrapper.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
     wrapper.style.opacity = '0';

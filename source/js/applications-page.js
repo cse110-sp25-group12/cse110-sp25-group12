@@ -83,7 +83,7 @@ const MOCK_APPLICATIONS = [
   {
     id: crypto.randomUUID(),
     company: 'Microsoft',
-    jobPosition: 'Product Manager',
+    jobPosition: 'Product Manager（牛马）',
     jobType: 'Full-time',
     salary: 180000,
     location: 'Redmond, WA',
@@ -105,7 +105,7 @@ const MOCK_APPLICATIONS = [
   {
     id: crypto.randomUUID(),
     company: 'Meta',
-    jobPosition: 'Frontend Engineer',
+    jobPosition: 'Frontend Engineer(牛马)',
     jobType: 'Full-time',
     salary: 200000,
     location: 'Menlo Park, CA',
@@ -148,14 +148,24 @@ const MOCK_APPLICATIONS = [
 ];
 
 /**
- * Load mock data into localStorage for testing/demo purposes
+ * Add mock data to existing applications in localStorage for testing/demo purposes
+ * This will append the mock data to any existing applications rather than replacing them
  * Usage: Open browser console and call loadMockData()
  * THIS IS A DEBUGGING TOOL
  */
 function loadMockData() {
-  localStorage.setItem('applications', JSON.stringify(MOCK_APPLICATIONS));
-  console.log('✅ Mock data loaded successfully!');
-  console.log(`📊 Added ${MOCK_APPLICATIONS.length} applications to localStorage`);
+  // Get existing applications from localStorage
+  const existingApplications = JSON.parse(localStorage.getItem('applications')) || [];
+
+  // Combine existing applications with mock data
+  const combinedApplications = [...existingApplications, ...MOCK_APPLICATIONS];
+
+  // Save the combined list back to localStorage
+  localStorage.setItem('applications', JSON.stringify(combinedApplications));
+
+  console.log('✅ Mock data added successfully!');
+  console.log(`📊 Added ${MOCK_APPLICATIONS.length} new applications to existing ${existingApplications.length}`);
+  console.log(`📈 Total applications: ${combinedApplications.length}`);
 
   // Re-render if on applications page
   if (typeof renderCards === 'function') {
@@ -163,8 +173,6 @@ function loadMockData() {
     console.log('🔄 Applications page refreshed');
   }
 }
-
-
 
 /**
  * Clear all applications from localStorage
