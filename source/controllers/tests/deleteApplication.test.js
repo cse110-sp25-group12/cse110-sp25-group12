@@ -41,7 +41,7 @@ describe('deleteApplication', () => {
   });
 
   it('removes just the card element if wrapper is not found', () => {
-    document.body.innerHTML = `<job-app-card data-id="1"></job-app-card>`;
+    document.body.innerHTML = '<job-app-card data-id="1"></job-app-card>';
     localStorage.setItem('applications', JSON.stringify([{ id: '1', company: 'Test Co' }]));
 
     deleteApplication('1');
