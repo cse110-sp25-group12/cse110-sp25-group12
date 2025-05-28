@@ -12,6 +12,7 @@ export default defineConfig([
       globals: {
         ...globals.browser,
         ...globals.jest,
+        global: 'writable',
       },
       sourceType: 'module',
     },
