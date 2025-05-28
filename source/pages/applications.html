@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light" data-sidebar-collapsed="false"> 
+<html lang="en" data-theme="light"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,80 +13,22 @@
     <script src="../components/job-card.js" type="module"></script>
 </head>
 <body class="app-layout"> 
-    <aside class="sidebar">
-        <header class="sidebar-header">
-            <a href="dashboard.html" class="sidebar-logo">
-                <span class="material-symbols-outlined">work_history</span>
-                <span class="logo-text">JobTrack</span>
-            </a>
-        </header>
-
-        <a href="add_application.html" class="add-application-button">
-            <span class="material-symbols-outlined">add_circle</span>
-            <span class="button-text">Add Application</span>
-        </a>
-
-        <nav>
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="dashboard.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">dashboard</span>
-                        <span class="link-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="applications.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">view_list</span>
-                        <span class="link-text">Applications</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="interviews.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">calendar_month</span>
-                        <span class="link-text">Interviews</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="tasks.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">task_alt</span>
-                        <span class="link-text">Tasks</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="settings.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">settings</span>
-                        <span class="link-text">Settings</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <footer class="sidebar-footer">
-            <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
-                <span class="material-symbols-outlined" id="themeToggleIcon">light_mode</span>
-                <span class="theme-label" id="themeToggleLabel">Light Mode</span>
-            </button>
-            <a href="#" class="user-profile"> 
-                 <span class="material-symbols-outlined">account_circle</span>
-                 <span class="profile-text">User Name</span>
-            </a>
-        </footer>
-    </aside>
+    <app-sidebar class="sidebar"></app-sidebar>
 
     <main class="main-content-page"> 
         <header class="main-header">
-            <button class="sidebar-toggle-button" id="sidebarToggle" aria-label="Toggle sidebar">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
             <h1>All Applications</h1>
         </header>
         
         <sorting-controls id="appSortingControls" class="applications-controls"></sorting-controls>
         
         <div id="applicationCardsContainer" class="content-grid">
-
-            
         </div>
     </main>
+
+    <script src="template.js" defer></script>    
+    <script src="../components/sidebar/sidebar.js" defer></script> 
+    <script src="../components/material.js" defer></script> 
     <script type="module" src="../components/job-card-component.js"></script> 
     <script type="module" src="../controllers/sorting-controls.js"></script> 
     <script src="../styles/template.js" defer></script>
