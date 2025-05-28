@@ -7,7 +7,7 @@ class AppSidebar extends HTMLElement {
 
   async connectedCallback() {
     // Adjust the fetch path to be relative to the HTML page in the 'pages' directory
-    const response = await fetch('../components/sidebar/sidebar.html'); 
+    const response = await fetch('../components/sidebar/sidebar.html');
     if (!response.ok) {
       console.error(`Failed to load sidebar.html: ${response.statusText} (path: ../components/sidebar/sidebar.html)`);
       this.shadowRoot.innerHTML = '<p>Error loading sidebar content.</p>';
@@ -56,8 +56,8 @@ class AppSidebar extends HTMLElement {
   }
 
   _updateThemeUI(theme) {
-    if (this._themeToggleIcon) { 
-        this._themeToggleIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
+    if (this._themeToggleIcon) {
+      this._themeToggleIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
     }
   }
 
