@@ -1,0 +1,40 @@
+import { randomUUID } from 'crypto';
+
+/**
+ * Generates a UUID, using crypto module in Node.js or browser crypto API
+ */
+function generateUUID() {
+  // In Node.js environment (like Jest), use the imported randomUUID
+  if (typeof randomUUID === 'function') {
+    return randomUUID();
+  }
+  // In browser environment, use the global crypto API
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback for older environments
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+/**
+ * Creates a new job application card and stores it in localStorage.
+ * @param {Object} formData - The input data from the form.
+ * @returns {Object} The newly created card object.
+ */
+export function createApplication(formData) {
+  const newCard = {
+    id: generateUUID(),
+    ...formData,
+    logo: formData.logo
+  };
+
+  const cards = JSON.parse(localStorage.getItem('applications')) || [];
+  cards.push(newCard);
+  localStorage.setItem('applications', JSON.stringify(cards));
+
+  return newCard;
+}
