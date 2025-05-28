@@ -17,7 +17,8 @@
       "Phone Interview": "2025-04-05",
       "Technical Interview": "2025-04-12"
     },
-    "status": "Applied"
+    "status": "Applied",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
   },
   {
     "id": 2,
@@ -36,7 +37,8 @@
     "importantDates": {
       "Challenge Submission": "2025-04-24"
     },
-    "status": "Interviewing"
+    "status": "Interviewing",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
   },
   {
     "id": 3,
@@ -55,6 +57,7 @@
     "importantDates": {
       "Offer Deadline": "2025-05-20"
     },
-    "status": "Offered"
+    "status": "Offered",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
   }
 ]
