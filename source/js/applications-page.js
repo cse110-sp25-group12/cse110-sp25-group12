@@ -1,20 +1,26 @@
 import '../components/job-card.js';
+import { deleteApplication } from '../controllers/deleteApplication.js';
 
+// Load applications from JSON file and render
+// Only run once if localStorage is empty (first visit)
 document.addEventListener('DOMContentLoaded', async () => {
-  const jobs = await fetchApplications();
-  localStorage.setItem('applications', JSON.stringify(jobs));
+  if (!localStorage.getItem('applications')) {
+    const jobs = await fetchApplications();
+    localStorage.setItem('applications', JSON.stringify(jobs));
+  }
+  const jobs = JSON.parse(localStorage.getItem('applications'));
   renderCards(jobs);
   setupModal();
 });
 
 async function fetchApplications() {
   try {
-    const response = await fetch('../data/applications.json'); // adjust path if needed
+    const response = await fetch('../data/applications.json');
     if (!response.ok) throw new Error('Failed to load applications.json');
     return await response.json();
   } catch (error) {
     console.error('Error loading applications:', error);
-    return []; // fallback to empty list
+    return [];
   }
 }
 
@@ -22,11 +28,46 @@ function renderCards(jobs) {
   const container = document.getElementById('applicationCardsContainer');
   container.innerHTML = '';
 
+  const header = document.querySelector('.main-header h1');
+  if (header) {
+    header.textContent = `All Applications (${jobs.length})`;
+  }
+
+  if (jobs.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <span class="material-symbols-outlined">work_off</span>
+        <h3>No applications yet</h3>
+        <p>Start tracking your job applications by adding your first one!</p>
+        <a href="add_application.html" class="add-btn">Add Your First Application</a>
+      </div>
+    `;
+    return;
+  }
+
   for (const job of jobs) {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('application-wrapper');
+    wrapper.dataset.id = job.id;
+
     const cardElem = document.createElement('job-app-card');
     cardElem.data = job;
+    cardElem.dataset.id = job.id;
     cardElem.addEventListener('click', () => openModal(job));
-    container.appendChild(cardElem);
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.innerHTML = `
+      <span class="material-symbols-outlined">delete</span>
+      <span class="delete-text">Delete</span>
+    `;
+    deleteBtn.dataset.id = job.id;
+    deleteBtn.title = 'Delete this application';
+
+    wrapper.appendChild(cardElem);
+    wrapper.appendChild(deleteBtn);
+
+    container.appendChild(wrapper);
   }
 }
 
@@ -76,3 +117,29 @@ function openModal(data) {
     }
   }
 }
+
+document.addEventListener('click', (e) => {
+  const deleteBtn = e.target.closest('.delete-btn');
+  if (deleteBtn) {
+    const appId = deleteBtn.dataset.id;
+    if (confirm('Are you sure you want to delete this application?')) {
+      deleteApplication(appId);
+      setTimeout(() => {
+        const remainingCards = JSON.parse(localStorage.getItem('applications')) || [];
+        const header = document.querySelector('.main-header h1');
+        if (header) header.textContent = `All Applications (${remainingCards.length})`;
+        if (remainingCards.length === 0) {
+          const container = document.getElementById('applicationCardsContainer');
+          container.innerHTML = `
+            <div class="empty-state">
+              <span class="material-symbols-outlined">work_off</span>
+              <h3>No applications yet</h3>
+              <p>Start tracking your job applications by adding your first one!</p>
+              <a href="add_application.html" class="add-btn">Add Your First Application</a>
+            </div>
+          `;
+        }
+      }, 300);
+    }
+  }
+});
