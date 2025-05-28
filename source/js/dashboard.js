@@ -1,3 +1,5 @@
+import Chart from 'chart.js/auto';
+
 document.addEventListener('DOMContentLoaded', () => {
   const applications = JSON.parse(localStorage.getItem('applications')) || [];
 
