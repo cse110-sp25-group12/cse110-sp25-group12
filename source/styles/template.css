@@ -17,6 +17,7 @@
 .main-content-page {
     flex-grow: 1;
     height: 100vh;
+    padding: 2em;
     overflow-y: auto; /* Allow scrolling for main content */
     display: flex;
     flex-direction: column;

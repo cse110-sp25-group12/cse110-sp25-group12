@@ -305,7 +305,7 @@ html[data-sidebar-collapsed="true"] .add-application-button {
    -------------------------------------------------------------------------- */
 .main-content-page { 
     flex-grow: 1; 
-    padding: 24px; 
+    padding: 2em; 
     height: 100vh; /* Ensure it can fill the main area */
     overflow-y: auto; 
     transition: background-color 0.3s ease, color 0.3s ease; 
