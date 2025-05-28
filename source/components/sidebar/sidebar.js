@@ -6,45 +6,41 @@ class AppSidebar extends HTMLElement {
   }
 
   async connectedCallback() {
-    const response = await fetch('components/sidebar/sidebar.html'); // Path relative to the main HTML document
+    // Adjust the fetch path to be relative to the HTML page in the 'pages' directory
+    const response = await fetch('../components/sidebar/sidebar.html'); 
     if (!response.ok) {
-      console.error(`Failed to load sidebar.html: ${response.statusText}`);
-      this.shadowRoot.innerHTML = '<p>Error loading sidebar.</p>';
+      console.error(`Failed to load sidebar.html: ${response.statusText} (path: ../components/sidebar/sidebar.html)`);
+      this.shadowRoot.innerHTML = '<p>Error loading sidebar content.</p>';
       return;
     }
     const html = await response.text();
 
-    // Link stylesheets
     const styles = `
-            <link rel="stylesheet" href="styles/colors.css"> 
-            <link rel="stylesheet" href="components/sidebar/sidebar.css"> 
+            <link rel="stylesheet" href="../styles/colors.css"> 
+            <link rel="stylesheet" href="../components/sidebar/sidebar.css"> 
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         `;
+
     this.shadowRoot.innerHTML = `${styles}<aside class="sidebar-wrapper">${html}</aside>`;
 
     this._themeToggleButton = this.shadowRoot.querySelector('.theme-toggle-button');
     this._themeToggleIcon = this._themeToggleButton?.querySelector('.material-symbols-outlined');
-    this._themeToggleLabel = this._themeToggleButton?.querySelector('.theme-label');
+    // _themeToggleLabel is intentionally not used for display in collapsed mode
     this._navLinks = this.shadowRoot.querySelectorAll('.nav-link');
 
     this._addEventListeners();
     this._updateThemeUI(document.documentElement.getAttribute('data-theme') || 'light');
     this._setActiveNavLink();
-    this._updateCollapsedState(document.documentElement.getAttribute('data-sidebar-collapsed') === 'true');
+    // Expansion logic is removed, so no _updateCollapsedState call
 
-    this._observer = new MutationObserver(mutations => {
+    this._themeObserver = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
-        if (mutation.type === 'attributes') {
-          if (mutation.attributeName === 'data-theme') {
-            this._updateThemeUI(mutation.target.getAttribute('data-theme'));
-          }
-          if (mutation.attributeName === 'data-sidebar-collapsed') {
-            this._updateCollapsedState(mutation.target.getAttribute('data-sidebar-collapsed') === 'true');
-          }
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+          this._updateThemeUI(mutation.target.getAttribute('data-theme'));
         }
       });
     });
-    this._observer.observe(document.documentElement, { attributes: true });
+    this._themeObserver.observe(document.documentElement, { attributes: true });
   }
 
   disconnectedCallback() {
@@ -60,9 +56,8 @@ class AppSidebar extends HTMLElement {
   }
 
   _updateThemeUI(theme) {
-    if (this._themeToggleIcon && this._themeToggleLabel) {
-      this._themeToggleIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
-      this._themeToggleLabel.textContent = theme === 'dark' ? 'Dark Mode' : 'Light Mode';
+    if (this._themeToggleIcon) { 
+        this._themeToggleIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
     }
   }
 
@@ -82,12 +77,6 @@ class AppSidebar extends HTMLElement {
     } else if (addAppButton) {
       addAppButton.classList.remove('active');
     }
-  }
-
-  _updateCollapsedState(isCollapsed) {
-    if (isCollapsed) this.setAttribute('collapsed', '');
-    else this.removeAttribute('collapsed');
-    // The :host([collapsed]) CSS rules in app-sidebar.css will handle the visual changes.
   }
 }
 customElements.define('app-sidebar', AppSidebar);
