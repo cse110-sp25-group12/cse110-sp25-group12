@@ -55,17 +55,8 @@ function renderCards(jobs) {
     cardElem.dataset.id = job.id;
     cardElem.addEventListener('click', () => openModal(job));
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-btn');
-    deleteBtn.innerHTML = `
-      <span class="material-symbols-outlined">delete</span>
-      <span class="delete-text">Delete</span>
-    `;
-    deleteBtn.dataset.id = job.id;
-    deleteBtn.title = 'Delete this application';
 
     wrapper.appendChild(cardElem);
-    wrapper.appendChild(deleteBtn);
 
     container.appendChild(wrapper);
   }
