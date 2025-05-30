@@ -19,6 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Prepare Site for Pages
+        run: |
+          #staging folder
+          mkdir dist
+          #bring all source/pages/ html files into dist/
+          rsync -av source/pages/ dist/
+          #bring all submodules of source except pages into dist/
+          rsync -av --exclude='pages' source/ dist/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
