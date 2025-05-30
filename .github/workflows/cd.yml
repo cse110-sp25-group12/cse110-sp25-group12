@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - cicd/refactor
   workflow_dispatch:
 
 permissions:
@@ -31,7 +32,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: ./source
+
 
   deploy:
     needs: build
