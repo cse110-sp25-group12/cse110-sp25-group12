@@ -1,12 +1,10 @@
-import { randomUUID } from 'crypto';
-
 /**
  * Generates a UUID, using crypto module in Node.js or browser crypto API
  */
 function generateUUID() {
   // In Node.js environment (like Jest), use the imported randomUUID
   if (typeof randomUUID === 'function') {
-    return randomUUID();
+    return crypto.randomUUID();
   }
   // In browser environment, use the global crypto API
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {

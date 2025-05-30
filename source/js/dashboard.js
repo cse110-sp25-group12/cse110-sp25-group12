@@ -1,4 +1,4 @@
-import Chart from 'chart.js/auto';
+import 'https://cdn.jsdelivr.net/npm/chart.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const applications = JSON.parse(localStorage.getItem('applications')) || [];
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // === Applications Over Time  ===
-  new Chart(applicationsChartEl.getContext('2d'), {
+  new Chart(applicationsChartEl.getContext('2d'), { /* eslint-disable-line */
     type: 'line',
     data: {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  new Chart(statusChartEl.getContext('2d'), {
+  new Chart(statusChartEl.getContext('2d'), { /* eslint-disable-line */
     type: 'doughnut',
     data: {
       labels: statusLabels,
