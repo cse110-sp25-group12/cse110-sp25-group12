@@ -58,6 +58,74 @@ export function sortApplications(applications, sortBy = 'date', direction = 'des
 }
 
 /**
+ * Sort applications by date applied
+ * @param {Array} applications - Array of application objects
+ * @param {string} direction - Sort direction: 'asc' or 'desc'
+ * @returns {Array} Sorted applications array
+ */
+export function sortByDate(applications, direction = 'desc') {
+  if (!Array.isArray(applications)) return [];
+
+  return [...applications].sort((a, b) => {
+    const dateA = new Date(a.dateApplied || 0);
+    const dateB = new Date(b.dateApplied || 0);
+    const comparison = dateA - dateB;
+    return direction === 'asc' ? comparison : -comparison;
+  });
+}
+
+/**
+ * Sort applications by company name
+ * @param {Array} applications - Array of application objects
+ * @param {string} direction - Sort direction: 'asc' or 'desc'
+ * @returns {Array} Sorted applications array
+ */
+export function sortByCompany(applications, direction = 'asc') {
+  if (!Array.isArray(applications)) return [];
+
+  return [...applications].sort((a, b) => {
+    const companyA = a.company?.toLowerCase() || '';
+    const companyB = b.company?.toLowerCase() || '';
+    const comparison = companyA.localeCompare(companyB);
+    return direction === 'asc' ? comparison : -comparison;
+  });
+}
+
+/**
+ * Sort applications by status priority
+ * @param {Array} applications - Array of application objects
+ * @param {string} direction - Sort direction: 'asc' or 'desc'
+ * @returns {Array} Sorted applications array
+ */
+export function sortByStatus(applications, direction = 'desc') {
+  if (!Array.isArray(applications)) return [];
+
+  return [...applications].sort((a, b) => {
+    const priorityA = STATUS_PRIORITY[a.status] || 0;
+    const priorityB = STATUS_PRIORITY[b.status] || 0;
+    const comparison = priorityA - priorityB;
+    return direction === 'asc' ? comparison : -comparison;
+  });
+}
+
+/**
+ * Sort applications by position name
+ * @param {Array} applications - Array of application objects
+ * @param {string} direction - Sort direction: 'asc' or 'desc'
+ * @returns {Array} Sorted applications array
+ */
+export function sortByPosition(applications, direction = 'asc') {
+  if (!Array.isArray(applications)) return [];
+
+  return [...applications].sort((a, b) => {
+    const positionA = a.position?.toLowerCase() || '';
+    const positionB = b.position?.toLowerCase() || '';
+    const comparison = positionA.localeCompare(positionB);
+    return direction === 'asc' ? comparison : -comparison;
+  });
+}
+
+/**
  * Helper function to get status priority for external use
  * @param {string} status - Application status
  * @returns {number} Priority value
@@ -65,3 +133,4 @@ export function sortApplications(applications, sortBy = 'date', direction = 'des
 export function getStatusPriority(status) {
   return STATUS_PRIORITY[status] || 0;
 }
+
