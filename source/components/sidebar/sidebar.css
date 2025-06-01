@@ -1,8 +1,8 @@
-/* Styles for the app-sidebar Web Component - Always Collapsed */
+/* Styles for the app-sidebar Web Component - Always Expanded */
 
 :host {
-    --_app-sidebar-collapsed-width: 76px; /* Fixed width for the rail */
-    --_app-sidebar-current-width: var(--_app-sidebar-collapsed-width);
+    --_app-sidebar-expanded-width: 280px; /* Fixed expanded width */
+    --_app-sidebar-current-width: var(--_app-sidebar-expanded-width);
 
     display: block;
     width: var(--_app-sidebar-current-width);
@@ -11,30 +11,46 @@
     box-sizing: border-box;
 }
 
+/* :host([collapsed]) { /* REMOVE this block */
+    /* --_app-sidebar-current-width: var(--_app-sidebar-collapsed-width); */
+/* } */
+
 .sidebar-wrapper {
     background-color: var(--md-sys-color-surface-container-low);
     border-right: 1px solid var(--md-sys-color-outline-variant);
-    padding: 16px 8px; /* Padding for collapsed state */
+    padding: 16px; /* Default padding for expanded state */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items for collapsed state */
+    /* align-items: center; /* Not needed for expanded state */
     height: 100%;
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Removed padding transition */
 }
+
+/* :host([collapsed]) .sidebar-wrapper { /* REMOVE this block */
+    /* padding: 16px 8px; */
+    /* align-items: center; */
+/* } */
 
 /* Header and Logo */
 .sidebar-header {
     padding-bottom: 16px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center logo icon */
-    min-height: var(--header-height); /* Assuming --header-height is defined elsewhere or use fixed value */
+    /* justify-content: center; /* Not needed for expanded */
+    min-height: var(--header-height); 
     overflow: hidden;
+    /* transition: padding 0.3s ease-in-out; /* No longer needed */
 }
+
+/* :host([collapsed]) .sidebar-header { /* REMOVE this block */
+    /* justify-content: center; */
+    /* padding-left: 0; */
+    /* padding-right: 0; */
+/* } */
 
 .sidebar-logo {
     font-size: 1.375rem;
@@ -45,58 +61,94 @@
     text-decoration: none;
     white-space: nowrap;
     padding: 8px;
+    /* transition: padding 0.3s ease-in-out; /* No longer needed */
 }
 
 .sidebar-logo .material-symbols-outlined {
-    margin-right: 0; /* No margin as text is hidden */
+    margin-right: 12px; /* Keep margin for expanded state */
     color: var(--md-sys-color-primary);
     font-size: 28px;
     flex-shrink: 0;
+    /* transition: margin-right 0.3s ease-in-out; /* No longer needed */
 }
 
+/* :host([collapsed]) .sidebar-logo .material-symbols-outlined { /* REMOVE this block */
+    /* margin-right: 0; */
+/* } */
+
 .sidebar-logo .logo-text {
-    opacity: 0;
-    width: 0;
-    overflow: hidden;
-    pointer-events: none;
+    opacity: 1; /* Always visible */
+    width: auto; /* Always visible */
+    /* transition: opacity 0.2s ease-in-out 0.1s, width 0.2s ease-in-out 0.1s; /* No longer needed */
 }
+
+/* :host([collapsed]) .sidebar-logo .logo-text { /* REMOVE this block */
+    /* opacity: 0; */
+    /* width: 0; */
+    /* overflow: hidden; */
+    /* pointer-events: none; */
+/* } */
 
 /* Add Application Button */
 .add-application-button {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 48px; /* Fixed size for icon button */
-    height: 48px; /* Fixed size for icon button */
+    padding: 12px 16px; /* Expanded padding */
+    margin-bottom: 4px;
+    border-radius: 28px; /* Expanded border-radius */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; /* Not needed for expanded */
     margin-bottom: 16px;
     background-color: var(--md-sys-color-primary-container);
     color: var(--md-sys-color-on-primary-container);
     border: none;
-    border-radius: 50%; /* Circular */
+    border-radius: 28px; /* Expanded border-radius */
     cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
     overflow: hidden;
+    white-space: nowrap;
     text-decoration: none;
-    padding: 0; /* Remove padding to center icon */
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease; /* Removed size/shape transitions */
 }
 
 .add-application-button:hover {
     background-color: var(--md-sys-color-primary);
     color: var(--md-sys-color-on-primary);
 }
-
 .add-application-button .material-symbols-outlined {
-    margin-right: 0; /* No margin as text is hidden */
+    margin-right: 12px; /* Keep margin for expanded state */
     font-size: 20px;
     flex-shrink: 0;
+    /* transition: margin-right 0.3s ease-in-out; /* No longer needed */
 }
 
 .add-application-button .button-text {
-    opacity: 0;
-    width: 0;
-    overflow: hidden;
-    pointer-events: none;
+    opacity: 1; /* Always visible */
+    width: auto; /* Always visible */
+    /* transition: opacity 0.2s ease-in-out 0.1s, width 0.2s ease-in-out 0.1s; /* No longer needed */
 }
+
+/* :host([collapsed]) .add-application-button { /* REMOVE this block */
+    /* width: 48px; */
+    /* height: 48px; */
+    /* border-radius: 50%; */
+    /* padding: 0; */
+/* } */
+
+/* :host([collapsed]) .add-application-button .material-symbols-outlined { /* REMOVE this block */
+    /* margin-right: 0; */
+/* } */
+
+/* :host([collapsed]) .add-application-button .button-text { /* REMOVE this block */
+    /* opacity: 0; */
+    /* width: 0; */
+    /* overflow: hidden; */
+    /* pointer-events: none; */
+/* } */
 
 /* Navigation List and Links */
 .nav-list {
@@ -114,29 +166,29 @@
 .nav-link {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center icon */
-    width: 48px;   /* Fixed width for icon button */
-    height: 48px;  /* Fixed height for icon button */
+    padding: 12px 16px; /* Expanded padding */
     margin-bottom: 4px;
-    border-radius: 50%; /* Circular */
-    padding: 0;    /* Remove padding to center icon */
+    border-radius: 28px; /* Expanded border-radius */
     text-decoration: none;
     color: var(--md-sys-color-on-surface-variant);
+    font-weight: 500;
+    font-size: 0.875rem;
+    white-space: nowrap;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease; /* Removed size/shape transitions */
 }
 
 .nav-link .material-symbols-outlined {
-    margin-right: 0; /* No margin as text is hidden */
+    margin-right: 20px; /* Keep margin for expanded state */
     font-size: 20px;
     flex-shrink: 0;
+    /* transition: margin-right 0.3s ease-in-out; /* No longer needed */
 }
 
 .nav-link .link-text {
-    opacity: 0;
-    width: 0;
-    overflow: hidden;
-    pointer-events: none;
+    opacity: 1; /* Always visible */
+    width: auto; /* Always visible */
+    /* transition: opacity 0.2s ease-in-out 0.1s, width 0.2s ease-in-out 0.1s; /* No longer needed */
 }
 
 .nav-link:hover {
@@ -153,32 +205,58 @@
     color: var(--md-sys-color-on-secondary-container);
 }
 
+/* :host([collapsed]) .nav-link { /* REMOVE this block */
+    /* width: 48px;   */
+    /* height: 48px;  */
+    /* border-radius: 50%; */
+    /* padding: 0;    */
+    /* justify-content: center; */
+/* } */
+
+/* :host([collapsed]) .nav-link .material-symbols-outlined { /* REMOVE this block */
+    /* margin-right: 0; */
+/* } */
+
+/* :host([collapsed]) .nav-link .link-text { /* REMOVE this block */
+    /* opacity: 0; */
+    /* width: 0; */
+    /* overflow: hidden; */
+    /* pointer-events: none; */
+/* } */
+
 /* Sidebar Footer and Theme Toggle */
 .sidebar-footer {
     padding-top: 8px;
     margin-top: auto;
     border-top: 1px solid var(--md-sys-color-outline-variant);
     overflow: hidden;
-    width: 100%; /* Ensure footer items can be centered if wrapper is */
-    display: flex; /* Added to help center its child */
-    justify-content: center; /* Center the theme toggle button */
+    /* transition: padding 0.3s ease-in-out; /* No longer needed */
 }
+
+/* :host([collapsed]) .sidebar-footer { /* REMOVE this block */
+    /* padding-left: 0; */
+    /* padding-right: 0; */
+/* } */
 
 .theme-toggle-button {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center icon */
-    width: 48px; /* Fixed size for icon button */
-    height: 48px; /* Fixed size for icon button */
+    justify-content: flex-start; /* Text to the left of icon in expanded */
+    width: 100%;
     background-color: transparent;
     border: none;
     color: var(--md-sys-color-on-surface-variant);
-    padding: 0; /* Remove padding to center icon */
+    padding: 12px 16px; /* Expanded padding */
     margin-bottom: 8px;
-    border-radius: 50%; /* Circular */
+    border-radius: 28px; /* Expanded border-radius */
     cursor: pointer;
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
     text-decoration: none;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease; /* Removed size/shape transitions */
 }
 
 .theme-toggle-button:hover {
@@ -186,14 +264,33 @@
 }
 
 .theme-toggle-button .material-symbols-outlined {
-    margin-right: 0; /* No margin as text is hidden */
+    margin-right: 20px; /* Keep margin for expanded state */
     font-size: 20px;
     flex-shrink: 0;
+    /* transition: margin-right 0.3s ease-in-out; /* No longer needed */
 }
 
 .theme-toggle-button .theme-label {
-    opacity: 0;
-    width: 0;
-    overflow: hidden;
-    pointer-events: none;
+    opacity: 1; /* Always visible */
+    width: auto; /* Always visible */
+    /* transition: opacity 0.2s ease-in-out 0.1s, width 0.2s ease-in-out 0.1s; /* No longer needed */
 }
+
+/* :host([collapsed]) .theme-toggle-button { /* REMOVE this block */
+    /* width: 48px; */
+    /* height: 48px; */
+    /* border-radius: 50%; */
+    /* padding: 0; */
+    /* justify-content: center; */
+/* } */
+
+/* :host([collapsed]) .theme-toggle-button .material-symbols-outlined { /* REMOVE this block */
+    /* margin-right: 0; */
+/* } */
+
+/* :host([collapsed]) .theme-toggle-button .theme-label { /* REMOVE this block */
+    /* opacity: 0; */
+    /* width: 0; */
+    /* overflow: hidden; */
+    /* pointer-events: none; */
+/* } */

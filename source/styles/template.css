@@ -1,245 +1,27 @@
 /* template.css - Common Layout and Template Styles */
 
 /* ==========================================================================
-   Base Layout & Body
+   Base Layout
    ========================================================================== */
-html, body.app-layout {
-    height: 100%; 
-}
-body.app-layout { 
-    display: flex; 
-    overflow: hidden; /* Prevents scrollbars on body if children manage their own scroll */
-    font-family: 'Roboto', sans-serif; 
-    background-color: var(--md-sys-color-background); 
-    color: var(--md-sys-color-on-background); 
-    transition: background-color 0.3s ease, color 0.3s ease; 
-    margin: 0;
+.app-layout {
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* Prevent body scroll when main content scrolls */
+    background-color: var(--md-sys-color-surface); /* Base background for the app */
 }
 
-/* ==========================================================================
-   Sidebar Styles (Common Template Element)
-   ========================================================================== */
-.sidebar { 
-    width: var(--sidebar-width); 
-    background-color: var(--md-sys-color-surface-container-low); 
-    border-right: 1px solid var(--md-sys-color-outline-variant); 
-    padding: 16px; 
-    display: flex; 
-    flex-direction: column; 
-    height: 100vh; /* Sidebar takes full viewport height */
-    overflow-x: hidden; 
-    overflow-y: auto;   
-    transition: width 0.3s ease-in-out, background-color 0.3s ease, border-color 0.3s ease, padding 0.3s ease-in-out;
-    flex-shrink: 0; 
-}
+/* Sidebar placeholder styling (actual component is app-sidebar) */
+/* The .sidebar class is on the <app-sidebar> host element */
+/* Its width is controlled by --sidebar-width from colors.css */
 
-.sidebar-header { 
-    padding-bottom: 16px; 
-    display: flex; 
-    align-items: center; 
-    min-height: var(--header-height); 
-    overflow: hidden; 
-}
-.sidebar-logo { 
-    font-size: 1.375rem; 
-    font-weight: 500; 
-    color: var(--md-sys-color-on-surface-variant); 
-    display: flex; 
-    align-items: center; 
-    text-decoration: none; 
-    white-space: nowrap; 
-}
-.sidebar-logo .material-symbols-outlined { 
-    margin-right: 12px; 
-    color: var(--md-sys-color-primary); 
-    font-size: 28px; 
-    flex-shrink: 0; 
-}
-.sidebar-logo .logo-text { 
-    opacity: 1; 
-    transition: opacity 0.2s ease-in-out; 
-}
-
-.add-application-button { /* Common button in sidebar */
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    width: 100%; 
-    padding: 12px 0; 
-    margin-bottom: 16px; 
-    background-color: var(--md-sys-color-primary-container); 
-    color: var(--md-sys-color-on-primary-container); 
-    border: none; 
-    border-radius: 28px; 
-    cursor: pointer; 
-    font-family: 'Roboto', sans-serif; 
-    font-size: 0.875rem; 
-    font-weight: 500; 
-    transition: background-color 0.2s ease, color 0.2s ease, width 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, border-radius 0.3s ease-in-out; 
-    overflow: hidden; 
-    white-space: nowrap; 
-    text-decoration: none; 
-}
-.add-application-button:hover { 
-    background-color: var(--md-sys-color-primary); 
-    color: var(--md-sys-color-on-primary); 
-}
-.add-application-button .material-symbols-outlined { 
-    margin-right: 12px; 
-    font-size: 20px; 
-    flex-shrink: 0; 
-}
-.add-application-button .button-text { 
-    opacity: 1; 
-    transition: opacity 0.2s ease-in-out; 
-}
-
-.nav-list { 
-    list-style: none; 
-    padding: 0; 
-    margin: 0; 
-    flex-grow: 1; 
-}
-.nav-item { 
-    margin: 0; 
-    overflow: hidden; 
-} 
-.nav-link { 
-    display: flex; 
-    align-items: center; 
-    padding: 12px 16px; 
-    margin-bottom: 4px; 
-    border-radius: 28px; 
-    text-decoration: none; 
-    color: var(--md-sys-color-on-surface-variant); 
-    font-weight: 500; 
-    font-size: 0.875rem; 
-    transition: background-color 0.2s ease, color 0.2s ease, width 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, border-radius 0.3s ease-in-out; 
-    white-space: nowrap; 
-    cursor: pointer; 
-}
-.nav-link .material-symbols-outlined { 
-    margin-right: 20px; 
-    font-size: 20px; 
-    flex-shrink: 0; 
-}
-.nav-link .link-text { 
-    opacity: 1; 
-    transition: opacity 0.2s ease-in-out; 
-}
-.nav-link:hover { 
-    background-color: var(--md-sys-color-surface-container-high); 
-}
-.nav-link.active { 
-    background-color: var(--md-sys-color-secondary-container); 
-    color: var(--md-sys-color-on-secondary-container); 
-}
-.nav-link.active .material-symbols-outlined { 
-    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20; 
-    color: var(--md-sys-color-on-secondary-container); 
-}
-
-.sidebar-footer { 
-    padding-top: 8px; 
-    margin-top: auto; 
-    border-top: 1px solid var(--md-sys-color-outline-variant); 
-    overflow: hidden; 
-}
-.theme-toggle-button, 
-.user-profile { 
-    display: flex; 
-    align-items: center; 
-    justify-content: flex-start; 
-    width: 100%; 
-    background-color: transparent; 
-    border: none; 
-    color: var(--md-sys-color-on-surface-variant); 
-    padding: 12px 16px; 
-    border-radius: 28px; 
-    cursor: pointer; 
-    text-align: left; 
-    font-family: 'Roboto', sans-serif; 
-    font-size: 0.875rem; 
-    font-weight: 500; 
-    transition: background-color 0.2s ease, color 0.2s ease, width 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, border-radius 0.3s ease-in-out; 
-    white-space: nowrap; 
-    text-decoration: none; 
-}
-.theme-toggle-button { 
-    margin-bottom: 8px; 
-}
-.theme-toggle-button:hover, 
-.user-profile:hover { 
-    background-color: var(--md-sys-color-surface-container-high); 
-}
-.theme-toggle-button .material-symbols-outlined, 
-.user-profile .material-symbols-outlined { 
-    margin-right: 20px; 
-    font-size: 20px; 
-    flex-shrink: 0; 
-}
-.theme-toggle-button .theme-label, 
-.user-profile .profile-text { 
-    opacity: 1; 
-    transition: opacity 0.2s ease-in-out; 
-}
-
-/* Collapsed Sidebar Styles (Navigation Rail) */
-html[data-sidebar-collapsed="true"] .sidebar { 
-    --sidebar-width: var(--sidebar-collapsed-width); 
-    padding: 16px 0; 
-    align-items: center; 
-}
-html[data-sidebar-collapsed="true"] .sidebar-logo .logo-text,
-html[data-sidebar-collapsed="true"] .add-application-button .button-text,
-html[data-sidebar-collapsed="true"] .nav-link .link-text,
-html[data-sidebar-collapsed="true"] .theme-toggle-button .theme-label,
-html[data-sidebar-collapsed="true"] .user-profile .profile-text { 
-    opacity: 0; 
-    width: 0; 
-    pointer-events: none; 
-}
-html[data-sidebar-collapsed="true"] .sidebar-header,
-html[data-sidebar-collapsed="true"] .add-application-button,
-html[data-sidebar-collapsed="true"] .nav-link,
-html[data-sidebar-collapsed="true"] .theme-toggle-button,
-html[data-sidebar-collapsed="true"] .user-profile {
-    justify-content: center; 
-    padding-left: 0;         
-    padding-right: 0;        
-}
-html[data-sidebar-collapsed="true"] .sidebar-logo .material-symbols-outlined,
-html[data-sidebar-collapsed="true"] .add-application-button .material-symbols-outlined,
-html[data-sidebar-collapsed="true"] .nav-link .material-symbols-outlined,
-html[data-sidebar-collapsed="true"] .theme-toggle-button .material-symbols-outlined,
-html[data-sidebar-collapsed="true"] .user-profile .material-symbols-outlined {
-    margin-right: 0; 
-}
-html[data-sidebar-collapsed="true"] .add-application-button,
-html[data-sidebar-collapsed="true"] .nav-link,
-html[data-sidebar-collapsed="true"] .theme-toggle-button,
-html[data-sidebar-collapsed="true"] .user-profile {
-    width: 48px;  
-    height: 48px; 
-    border-radius: 50%; 
-    padding: 0; 
-}
-html[data-sidebar-collapsed="true"] .add-application-button { 
-     margin-left: auto; 
-     margin-right: auto;
-}
-
-/* ==========================================================================
-   Main Content Area (Common Template Structure)
-   ========================================================================== */
-.main-content-page { 
-    flex-grow: 1; /* Allows this to take up remaining space */
-    padding: 24px; 
-    /* Removed height: 100vh; Let flexbox determine height */
-    overflow-y: auto; /* This will allow scrolling if content exceeds available height */
-    display: flex; /* Added to manage internal layout better, e.g., sticky footer if needed */
-    flex-direction: column; /* Stack header and form/content vertically */
-    transition: background-color 0.3s ease, color 0.3s ease; 
+.main-content-page {
+    flex-grow: 1;
+    height: 100vh;
+    padding: 2em;
+    overflow-y: auto; /* Allow scrolling for main content */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--md-sys-color-surface);
 }
 
 .main-header { 
@@ -285,41 +67,17 @@ html[data-sidebar-collapsed="true"] .add-application-button {
 
 /* Responsive adjustments for the template itself */
 @media (max-width: 768px) {
-    html[data-sidebar-collapsed="false"] .sidebar, 
-    html[data-sidebar-collapsed="true"] .sidebar {
-         --sidebar-width: var(--sidebar-collapsed-width); 
-         padding: 16px 0;
-         align-items: center;
-    }
+    /* If you want the sidebar to collapse to a rail on small screens, 
+       you would re-introduce logic here and in template.js.
+       For a permanently expanded sidebar, this section might not change much
+       unless you want to hide the sidebar entirely on very small screens. */
     
-    .sidebar-logo .logo-text, 
-    .add-application-button .button-text, 
-    .nav-link .link-text, 
-    .theme-toggle-button .theme-label, 
-    .user-profile .profile-text { 
-        display: none !important; 
-        opacity: 0; width: 0; 
-    }
+    /* Example: If you wanted to hide it on very small screens */
+    /* .sidebar { display: none; } */
+    /* .main-header .sidebar-toggle-button { display: block; } /* If you had a toggle for this */
     
-    .add-application-button,
-    .nav-link,
-    .theme-toggle-button,
-    .user-profile {
-        width: 48px !important;
-        height: 48px !important;
-        border-radius: 50% !important;
-        padding: 0 !important;
-        justify-content: center !important;
-    }
-     .add-application-button .material-symbols-outlined,
-     .nav-link .material-symbols-outlined,
-     .theme-toggle-button .material-symbols-outlined,
-     .user-profile .material-symbols-outlined {
-        margin-right: 0 !important;
-    }
-
-    .sidebar-header { justify-content: center; }
-    .sidebar-footer { padding-left:0; padding-right:0;}
-    .sidebar-toggle-button { display: none; } 
-    .main-header h1 { font-size: 1.5rem; margin-left: 8px; } 
+    .main-header h1 { 
+        font-size: 1.5rem; 
+        /* margin-left: 8px; /* Adjust if sidebar is hidden or always present */
+    } 
 }
