@@ -64,8 +64,18 @@ function renderCards(jobs) {
     deleteBtn.dataset.id = job.id;
     deleteBtn.title = 'Delete this application';
 
+    const updateBtn = document.createElement('button');
+    updateBtn.classList.add('update-btn');
+    updateBtn.innerHTML = `
+      <span class="material-symbols-outlined">update</span>
+      <span class="update-text">update</span>
+    `;
+    updateBtn.dataset.id = job.id;
+    updateBtn.title = 'Edit this application';
+
     wrapper.appendChild(cardElem);
     wrapper.appendChild(deleteBtn);
+    wrapper.appendChild(updateBtn);
     
 
     container.appendChild(wrapper);
