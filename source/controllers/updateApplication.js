@@ -25,17 +25,25 @@ export function updateApplication(applicationId, updatedData) {
 }
 
 // DOM update helper
-function updateCardInDOM(applicationId, updatedData) {
-  const cardElement = document.querySelector(`[data-id="${applicationId}"]`);
+export function updateCardInDOM(applicationId) {
+  const cardElement = document.querySelector(`job-app-card[data-id="${applicationId}"]`);
   if (!cardElement) return;
-  // Visual feedback
-  cardElement.style.transition = 'all 0.3s ease';
-  cardElement.style.backgroundColor = 'rgba(100, 255, 100, 0.2)';
-  setTimeout(() => {
-    cardElement.style.backgroundColor = '';
-  }, 300);
-  // Update DOM fields if needed (e.g., company/status/position)
-  if (updatedData.company) {
-    cardElement.querySelector('.company-name').textContent = updatedData.company;
+
+  // Get the latest updated data from localStorage
+  const cards = JSON.parse(localStorage.getItem('applications')) || [];
+  const updatedCard = cards.find(card => card.id === applicationId);
+  if (!updatedCard) return;
+
+  // Update the card by re-setting its data (re-renders the shadow DOM)
+  cardElement.data = updatedCard;
+
+  // Optional: Visual feedback
+  const wrapper = cardElement.closest('.application-wrapper');
+  if (wrapper) {
+    wrapper.style.transition = 'background-color 0.3s ease';
+    wrapper.style.backgroundColor = 'rgba(100, 255, 100, 0.2)';
+    setTimeout(() => {
+      wrapper.style.backgroundColor = '';
+    }, 300);
   }
 }
