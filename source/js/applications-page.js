@@ -235,9 +235,21 @@ function renderCards() {
     deleteBtn.dataset.id = card.id;
     deleteBtn.title = 'Delete this application';
 
+    // Create update button
+    const updateBtn = document.createElement('button');
+    updateBtn.classList.add('update-btn');
+    updateBtn.innerHTML = `
+      <span class="material-symbols-outlined">edit</span>
+      <span class="delete-text">Update</span>
+    `;
+    updateBtn.dataset.id = card.id;
+    updateBtn.title = 'Edit this application';
+
     // Append card and button to wrapper
     wrapper.appendChild(cardElem);
+    wrapper.appendChild(updateBtn);
     wrapper.appendChild(deleteBtn);
+    
 
     // Add to DOM
     container.appendChild(wrapper);
