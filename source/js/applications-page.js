@@ -259,9 +259,6 @@ function openModal(data) {
   }
 }
 
-
-
-
 document.addEventListener('click', (e) => {
   const deleteBtn = e.target.closest('.delete-btn');
   if (deleteBtn) {
@@ -287,6 +284,18 @@ document.addEventListener('click', (e) => {
     }
   }
 });
+
+export function updateCardInDOM(applicationId) {
+  const cardElement = document.querySelector(`job-app-card[data-id="${applicationId}"]`);
+  const updatedCard = cards.find(card => card.id === applicationId);
+  
+  // Re-render the card with new data
+  cardElement.data = updatedCard;
+  
+  // Visual feedback with green highlight
+  wrapper.style.backgroundColor = 'rgba(100, 255, 100, 0.2)';
+  setTimeout(() => wrapper.style.backgroundColor = '', 300);
+}
 
 
 
