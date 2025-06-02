@@ -16,7 +16,6 @@ export function updateApplication(applicationId, updatedData) {
     ...updatedData,
     id: applicationId   // Ensure ID remains unchanged
   };
-  // Update storage 
   const updatedCards = [...cards];
   updatedCards[cardIndex] = updatedCard;
   localStorage.setItem('applications', JSON.stringify(updatedCards));
