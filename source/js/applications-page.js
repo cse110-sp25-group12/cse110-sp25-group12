@@ -71,11 +71,12 @@ function renderCards(jobs) {
     const updateBtn = document.createElement('button');
     updateBtn.classList.add('update-btn');
     updateBtn.innerHTML = `
-      <span class="material-symbols-outlined">update</span>
-      <span class="update-text">update</span>
+      <span class="material-symbols-outlined">edit</span>
+      <span class="update-text">Edit</span>
     `;
     updateBtn.dataset.id = job.id;
     updateBtn.title = 'Edit this application';
+    updateBtn.style.display = 'flex'; // Ensure it's visible
 
     updateBtn.addEventListener('click', (e) => {
       e.stopPropagation(); // Prevent modal from opening
@@ -196,6 +197,16 @@ function renderCards(jobs) {
     wrapper.appendChild(deleteBtn);
     wrapper.appendChild(updateBtn);
     
+    // Debug logging to verify buttons are created
+    console.log('Created buttons for job:', job.id, {
+      deleteBtn: deleteBtn.classList.contains('delete-btn'),
+      updateBtn: updateBtn.classList.contains('update-btn'),
+      wrapperChildren: wrapper.children.length,
+      updateBtnDisplay: window.getComputedStyle(updateBtn).display,
+      updateBtnPosition: window.getComputedStyle(updateBtn).position,
+      updateBtnTop: window.getComputedStyle(updateBtn).top,
+      updateBtnRight: window.getComputedStyle(updateBtn).right
+    });
 
     container.appendChild(wrapper);
   }
