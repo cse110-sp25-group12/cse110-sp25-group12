@@ -1,6 +1,6 @@
 import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
-import { updateApplication} from '../controllers/updateApplication.js';
+import { updateApplication } from '../controllers/updateApplication.js';
 
 
 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const jobs = JSON.parse(localStorage.getItem('applications'));
   renderCards(jobs);
   setupModal();
-  
+
 });
 
 async function fetchApplications() {
@@ -80,7 +80,7 @@ function renderCards(jobs) {
 
     updateBtn.addEventListener('click', (e) => {
       e.stopPropagation(); // Prevent modal from opening
-    
+
       // Prevent multiple forms from stacking
       const existingForm = wrapper.querySelector('.inline-update-form');
       if (existingForm) {
@@ -136,7 +136,7 @@ function renderCards(jobs) {
         `;
         document.head.appendChild(style);
       }
-    
+
       const form = document.createElement('form');
       form.classList.add('inline-update-form');
       form.innerHTML = `
@@ -155,21 +155,21 @@ function renderCards(jobs) {
         <button type="button" class="cancel-update">Cancel</button>
       </div>
     `;
-    
-      
 
-    
+
+
+
       // Add event listeners
       form.querySelector('.cancel-update').addEventListener('click', () => {
         form.remove();
       });
-    
+
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-    
+
         const newCompany = form.company.value.trim();
         const newStatus = form.status.value.trim();
-    
+
         const updatedData = {
           company: form.company.value.trim(),
           jobPosition: form.jobPosition.value.trim(),
@@ -184,7 +184,7 @@ function renderCards(jobs) {
           },
           notes: form.notes.value.trim(),
         };
-    
+
         const updatedApp = updateApplication(job.id, updatedData);
         if (updatedApp) {
           updateCardInDOM(job.id);
@@ -192,14 +192,14 @@ function renderCards(jobs) {
           location.reload();
         }
       });
-    
+
       wrapper.appendChild(form);
     });
-    
+
     wrapper.appendChild(cardElem);
     wrapper.appendChild(deleteBtn);
     wrapper.appendChild(updateBtn);
-    
+
     // Debug logging to verify buttons are created
     console.log('Created buttons for job:', job.id, {
       deleteBtn: deleteBtn.classList.contains('delete-btn'),

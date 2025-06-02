@@ -9,7 +9,7 @@ export function updateApplication(applicationId, updatedData) {
   const cards = JSON.parse(localStorage.getItem('applications')) || [];
   // Find index
   const cardIndex = cards.findIndex(card => card.id === applicationId);
-  if (cardIndex === -1) return null; // Silent fail 
+  if (cardIndex === -1) return null; // Silent fail
   // Immutable update
   const updatedCard = {
     ...cards[cardIndex], // Keep existing data
