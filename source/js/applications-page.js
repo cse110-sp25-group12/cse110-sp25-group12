@@ -1,6 +1,6 @@
 import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
-import { updateApplication, updateCardInDOM } from '../controllers/updateApplication.js';
+import { updateApplication} from '../controllers/updateApplication.js';
 
 
 
@@ -98,9 +98,12 @@ function renderCards(jobs) {
             flex-direction: column;
             gap: 0.75rem;
             max-width: 260px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 8px;
           }
           .inline-update-form label {
-            color: #f0f0f0; /* 👈 Light gray/white text for dark background */
+            color: #f0f0f0; 
             font-weight: 500;
           }
           .inline-update-form input {
@@ -287,14 +290,25 @@ document.addEventListener('click', (e) => {
 
 export function updateCardInDOM(applicationId) {
   const cardElement = document.querySelector(`job-app-card[data-id="${applicationId}"]`);
+  if (!cardElement) return;
+
+  // Get the latest updated data from localStorage
+  const cards = JSON.parse(localStorage.getItem('applications')) || [];
   const updatedCard = cards.find(card => card.id === applicationId);
-  
-  // Re-render the card with new data
+  if (!updatedCard) return;
+
+  // Update the card by re-setting its data (re-renders the shadow DOM)
   cardElement.data = updatedCard;
-  
-  // Visual feedback with green highlight
-  wrapper.style.backgroundColor = 'rgba(100, 255, 100, 0.2)';
-  setTimeout(() => wrapper.style.backgroundColor = '', 300);
+
+  // Optional: Visual feedback
+  const wrapper = cardElement.closest('.application-wrapper');
+  if (wrapper) {
+    wrapper.style.transition = 'background-color 0.3s ease';
+    wrapper.style.backgroundColor = 'rgba(100, 255, 100, 0.2)';
+    setTimeout(() => {
+      wrapper.style.backgroundColor = '';
+    }, 300);
+  }
 }
 
 
