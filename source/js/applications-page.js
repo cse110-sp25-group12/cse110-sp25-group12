@@ -167,9 +167,6 @@ function renderCards(jobs) {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        const newCompany = form.company.value.trim();
-        const newStatus = form.status.value.trim();
-
         const updatedData = {
           company: form.company.value.trim(),
           jobPosition: form.jobPosition.value.trim(),

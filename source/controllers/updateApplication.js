@@ -13,14 +13,13 @@ export function updateApplication(applicationId, updatedData) {
   // Immutable update
   const updatedCard = {
     ...cards[cardIndex], // Keep existing data
-    ...updatedData,     // Apply updates
+    ...updatedData,
     id: applicationId   // Ensure ID remains unchanged
   };
   // Update storage 
   const updatedCards = [...cards];
   updatedCards[cardIndex] = updatedCard;
   localStorage.setItem('applications', JSON.stringify(updatedCards));
-  // Return updated card 
   return updatedCard;
 }
 
