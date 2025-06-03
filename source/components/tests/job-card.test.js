@@ -3,11 +3,13 @@
  */
 
 import '../job-card.js';
-describe('JobAppCard component', () => {
-  beforeEach(() => {
-    document.body.innerHTML = `<job-app-card></job-app-card>`;
 
-    const element = document.querySelector('job-app-card');
+describe('JobAppCard component', () => {
+  let element, shadow;
+
+  beforeEach(() => {
+    document.body.innerHTML = '<job-app-card></job-app-card>';
+    element = document.querySelector('job-app-card');
     element.data = {
       logo: 'https://example.com/logo.png',
       company: 'Test Company',
@@ -17,12 +19,10 @@ describe('JobAppCard component', () => {
         email: 'hr@test.com'
       }
     };
+    shadow = element.shadowRoot;
   });
 
   it('renders correct company and job title', () => {
-    const card = document.querySelector('job-app-card');
-    const shadow = card.shadowRoot;
-
     const company = shadow.querySelector('.company');
     const title = shadow.querySelector('.title');
 
@@ -31,9 +31,6 @@ describe('JobAppCard component', () => {
   });
 
   it('shows correct date and email', () => {
-    const card = document.querySelector('job-app-card');
-    const shadow = card.shadowRoot;
-
     const date = shadow.querySelector('.date');
     const email = shadow.querySelector('.email');
 
@@ -42,9 +39,6 @@ describe('JobAppCard component', () => {
   });
 
   it('toggles favorite icon on click', () => {
-    const card = document.querySelector('job-app-card');
-    const shadow = card.shadowRoot;
-
     const favoriteBtn = shadow.querySelector('.favorite');
     const icon = shadow.querySelector('.material-symbols-outlined');
 
