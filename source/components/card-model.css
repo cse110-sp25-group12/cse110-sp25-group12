@@ -27,171 +27,21 @@
   max-height: 100%;
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--md-sys-color-outline-variant);
-}
-
-.modal-header h2 { /* This is #modal-title */
-  margin: 0;
-  font-size: 1.5rem;
-  color: var(--md-sys-color-on-surface);
-  flex-grow: 1; /* Allow title to take available space */
-}
-
-.modal-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem; /* Space between edit and close buttons */
-}
-
-.icon-btn { /* General style for icon buttons like close and edit */
-    background: none;
-    border: none;
-    color: var(--md-sys-color-on-surface-variant);
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease;
-}
-.icon-btn:hover {
-    background-color: var(--md-sys-color-surface-container-high);
-}
-.icon-btn .material-symbols-outlined {
-    font-size: 24px;
-}
-.close-btn .material-symbols-outlined { /* If close button is just text, adjust this */
-    font-size: 28px; /* Make close X slightly larger if it's text */
-}
-.close-btn { /* Specific for the text-based close button if not using an icon */
-  font-size: 1.75rem; /* Adjust if it's '×' */
-  line-height: 1;
-  padding: 4px 8px; /* Adjust padding for text button */
-}
-
-
 .modal-content p,
 .modal-content span,
 .modal-content li {
   color: var(--md-sys-color-on-surface);
 }
 
-.modal-body strong {
-  color: var(--md-sys-color-on-surface-variant);
-  margin-right: 0.5em;
-}
-
-.modal-input {
-  /* display: none; /* Controlled by .editing class */
-  width: calc(100% - 20px); 
-  padding: 8px 10px;
-  margin-top: 4px;
-  border: 1px solid var(--md-sys-color-outline);
-  border-radius: 4px;
-  background-color: var(--md-sys-color-surface-container-highest);
-  color: var(--md-sys-color-on-surface);
-  font-size: 0.95rem;
-}
-
-.modal-notes-input {
-  min-height: 80px;
-  resize: vertical;
-}
-
-.modal-notes-display {
-  display: inline-block; 
-  white-space: pre-wrap; 
-  padding: 8px;
-  border: 1px solid transparent; 
-  min-height: 80px;
-  width: calc(100% - 20px);
-}
-
-/* View/Edit mode controlled by .editing class on .modal */
-.modal:not(.editing) .modal-input {
-    display: none;
-}
-.modal.editing .modal-display {
-    display: none;
-}
-.modal.editing .modal-input {
-    display: inline-block; /* Default for most inputs */
-}
-.modal.editing textarea.modal-input,
-.modal.editing select.modal-input { /* Ensure select and textarea take block display if needed */
-    display: block;
-    width: calc(100% - 20px); /* Ensure they take full width when block */
-}
-
-
-.modal-footer {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--md-sys-color-outline-variant);
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
-
-.modal-action-btn {
-  padding: 10px 20px;
-  border-radius: 20px;
+.close-btn {
+  float: right;
+  font-size: 1.5rem;
   border: none;
+  background: none;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
+  color: var(--md-sys-color-on-surface-variant);
 }
 
-/* Edit button at the top */
-#modalEditTopBtn {
-  /* Using .icon-btn styles, specific color if needed */
-  color: var(--md-sys-color-secondary); /* Example: secondary color for edit */
-}
-#modalEditTopBtn:hover {
-  background-color: var(--md-sys-color-secondary-container);
-}
-
-
-#modalSaveBtn {
-  background-color: var(--md-sys-color-primary);
-  color: var(--md-sys-color-on-primary);
-}
-#modalSaveBtn:hover {
-  background-color: var(--md-sys-color-primary-container);
-  color: var(--md-sys-color-on-primary-container);
-}
-
-#modalCancelBtn {
-    background-color: var(--md-sys-color-tertiary-container);
-    color: var(--md-sys-color-on-tertiary-container);
-}
-#modalCancelBtn:hover {
-    background-color: var(--md-sys-color-tertiary);
-    color: var(--md-sys-color-on-tertiary);
-}
-
-
-/* Button visibility based on .editing class */
-.modal:not(.editing) #modalSaveBtn,
-.modal:not(.editing) #modalCancelBtn {
-    display: none;
-}
-.modal.editing #modalEditTopBtn { /* Hide top edit button when editing */
-    display: none;
-}
-
-.modal.editing #modalSaveBtn,
-.modal.editing #modalCancelBtn {
-    display: inline-block;
-}
-.modal:not(.editing) #modalEditTopBtn { /* Ensure top edit button is visible when not editing */
-    display: flex; /* or inline-flex if it's an icon button */
+.modal-content strong {
+  color: var(--md-sys-color-on-surface-variant);
 }

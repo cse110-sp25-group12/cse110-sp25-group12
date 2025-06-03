@@ -33,62 +33,22 @@
     </main>
     
     <div id="appDetailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-title"></h2>
-                <div class="modal-header-actions">
-                    <button id="modalEditTopBtn" class="modal-action-btn icon-btn" aria-label="Edit Application">
-                        <span class="material-symbols-outlined">edit</span>
-                    </button>
-                    <button class="close-btn icon-btn" aria-label="Close modal">&times;</button>
-                </div>
-            </div>
-            <div class="modal-body">
-                <p><strong>Company:</strong> <span id="modal-company" class="modal-display"></span><input type="text" id="edit-modal-company" class="modal-input"></p>
-                <p><strong>Job Position:</strong> <span id="modal-jobPosition" class="modal-display"></span><input type="text" id="edit-modal-jobPosition" class="modal-input"></p>
-                <p><strong>Job Type:</strong> <span id="modal-type" class="modal-display"></span>
-                    <select id="edit-modal-type" class="modal-input">
-                        <option value="Full-Time">Full-Time</option>
-                        <option value="Part-Time">Part-Time</option>
-                        <option value="Contract">Contract</option>
-                        <option value="Internship">Internship</option>
-                        <option value="Temporary">Temporary</option>
-                    </select>
-                </p>
-                <p><strong>Salary:</strong> <span id="modal-salary" class="modal-display"></span><input type="number" id="edit-modal-salary" class="modal-input" placeholder="e.g., 75000"></p>
-                <p><strong>Location:</strong> <span id="modal-location" class="modal-display"></span><input type="text" id="edit-modal-location" class="modal-input"></p>
-                <p><strong>Date Applied:</strong> <span id="modal-date" class="modal-display"></span><input type="date" id="edit-modal-date" class="modal-input"></p>
-                <p><strong>Status:</strong> <span id="modal-status" class="modal-display"></span>
-                    <select id="edit-modal-status" class="modal-input">
-                        <option value="Wishlist">Wishlist</option>
-                        <option value="Applied">Applied</option>
-                        <option value="Screening">Screening</option>
-                        <option value="Interviewing">Interviewing</option>
-                        <option value="Offer">Offer</option>
-                        <option value="Rejected">Rejected</option>
-                        <option value="Ghosted">Ghosted</option>
-                        <option value="Withdrawn">Withdrawn</option>
-                    </select>
-                </p>
-                <p><strong>Contact Name:</strong> <span id="modal-contactName" class="modal-display"></span><input type="text" id="edit-modal-contactName" class="modal-input"></p>
-                <p><strong>Contact Email:</strong> <span id="modal-contactEmail" class="modal-display"></span><input type="email" id="edit-modal-contactEmail" class="modal-input"></p>
-                <p><strong>Contact Phone:</strong> <span id="modal-contactPhone" class="modal-display"></span><input type="tel" id="edit-modal-contactPhone" class="modal-input"></p>
-                
-                <div><strong>Notes:</strong>
-                    <span id="modal-notes" class="modal-display modal-notes-display"></span>
-                    <textarea id="edit-modal-notes" class="modal-input modal-notes-input"></textarea>
-                </div>
-                <div><strong>Important Dates:</strong>
-                    <ul id="modal-important-dates" class="modal-display"></ul>
-                    <p class="modal-input"><em>Editing important dates directly here is not supported in this version.</em></p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!-- Removed old #modalEditBtn from footer -->
-                <button id="modalSaveBtn" class="modal-action-btn">Save</button>
-                <button id="modalCancelBtn" class="modal-action-btn">Cancel</button>
-            </div>
+    <div class="modal-content">
+        <button class="close-btn">&times;</button>
+        <h2 id="modal-title"></h2>
+        <p><strong>Company:</strong> <span id="modal-company"></span></p>
+        <p><strong>Job Type:</strong> <span id="modal-type"></span></p>
+        <p><strong>Location:</strong> <span id="modal-location"></span></p>
+        <p><strong>Salary:</strong> <span id="modal-salary"></span></p>
+        <p><strong>Date Applied:</strong> <span id="modal-date"></span></p>
+        <p><strong>Status:</strong> <span id="modal-status"></span></p>
+        <p><strong>Contact:</strong> <span id="modal-contact"></span></p>
+        <p><strong>Phone:</strong> <span id="modal-phone"></span></p>
+        <p><strong>Notes:</strong> <span id="modal-notes"></span></p>
+        <div><strong>Important Dates:</strong>
+        <ul id="modal-important-dates"></ul>
         </div>
+    </div>
     </div>
 
     <script type="module" src="../components/job-card-component.js"></script> 
