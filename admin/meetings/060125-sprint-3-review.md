@@ -6,6 +6,7 @@
 
 - **Readme file for team repo**  
 - **Update Application Feature (Applications Page) + Testing**   
+  - Worked on logic of the update application feature as well as completing the sort feature
 - **Testing**  
   - Expanded unit/integration test suite for core modules  
 - **Backend**  
