@@ -195,6 +195,18 @@ function renderCards(jobs) {
 
     wrapper.appendChild(cardElem);
     wrapper.appendChild(deleteBtn);
+    wrapper.appendChild(updateBtn);
+
+    // Debug logging to verify buttons are created
+    console.log('Created buttons for job:', job.id, {
+      deleteBtn: deleteBtn.classList.contains('delete-btn'),
+      updateBtn: updateBtn.classList.contains('update-btn'),
+      wrapperChildren: wrapper.children.length,
+      updateBtnDisplay: window.getComputedStyle(updateBtn).display,
+      updateBtnPosition: window.getComputedStyle(updateBtn).position,
+      updateBtnTop: window.getComputedStyle(updateBtn).top,
+      updateBtnRight: window.getComputedStyle(updateBtn).right
+    });
 
     container.appendChild(wrapper);
   }
