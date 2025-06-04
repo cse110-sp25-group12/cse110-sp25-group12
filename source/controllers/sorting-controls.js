@@ -106,7 +106,6 @@ export function applySorting(sortOption) {
   }
 
   const sortedApplications = sortApplications(applications, sortOption);
-  localStorage.setItem('applications', JSON.stringify(sortedApplications));
 
   // Re-render the cards with sorted data
   if (typeof window.renderCards === 'function') {
