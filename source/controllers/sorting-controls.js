@@ -141,44 +141,50 @@ function getStatusPriority(status) {
 function sortApplications(applications, sortOption) {
   return [...applications].sort((a, b) => {
     switch (sortOption) {
-      case 'date-desc':
-        // Sort by date applied, newest first
-        const dateA = new Date(a.dateApplied || '1970-01-01');
-        const dateB = new Date(b.dateApplied || '1970-01-01');
-        return dateB - dateA;
-        
-      case 'date-asc':
-        // Sort by date applied, oldest first
-        const dateA2 = new Date(a.dateApplied || '1970-01-01');
-        const dateB2 = new Date(b.dateApplied || '1970-01-01');
-        return dateA2 - dateB2;
-        
-      case 'status-priority':
-        // Sort by status priority (most important first)
-        const priorityA = getStatusPriority(a.status);
-        const priorityB = getStatusPriority(b.status);
-        return priorityA - priorityB;
-        
-      case 'status-reverse':
-        // Sort by status priority (least important first)
-        const priorityA2 = getStatusPriority(a.status);
-        const priorityB2 = getStatusPriority(b.status);
-        return priorityB2 - priorityA2;
-        
-      case 'company-asc':
-        // Sort by company A-Z
-        const companyA = (a.company || '').toLowerCase();
-        const companyB = (b.company || '').toLowerCase();
-        return companyA.localeCompare(companyB);
-        
-      case 'company-desc':
-        // Sort by company Z-A
-        const companyA2 = (a.company || '').toLowerCase();
-        const companyB2 = (b.company || '').toLowerCase();
-        return companyB2.localeCompare(companyA2);
-        
-      default:
-        return 0;
+    case 'date-desc': {
+      // Sort by date applied, newest first
+      const dateA = new Date(a.dateApplied || '1970-01-01');
+      const dateB = new Date(b.dateApplied || '1970-01-01');
+      return dateB - dateA;
+    }
+
+    case 'date-asc': {
+      // Sort by date applied, oldest first
+      const dateA2 = new Date(a.dateApplied || '1970-01-01');
+      const dateB2 = new Date(b.dateApplied || '1970-01-01');
+      return dateA2 - dateB2;
+    }
+
+    case 'status-priority': {
+      // Sort by status priority (most important first)
+      const priorityA = getStatusPriority(a.status);
+      const priorityB = getStatusPriority(b.status);
+      return priorityA - priorityB;
+    }
+
+    case 'status-reverse': {
+      // Sort by status priority (least important first)
+      const priorityA2 = getStatusPriority(a.status);
+      const priorityB2 = getStatusPriority(b.status);
+      return priorityB2 - priorityA2;
+    }
+
+    case 'company-asc': {
+      // Sort by company A-Z
+      const companyA = (a.company || '').toLowerCase();
+      const companyB = (b.company || '').toLowerCase();
+      return companyA.localeCompare(companyB);
+    }
+
+    case 'company-desc': {
+      // Sort by company Z-A
+      const companyA2 = (a.company || '').toLowerCase();
+      const companyB2 = (b.company || '').toLowerCase();
+      return companyB2.localeCompare(companyA2);
+    }
+
+    default:
+      return 0;
     }
   });
 }
