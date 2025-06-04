@@ -58,7 +58,7 @@
 .form-field input[type="date"],
 .form-field select,
 .form-field textarea {
-    width: 95%;
+    width: var(--form-field-width); /* Adjusted to leave space for padding/margins */
     padding: 16px; /* M3 standard padding */
     border-radius: 4px; /* M3 text field corner radius */
     border: 1px solid var(--md-sys-color-outline);
