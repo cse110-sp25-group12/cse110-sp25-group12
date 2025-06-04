@@ -12,6 +12,7 @@ const SORT_OPTIONS = {
   'date-asc': 'Date Applied (Oldest First)',
   'status-priority': 'Status (Most Important First)',
   'status-reverse': 'Status (Least Important First)',
+  'favorites-first': 'Favorites First',
   'company-asc': 'Company (A-Z)',
   'company-desc': 'Company (Z-A)'
 };
@@ -167,6 +168,22 @@ function sortApplications(applications, sortOption) {
       const priorityA2 = getStatusPriority(a.status);
       const priorityB2 = getStatusPriority(b.status);
       return priorityB2 - priorityA2;
+    }
+
+    case 'favorites-first': {
+      // Sort favorites first, then by date (newest first) as secondary criteria
+      const isBookmarkedA = a.bookmarked || false;
+      const isBookmarkedB = b.bookmarked || false;
+
+      // If bookmark status is different, prioritize bookmarked
+      if (isBookmarkedA !== isBookmarkedB) {
+        return isBookmarkedB - isBookmarkedA;
+      }
+
+      // If both have same bookmark status, sort by date (newest first)
+      const dateA = new Date(a.dateApplied || '1970-01-01');
+      const dateB = new Date(b.dateApplied || '1970-01-01');
+      return dateB - dateA;
     }
 
     case 'company-asc': {
