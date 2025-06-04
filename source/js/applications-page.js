@@ -1,8 +1,7 @@
 import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
 import { updateApplication } from '../controllers/updateApplication.js';
-
-
+import { initSortingControls } from '../controllers/sorting-controls.js';
 
 // Load applications from JSON file and render
 // Only run once if localStorage is empty (first visit)
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const jobs = JSON.parse(localStorage.getItem('applications'));
   renderCards(jobs);
   setupModal();
-
 });
 
 async function fetchApplications() {
@@ -29,6 +27,11 @@ async function fetchApplications() {
 }
 
 function renderCards(jobs) {
+  // If no jobs parameter is provided, get from localStorage
+  if (!jobs) {
+    jobs = JSON.parse(localStorage.getItem('applications')) || [];
+  }
+  
   const container = document.getElementById('applicationCardsContainer');
   container.innerHTML = '';
 
@@ -155,9 +158,6 @@ function renderCards(jobs) {
         <button type="button" class="cancel-update">Cancel</button>
       </div>
     `;
-
-
-
 
       // Add event listeners
       form.querySelector('.cancel-update').addEventListener('click', () => {
@@ -307,6 +307,9 @@ export function updateCardInDOM(applicationId) {
     }, 300);
   }
 }
+
+// Make renderCards available globally for sorting functionality
+window.renderCards = renderCards;
 
 
 
