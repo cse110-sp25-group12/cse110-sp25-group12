@@ -38,34 +38,34 @@
     const mainContentElement = document.querySelector('.main-content-page');
 
     if (mainContentElement) {
-        if (sidebarElement) {
-            const showContent = () => {
-                mainContentElement.classList.add('content-visible');
-            };
+      if (sidebarElement) {
+        const showContent = () => {
+          mainContentElement.classList.add('content-visible');
+        };
 
-            customElements.whenDefined('app-sidebar').then(() => {
-                sidebarElement.addEventListener('sidebar-loaded', showContent, { once: true });
-                sidebarElement.addEventListener('sidebar-load-failed', showContent, { once: true }); // Also show content if sidebar fails, or handle error
+        customElements.whenDefined('app-sidebar').then(() => {
+          sidebarElement.addEventListener('sidebar-loaded', showContent, { once: true });
+          sidebarElement.addEventListener('sidebar-load-failed', showContent, { once: true }); // Also show content if sidebar fails, or handle error
 
-                // Fallback: Check if sidebar might have loaded before listener attached
-                // This is less likely with {once: true} and whenDefined, but can be a safeguard.
-                if (sidebarElement.shadowRoot && sidebarElement.shadowRoot.querySelector('.sidebar-wrapper') && !mainContentElement.classList.contains('content-visible')) {
-                    showContent();
-                }
-            });
-        } else {
-            // If no sidebar on the page, show content immediately
-            mainContentElement.classList.add('content-visible');
-        }
+          // Fallback: Check if sidebar might have loaded before listener attached
+          // This is less likely with {once: true} and whenDefined, but can be a safeguard.
+          if (sidebarElement.shadowRoot && sidebarElement.shadowRoot.querySelector('.sidebar-wrapper') && !mainContentElement.classList.contains('content-visible')) {
+            showContent();
+          }
+        });
+      } else {
+        // If no sidebar on the page, show content immediately
+        mainContentElement.classList.add('content-visible');
+      }
     }
-}
+  }
 
-// Ensure initializeTemplateApp is called after the DOM is ready.
-// Your existing setup for calling initializeTemplateApp should be fine.
-// Example:
-if (document.readyState === 'loading') {
+  // Ensure initializeTemplateApp is called after the DOM is ready.
+  // Your existing setup for calling initializeTemplateApp should be fine.
+  // Example:
+  if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeTemplateApp);
-} else {
+  } else {
     initializeTemplateApp();
-}
+  }
 })(); // End of IIFE

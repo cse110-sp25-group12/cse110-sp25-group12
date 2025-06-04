@@ -31,7 +31,7 @@ class JobAppCard extends HTMLElement {
     const deleteIcon = document.createElement('span');
     deleteIcon.classList.add('material-symbols-outlined');
     deleteIcon.textContent = 'delete';
-    
+
 
     const logo = document.createElement('img');
     logo.classList.add('logo');
@@ -153,16 +153,16 @@ class JobAppCard extends HTMLElement {
     shadow.append(fontLink, style, card);
 
     // Save elements for data binding
-    this._elements = { 
-        logo, 
-        title, 
-        company, 
-        date, 
-        email, 
-        favoriteIcon, // Renamed from icon
-        favoriteBtn, 
-        deleteIcon, // Added
-        deleteBtn     // Added
+    this._elements = {
+      logo,
+      title,
+      company,
+      date,
+      email,
+      favoriteIcon, // Renamed from icon
+      favoriteBtn,
+      deleteIcon, // Added
+      deleteBtn     // Added
     };
   }
 
@@ -201,7 +201,7 @@ class JobAppCard extends HTMLElement {
       favoriteBtn.classList.add('bounced');
       setTimeout(() => favoriteBtn.classList.remove('bounced'), 400);
       // Dispatch an event for favoriting
-      this.dispatchEvent(new CustomEvent('favorite-toggled', { 
+      this.dispatchEvent(new CustomEvent('favorite-toggled', {
         detail: { id: this.dataset.id, favorited: isActive },
         bubbles: true,
         composed: true
@@ -210,13 +210,13 @@ class JobAppCard extends HTMLElement {
 
     // Delete button logic
     deleteBtn.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent navigation if card is an <a> tag
-        // Dispatch an event for deletion, including the card's ID (assuming you set a data-id attribute)
-        this.dispatchEvent(new CustomEvent('delete-card', { 
-            detail: { id: this.dataset.id }, // You'll need to set data-id on the custom element
-            bubbles: true, 
-            composed: true 
-        }));
+      e.preventDefault(); // Prevent navigation if card is an <a> tag
+      // Dispatch an event for deletion, including the card's ID (assuming you set a data-id attribute)
+      this.dispatchEvent(new CustomEvent('delete-card', {
+        detail: { id: this.dataset.id }, // You'll need to set data-id on the custom element
+        bubbles: true,
+        composed: true
+      }));
     });
   }
 

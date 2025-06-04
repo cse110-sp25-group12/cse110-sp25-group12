@@ -7,7 +7,7 @@ class AppSidebar extends HTMLElement {
 
   async connectedCallback() {
     // Adjust the fetch path to be relative to the HTML page in the 'pages' directory
-    const response = await fetch('../components/sidebar/sidebar.html'); 
+    const response = await fetch('../components/sidebar/sidebar.html');
     if (!response.ok) {
       console.error(`Failed to load sidebar.html: ${response.statusText} (path: ../components/sidebar/sidebar.html)`);
       this.shadowRoot.innerHTML = '<p>Error loading sidebar content.</p>';
@@ -28,8 +28,8 @@ class AppSidebar extends HTMLElement {
 
     // Dispatch an event to signal that the sidebar is loaded
     this.dispatchEvent(new CustomEvent('sidebar-loaded', {
-        bubbles: true,
-        composed: true
+      bubbles: true,
+      composed: true
     }));
 
     this._themeToggleButton = this.shadowRoot.querySelector('.theme-toggle-button');
