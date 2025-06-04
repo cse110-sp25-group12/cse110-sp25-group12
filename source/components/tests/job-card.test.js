@@ -39,7 +39,7 @@ describe('JobAppCard component', () => {
   });
 
   it('toggles favorite icon on click', () => {
-    const favoriteBtn = shadow.querySelector('.favorite');
+    const favoriteBtn = shadow.querySelector('.favorite-btn');
     const icon = shadow.querySelector('.material-symbols-outlined');
 
     expect(favoriteBtn.classList.contains('active')).toBe(false);
