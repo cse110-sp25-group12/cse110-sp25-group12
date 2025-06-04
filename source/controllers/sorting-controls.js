@@ -10,10 +10,25 @@
 const SORT_OPTIONS = {
   'date-desc': 'Date Applied (Newest First)',
   'date-asc': 'Date Applied (Oldest First)',
-  'status-asc': 'Status (A-Z)',
-  'status-desc': 'Status (Z-A)',
+  'status-priority': 'Status (Most Important First)',
+  'status-reverse': 'Status (Least Important First)',
   'company-asc': 'Company (A-Z)',
   'company-desc': 'Company (Z-A)'
+};
+
+/**
+ * Status priority order - most important first
+ * @constant {Object}
+ */
+const STATUS_PRIORITY = {
+  'Offer': 1,
+  'Interviewing': 2,
+  'Screening': 3,
+  'Applied': 4,
+  'Wishlist': 5,
+  'Withdrawn': 6,
+  'Rejected': 7,
+  'Ghosted': 8
 };
 
 /**
@@ -108,6 +123,16 @@ export function applySorting(sortOption) {
 }
 
 /**
+ * Gets the priority value for a status
+ * @param {string} status - The status string
+ * @returns {number} Priority value (lower = higher priority)
+ */
+function getStatusPriority(status) {
+  const normalizedStatus = (status || '').trim();
+  return STATUS_PRIORITY[normalizedStatus] || 999; // Unknown statuses go to the end
+}
+
+/**
  * Sorts applications based on the selected option
  * @param {Array} applications - Array of application objects
  * @param {string} sortOption - The sorting option key
@@ -128,17 +153,17 @@ function sortApplications(applications, sortOption) {
         const dateB2 = new Date(b.dateApplied || '1970-01-01');
         return dateA2 - dateB2;
         
-      case 'status-asc':
-        // Sort by status A-Z
-        const statusA = (a.status || '').toLowerCase();
-        const statusB = (b.status || '').toLowerCase();
-        return statusA.localeCompare(statusB);
+      case 'status-priority':
+        // Sort by status priority (most important first)
+        const priorityA = getStatusPriority(a.status);
+        const priorityB = getStatusPriority(b.status);
+        return priorityA - priorityB;
         
-      case 'status-desc':
-        // Sort by status Z-A
-        const statusA2 = (a.status || '').toLowerCase();
-        const statusB2 = (b.status || '').toLowerCase();
-        return statusB2.localeCompare(statusA2);
+      case 'status-reverse':
+        // Sort by status priority (least important first)
+        const priorityA2 = getStatusPriority(a.status);
+        const priorityB2 = getStatusPriority(b.status);
+        return priorityB2 - priorityA2;
         
       case 'company-asc':
         // Sort by company A-Z
