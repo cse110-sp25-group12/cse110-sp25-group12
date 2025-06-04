@@ -305,7 +305,7 @@ html[data-sidebar-collapsed="true"] .add-application-button {
    -------------------------------------------------------------------------- */
 .main-content-page { 
     flex-grow: 1; 
-    padding: 24px; 
+    padding: 2em; 
     height: 100vh; /* Ensure it can fill the main area */
     overflow-y: auto; 
     transition: background-color 0.3s ease, color 0.3s ease; 
@@ -519,3 +519,17 @@ html[data-sidebar-collapsed="true"] .add-application-button {
     .sidebar-toggle-button { display: none; } 
     .main-header h1 { font-size: 1.5rem; margin-left: 8px; } 
 }
+#resetDataBtn {
+    background-color: var(--md-sys-color-primary);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#resetDataBtn:hover {
+    background-color: var(--md-sys-color-primary-container);
+}  

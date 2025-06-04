@@ -1,30 +1,12 @@
 // template.js - Common Template JavaScript Logic
 // IIFE to encapsulate the script and avoid polluting the global scope
 (function() {
-  let htmlElement,
-    themeToggleButton,
-    themeToggleIcon,
-    themeToggleLabel,
-    sidebarToggleButton,
-    navLinks;
+  let htmlElement;
 
   // --- Theme Toggle Functions ---
   function applyTheme(theme) {
     if (!htmlElement) htmlElement = document.documentElement;
     htmlElement.setAttribute('data-theme', theme);
-
-    if (themeToggleIcon && themeToggleLabel) {
-      if (theme === 'dark') {
-        themeToggleIcon.textContent = 'dark_mode';
-        themeToggleLabel.textContent = 'Dark Mode';
-      } else {
-        themeToggleIcon.textContent = 'light_mode';
-        themeToggleLabel.textContent = 'Light Mode';
-      }
-    }
-    // If charts exist on the current page (handled by page-specific JS),
-    // they might need a separate trigger or listen for theme changes.
-    // For now, this global script doesn't directly interact with charts.
   }
 
   function toggleTheme() {
@@ -35,54 +17,12 @@
     localStorage.setItem('appTheme', newTheme);
   }
 
-  // --- Sidebar Toggle Functions ---
-  function applySidebarState(collapsed) {
-    if (!htmlElement) htmlElement = document.documentElement;
-    htmlElement.setAttribute('data-sidebar-collapsed', collapsed ? 'true' : 'false');
-
-    const newWidth = collapsed
-      ? getComputedStyle(htmlElement).getPropertyValue('--sidebar-collapsed-width')
-      : getComputedStyle(htmlElement).getPropertyValue('--sidebar-expanded-width');
-    htmlElement.style.setProperty('--sidebar-width', newWidth.trim());
-  }
-
-  function toggleSidebar() {
-    if (!htmlElement) htmlElement = document.documentElement;
-    const isCollapsed = htmlElement.getAttribute('data-sidebar-collapsed') === 'true';
-    applySidebarState(!isCollapsed);
-    localStorage.setItem('sidebarCollapsed', !isCollapsed);
-  }
-
-  // --- Set Active Navigation Link ---
-  function setActiveNavLink() {
-    if (!navLinks) navLinks = document.querySelectorAll('.sidebar .nav-link');
-    const currentPage = window.location.pathname.split('/').pop();
-
-    navLinks.forEach(link => {
-      if (link.getAttribute('href') === currentPage) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
-      }
-    });
-  }
-
   // --- Global Event Listeners and Initial Setup ---
   function initializeTemplateApp() {
     htmlElement = document.documentElement;
-    themeToggleButton = document.getElementById('themeToggle');
-    themeToggleIcon = document.getElementById('themeToggleIcon');
-    themeToggleLabel = document.getElementById('themeToggleLabel');
-    sidebarToggleButton = document.getElementById('sidebarToggle');
-    navLinks = document.querySelectorAll('.sidebar .nav-link');
 
-    if (themeToggleButton) {
-      themeToggleButton.addEventListener('click', toggleTheme);
-    }
-    if (sidebarToggleButton) {
-      sidebarToggleButton.addEventListener('click', toggleSidebar);
-    }
-
+    // Theme initialization
+    document.body.addEventListener('request-theme-toggle', toggleTheme);
     const savedTheme = localStorage.getItem('appTheme');
     const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (savedTheme) {
@@ -93,22 +33,39 @@
       applyTheme('light');
     }
 
-    if (window.innerWidth > 768) {
-      const savedSidebarState = localStorage.getItem('sidebarCollapsed') === 'true';
-      applySidebarState(savedSidebarState);
-    } else {
-      applySidebarState(true);
-    }
+    // Sidebar loading and content visibility logic
+    const sidebarElement = document.querySelector('app-sidebar');
+    const mainContentElement = document.querySelector('.main-content-page');
 
-    setActiveNavLink();
+    if (mainContentElement) {
+      if (sidebarElement) {
+        const showContent = () => {
+          mainContentElement.classList.add('content-visible');
+        };
+
+        customElements.whenDefined('app-sidebar').then(() => {
+          sidebarElement.addEventListener('sidebar-loaded', showContent, { once: true });
+          sidebarElement.addEventListener('sidebar-load-failed', showContent, { once: true }); // Also show content if sidebar fails, or handle error
+
+          // Fallback: Check if sidebar might have loaded before listener attached
+          // This is less likely with {once: true} and whenDefined, but can be a safeguard.
+          if (sidebarElement.shadowRoot && sidebarElement.shadowRoot.querySelector('.sidebar-wrapper') && !mainContentElement.classList.contains('content-visible')) {
+            showContent();
+          }
+        });
+      } else {
+        // If no sidebar on the page, show content immediately
+        mainContentElement.classList.add('content-visible');
+      }
+    }
   }
 
-  // Wait for the DOM to be fully loaded before running the global initialization
+  // Ensure initializeTemplateApp is called after the DOM is ready.
+  // Your existing setup for calling initializeTemplateApp should be fine.
+  // Example:
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeTemplateApp);
   } else {
-    // DOMContentLoaded has already fired
     initializeTemplateApp();
   }
-
 })(); // End of IIFE

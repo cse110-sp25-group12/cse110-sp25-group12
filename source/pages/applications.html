@@ -7,76 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/colors.css"> 
+    <link rel="stylesheet" href="../components/card-model.css">
     <link rel="stylesheet" href="../styles/template.css"> 
     <link rel="stylesheet" href="../components/applications.css"> 
     <link rel="stylesheet" href="../components/job-card.css">
     <script src="../components/job-card.js" type="module"></script>
 </head>
 <body class="app-layout"> 
-    <aside class="sidebar">
-        <header class="sidebar-header">
-            <a href="dashboard.html" class="sidebar-logo">
-                <span class="material-symbols-outlined">work_history</span>
-                <span class="logo-text">JobTrack</span>
-            </a>
-        </header>
-
-        <a href="add_application.html" class="add-application-button">
-            <span class="material-symbols-outlined">add_circle</span>
-            <span class="button-text">Add Application</span>
-        </a>
-
-        <nav>
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="dashboard.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">dashboard</span>
-                        <span class="link-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="applications.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">view_list</span>
-                        <span class="link-text">Applications</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="interviews.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">calendar_month</span>
-                        <span class="link-text">Interviews</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="tasks.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">task_alt</span>
-                        <span class="link-text">Tasks</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="settings.html" class="nav-link"> 
-                        <span class="material-symbols-outlined">settings</span>
-                        <span class="link-text">Settings</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <footer class="sidebar-footer">
-            <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
-                <span class="material-symbols-outlined" id="themeToggleIcon">light_mode</span>
-                <span class="theme-label" id="themeToggleLabel">Light Mode</span>
-            </button>
-            <a href="#" class="user-profile"> 
-                 <span class="material-symbols-outlined">account_circle</span>
-                 <span class="profile-text">User Name</span>
-            </a>
-        </footer>
-    </aside>
+    <app-sidebar></app-sidebar>
 
     <main class="main-content-page"> 
         <header class="main-header">
-            <button class="sidebar-toggle-button" id="sidebarToggle" aria-label="Toggle sidebar">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
             <h1>All Applications</h1>
         </header>
         
@@ -87,9 +28,31 @@
             
         </div>
     </main>
+    
+    <div id="appDetailsModal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn"><span class="material-symbols-outlined">&#xe5cd;</span></button>
+        <button id="editApplicationBtn" class="close-btn"><span class="material-symbols-outlined">edit</span></button>
+        <h2 id="modal-title"></h2>
+        <p><strong>Company:</strong> <span id="modal-company"></span></p>
+        <p><strong>Job Type:</strong> <span id="modal-type"></span></p>
+        <p><strong>Location:</strong> <span id="modal-location"></span></p>
+        <p><strong>Salary:</strong> <span id="modal-salary"></span></p>
+        <p><strong>Date Applied:</strong> <span id="modal-date"></span></p>
+        <p><strong>Status:</strong> <span id="modal-status"></span></p>
+        <p><strong>Contact:</strong> <span id="modal-contact"></span></p>
+        <p><strong>Phone:</strong> <span id="modal-phone"></span></p>
+        <p><strong>Notes:</strong> <span id="modal-notes"></span></p>
+        <div><strong>Important Dates:</strong>
+        <ul id="modal-important-dates"></ul>
+        </div>
+    </div>
+    </div>
+
     <script type="module" src="../components/job-card-component.js"></script> 
     <script type="module" src="../controllers/sorting-controls.js"></script> 
     <script src="../styles/template.js" defer></script>
     <script type="module" src="../js/applications-page.js"></script>
+    <script src="../components/sidebar/sidebar.js" defer></script>
 </body>
 </html>
