@@ -11,6 +11,9 @@ class AppSidebar extends HTMLElement {
     if (!response.ok) {
       console.error(`Failed to load sidebar.html: ${response.statusText} (path: ../components/sidebar/sidebar.html)`);
       this.shadowRoot.innerHTML = '<p>Error loading sidebar content.</p>';
+      // Dispatch an event even on error, so the page doesn't hang indefinitely
+      // Or handle this state differently in the main page script
+      this.dispatchEvent(new CustomEvent('sidebar-load-failed', { bubbles: true, composed: true }));
       return;
     }
     const html = await response.text();
@@ -23,15 +26,19 @@ class AppSidebar extends HTMLElement {
 
     this.shadowRoot.innerHTML = `${styles}<aside class="sidebar-wrapper">${html}</aside>`;
 
+    // Dispatch an event to signal that the sidebar is loaded
+    this.dispatchEvent(new CustomEvent('sidebar-loaded', {
+      bubbles: true,
+      composed: true
+    }));
+
     this._themeToggleButton = this.shadowRoot.querySelector('.theme-toggle-button');
     this._themeToggleIcon = this._themeToggleButton?.querySelector('.material-symbols-outlined');
-    // _themeToggleLabel is intentionally not used for display in collapsed mode
     this._navLinks = this.shadowRoot.querySelectorAll('.nav-link');
 
     this._addEventListeners();
     this._updateThemeUI(document.documentElement.getAttribute('data-theme') || 'light');
     this._setActiveNavLink();
-    // Expansion logic is removed, so no _updateCollapsedState call
 
     this._themeObserver = new MutationObserver(mutations => {
       mutations.forEach(mutation => {

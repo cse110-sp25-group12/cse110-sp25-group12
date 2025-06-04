@@ -8,6 +8,7 @@
     height: 100vh;
     overflow: hidden; /* Prevent body scroll when main content scrolls */
     background-color: var(--md-sys-color-surface); /* Base background for the app */
+    margin: 0px;
 }
 
 /* Sidebar placeholder styling (actual component is app-sidebar) */
@@ -18,10 +19,20 @@
     flex-grow: 1;
     height: 100vh;
     padding: 2em;
-    overflow-y: auto; /* Allow scrolling for main content */
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     background-color: var(--md-sys-color-surface);
+    /* Initially hide the main content */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Fade-in transition */
+}
+
+.main-content-page.content-visible {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s; /* Apply visibility change immediately with opacity */
 }
 
 .main-header { 
