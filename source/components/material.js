@@ -207,8 +207,9 @@
       applySidebarState(true);
     }
 
-    // Create charts with the sample data
-    createCharts(sampleChartData);
+    // Create charts with the sample data Commented out for now
+    // Uncomment the line below to create charts with sample data
+    //createCharts(sampleChartData);
   }
 
   document.addEventListener('DOMContentLoaded', initializeApp);

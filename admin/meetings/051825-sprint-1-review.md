@@ -1,6 +1,6 @@
 # Sprint 1 Review – 05/18/2025
 
-## Items we worked on
+## Items we worked on (more information on Github Kanban Board)
 
 - **Application CARD Component**  
   - Built the core Card object component  

@@ -160,4 +160,82 @@
   font-size: 0.95rem;
 }
 
+/* ==== Update and Delete Button Styles ==== */
+.delete-btn, .update-btn {
+    position: absolute;
+    top: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex !important; /* Force display */
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    z-index: 100;
+    font-weight: 500;
+    min-height: 32px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    opacity: 1 !important; /* Ensure visibility */
+    visibility: visible !important; /* Ensure visibility */
+}
+
+.delete-btn {
+    right: 8px;
+}
+
+.update-btn {
+    right: 80px; /* Position next to delete button with more space */
+}
+
+.delete-btn:hover {
+    background: rgba(220, 53, 69, 0.9);
+    transform: scale(1.05);
+}
+
+.update-btn:hover {
+    background: rgba(40, 167, 69, 0.9);
+    transform: scale(1.05);
+}
+
+.delete-btn .material-symbols-outlined,
+.update-btn .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.delete-text, .update-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Ensure the buttons are always on top */
+.application-wrapper:hover .delete-btn,
+.application-wrapper:hover .update-btn {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Debug styles - remove these once buttons are working */
+.delete-btn {
+    background: rgba(220, 53, 69, 0.8) !important;
+}
+
+.update-btn {
+    background: rgba(40, 167, 69, 0.8) !important;
+}
+
+/* Application wrapper to position buttons */
+.application-wrapper {
+    position: relative;
+    display: inline-block;
+    /* Add a minimum height to ensure buttons have space */
+    min-height: 200px;
+    /* Add some margin to ensure buttons don't overlap with other cards */
+    margin: 10px;
+    /* Ensure the wrapper has a visible boundary for debugging */
+    border: 1px solid transparent;
+}
+
 

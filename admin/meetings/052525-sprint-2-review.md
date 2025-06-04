@@ -1,6 +1,6 @@
 # Sprint 2 Review – 05/25/2025
 
-## Items we worked on
+## Items we worked on (more information on Github Kanban Board)
 
 - **Frontend Bugfixes**  
   - Fixed various UI/layout issues across forms and components  
