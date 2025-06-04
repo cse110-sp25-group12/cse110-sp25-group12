@@ -292,8 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
     offersReceivedDetailsEl.textContent =
       newOffers.length > 0
         ? `${newOffers.length} new offer${
-            newOffers.length > 1 ? 's' : ''
-          }!`
+          newOffers.length > 1 ? 's' : ''
+        }!`
         : 'No new offers';
   }
 
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthlyData = getApplicationsByMonth();
 
     try {
-      new Chart(applicationsChartEl.getContext('2d'), {
+      new Chart(applicationsChartEl.getContext('2d'), { /*eslint-disable-line */
         type: 'line',
         data: {
           labels: monthlyData.months,
@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     try {
-      new Chart(statusChartEl.getContext('2d'), {
+      new Chart(statusChartEl.getContext('2d'), { /*eslint-disable-line */
         type: 'doughnut',
         data: {
           labels: statusLabels,
