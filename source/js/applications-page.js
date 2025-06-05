@@ -99,12 +99,13 @@ function setupModal() {
 }
 
 function openModal(data) {
+  window.currentlyViewingJob = data;
   const modal = document.getElementById('appDetailsModal');
   modal.classList.add('show');
 
   document.getElementById('modal-title').textContent = data.jobPosition;
   document.getElementById('modal-company').textContent = data.company;
-  document.getElementById('modal-type').textContent = data.jobType;
+  document.getElementById('modal-type').textContent = data.positionType;
   document.getElementById('modal-salary').textContent = `$${data.salary?.toLocaleString() || '-'}`;
   document.getElementById('modal-location').textContent = data.location;
   document.getElementById('modal-date').textContent = data.dateApplied;
@@ -149,6 +150,17 @@ document.addEventListener('click', (e) => {
     }
   }
 });
+
+document.getElementById('editApplicationBtn').addEventListener('click', () => {
+  if (!window.currentlyViewingJob) return;
+
+  // Store job to edit in localStorage temporarily
+  localStorage.setItem('editJobData', JSON.stringify(window.currentlyViewingJob));
+
+  // Redirect to add form (which we will adjust to handle editing)
+  window.location.href = 'add_application.html';
+});
+
 
 export function updateCardInDOM(applicationId) {
   const cardElement = document.querySelector(`job-app-card[data-id="${applicationId}"]`);
