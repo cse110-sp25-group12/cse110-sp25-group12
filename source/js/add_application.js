@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
       contact: {
         name: document.getElementById('contactName').value,
         email: document.getElementById('contactEmail').value,
-        phone: document.getElementById('contactPhone').value
+        phoneNumber: document.getElementById('contactPhone').value
       },
       notes: document.getElementById('notes').value
     };
