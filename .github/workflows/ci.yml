@@ -97,6 +97,10 @@ jobs:
   coverage:
     name: Jest Coverage Report
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: write
     steps:
       - uses: actions/checkout@v3
 
