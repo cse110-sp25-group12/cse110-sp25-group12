@@ -18,6 +18,7 @@
       "Technical Interview": "2025-04-12"
     },
     "status": "Applied",
+    "bookmarked": true,
     "logo": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
   },
   {
@@ -38,6 +39,7 @@
       "Challenge Submission": "2025-04-24"
     },
     "status": "Interviewing",
+    "bookmarked": false,
     "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
   },
   {
@@ -57,7 +59,8 @@
     "importantDates": {
       "Offer Deadline": "2025-05-20"
     },
-    "status": "Offer",
+    "status": "Offered",
+    "bookmarked": true,
     "logo": "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
   }
 ]

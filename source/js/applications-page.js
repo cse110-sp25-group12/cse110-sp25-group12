@@ -1,5 +1,6 @@
 import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
+import { updateApplication } from '../controllers/updateApplication.js';
 
 
 // Load applications from JSON file and render
@@ -26,6 +27,11 @@ async function fetchApplications() {
 }
 
 function renderCards(jobs) {
+  // If no jobs parameter is provided, get from localStorage
+  if (!jobs) {
+    jobs = JSON.parse(localStorage.getItem('applications')) || [];
+  }
+
   const container = document.getElementById('applicationCardsContainer');
   container.innerHTML = '';
 
@@ -64,6 +70,128 @@ function renderCards(jobs) {
     `;
     deleteBtn.dataset.id = job.id;
     deleteBtn.title = 'Delete this application';
+
+    const updateBtn = document.createElement('button');
+    updateBtn.classList.add('update-btn');
+    updateBtn.innerHTML = `
+      <span class="material-symbols-outlined">edit</span>
+      <span class="update-text">Edit</span>
+    `;
+    updateBtn.dataset.id = job.id;
+    updateBtn.title = 'Edit this application';
+    updateBtn.style.display = 'flex'; // Ensure it's visible
+
+    updateBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent modal from opening
+
+      // Prevent multiple forms from stacking
+      const existingForm = wrapper.querySelector('.inline-update-form');
+      if (existingForm) {
+        existingForm.remove();
+        return;
+      }
+
+      if (!document.getElementById('inline-update-style')) {
+        const style = document.createElement('style');
+        style.id = 'inline-update-style';
+        style.textContent = `
+          .inline-update-form {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 260px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 8px;
+          }
+          .inline-update-form label {
+            color: #f0f0f0; 
+            font-weight: 500;
+          }
+          .inline-update-form input {
+            padding: 4px 6px;
+            width: 100%;
+            box-sizing: border-box;
+          }
+          .inline-update-form .button-row {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-start;
+          }
+          .inline-update-form button {
+            padding: 4px 10px;
+            font-size: 0.9rem;
+            width: auto;
+            cursor: pointer;
+          }
+          .inline-update-form textarea {
+            padding: 4px 6px;
+            font-size: 0.9rem;
+            resize: vertical;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #000;
+            width: 100%;
+            box-sizing: border-box;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
+      const form = document.createElement('form');
+      form.classList.add('inline-update-form');
+      form.innerHTML = `
+      <label>Company:<input type="text" name="company" value="${job.company}" required /></label>
+      <label>Job Position: <input type="text" name="jobPosition" value="${job.jobPosition}" required /></label>
+      <label>Job Type: <input type="text" name="jobType" value="${job.jobType || ''}" /></label>
+      <label>Location: <input type="text" name="location" value="${job.location || ''}" /></label>
+      <label>Salary: <input type="number" name="salary" value="${job.salary || ''}" /></label>
+      <label>Date Applied: <input type="date" name="dateApplied" value="${job.dateApplied || ''}" /></label>
+      <label>Status: <input type="text" name="status" value="${job.status || ''}" /></label>
+      <label>Contact Email: <input type="email" name="email" value="${job.contact?.email || ''}" /></label>
+      <label>Phone Number: <input type="tel" name="phone" value="${job.contact?.phoneNumber || ''}" /></label>
+      <label>Notes: <textarea name="notes" rows="2">${job.notes || ''}</textarea></label>
+      <div class="button-row">
+        <button type="submit">Save</button>
+        <button type="button" class="cancel-update">Cancel</button>
+      </div>
+    `;
+
+      // Add event listeners
+      form.querySelector('.cancel-update').addEventListener('click', () => {
+        form.remove();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const updatedData = {
+          company: form.company.value.trim(),
+          jobPosition: form.jobPosition.value.trim(),
+          jobType: form.jobType.value.trim(),
+          location: form.location.value.trim(),
+          salary: Number(form.salary.value),
+          dateApplied: form.dateApplied.value,
+          status: form.status.value.trim(),
+          contact: {
+            email: form.email.value.trim(),
+            phoneNumber: form.phone.value.trim()
+          },
+          notes: form.notes.value.trim(),
+        };
+
+        const updatedApp = updateApplication(job.id, updatedData);
+        if (updatedApp) {
+          updateCardInDOM(job.id);
+          form.remove();
+          location.reload();
+        }
+      });
+
+      wrapper.appendChild(form);
+    });
 
     wrapper.appendChild(cardElem);
     wrapper.appendChild(deleteBtn);
@@ -181,3 +309,6 @@ export function updateCardInDOM(applicationId) {
     }, 300);
   }
 }
+
+// Make renderCards available globally for sorting functionality
+window.renderCards = renderCards;
