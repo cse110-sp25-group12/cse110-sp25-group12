@@ -1,6 +1,6 @@
 import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
-import { updateApplication } from '../controllers/updateApplication.js';
+
 
 // Load applications from JSON file and render
 // Only run once if localStorage is empty (first visit)
