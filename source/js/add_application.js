@@ -3,9 +3,23 @@ import { updateApplication } from '../controllers/updateApplication.js';
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   //add event listener to form
+
+  const addBtn = document.getElementById('addApplicationBtn');
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      localStorage.removeItem('editJobData');
+    });
+  }
+
   const form = document.getElementById('addApplicationForm');
+
+  const rawEdit = localStorage.getItem('editJobData');
+  if (!rawEdit) {
+    localStorage.removeItem('editJobData');
+  }
+
   const editData = localStorage.getItem('editJobData');
 
   if (editData) {
