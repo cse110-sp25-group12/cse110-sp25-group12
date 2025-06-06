@@ -2,6 +2,7 @@ import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
 import { updateApplication } from '../controllers/updateApplication.js';
 
+
 // Load applications from JSON file and render
 // Only run once if localStorage is empty (first visit)
 document.addEventListener('DOMContentLoaded', async () => {
@@ -194,17 +195,10 @@ function renderCards(jobs) {
 
     wrapper.appendChild(cardElem);
     wrapper.appendChild(deleteBtn);
-    wrapper.appendChild(updateBtn);
 
-    // Debug logging to verify buttons are created
     console.log('Created buttons for job:', job.id, {
       deleteBtn: deleteBtn.classList.contains('delete-btn'),
-      updateBtn: updateBtn.classList.contains('update-btn'),
-      wrapperChildren: wrapper.children.length,
-      updateBtnDisplay: window.getComputedStyle(updateBtn).display,
-      updateBtnPosition: window.getComputedStyle(updateBtn).position,
-      updateBtnTop: window.getComputedStyle(updateBtn).top,
-      updateBtnRight: window.getComputedStyle(updateBtn).right
+      wrapperChildren: wrapper.children.length
     });
 
     container.appendChild(wrapper);
@@ -233,12 +227,13 @@ function setupModal() {
 }
 
 function openModal(data) {
+  window.currentlyViewingJob = data;
   const modal = document.getElementById('appDetailsModal');
   modal.classList.add('show');
 
   document.getElementById('modal-title').textContent = data.jobPosition;
   document.getElementById('modal-company').textContent = data.company;
-  document.getElementById('modal-type').textContent = data.jobType;
+  document.getElementById('modal-type').textContent = data.positionType;
   document.getElementById('modal-salary').textContent = `$${data.salary?.toLocaleString() || '-'}`;
   document.getElementById('modal-location').textContent = data.location;
   document.getElementById('modal-date').textContent = data.dateApplied;
@@ -284,19 +279,27 @@ document.addEventListener('click', (e) => {
   }
 });
 
+document.getElementById('editApplicationBtn').addEventListener('click', () => {
+  if (!window.currentlyViewingJob) return;
+
+  // Store job to edit in localStorage temporarily
+  localStorage.setItem('editJobData', JSON.stringify(window.currentlyViewingJob));
+
+  // Redirect to add form (which we will adjust to handle editing)
+  window.location.href = 'add_application.html';
+});
+
+
 export function updateCardInDOM(applicationId) {
   const cardElement = document.querySelector(`job-app-card[data-id="${applicationId}"]`);
   if (!cardElement) return;
 
-  // Get the latest updated data from localStorage
   const cards = JSON.parse(localStorage.getItem('applications')) || [];
   const updatedCard = cards.find(card => card.id === applicationId);
   if (!updatedCard) return;
 
-  // Update the card by re-setting its data (re-renders the shadow DOM)
   cardElement.data = updatedCard;
 
-  // Optional: Visual feedback
   const wrapper = cardElement.closest('.application-wrapper');
   if (wrapper) {
     wrapper.style.transition = 'background-color 0.3s ease';
@@ -309,6 +312,3 @@ export function updateCardInDOM(applicationId) {
 
 // Make renderCards available globally for sorting functionality
 window.renderCards = renderCards;
-
-
-
