@@ -3,7 +3,7 @@ import { updateApplication } from '../controllers/updateApplication.js';
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   //add event listener to form
 
   const addBtn = document.getElementById('addApplicationBtn');
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const rawEdit = localStorage.getItem('editJobData');
   if (!rawEdit) {
-    
     localStorage.removeItem('editJobData');
   }
 
