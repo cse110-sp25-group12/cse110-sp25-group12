@@ -93,7 +93,7 @@ jobs:
         uses: ArtiomTr/jest-coverage-report-action@v2
         id: coverage
         with:
-          output: comment
+          output: report-markdown
           annotations: none
       
       - name: Add sticky comment to PR
