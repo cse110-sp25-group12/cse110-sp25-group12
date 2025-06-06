@@ -93,10 +93,10 @@ jobs:
         uses: ArtiomTr/jest-coverage-report-action@v2
         id: coverage
         with:
-          output: comment, report-markdown
+          output: comment
           annotations: none
       
-      # - name: Add sticky comment to PR
-      #   uses: marocchino/sticky-pull-request-comment@v2
-      #   with:
-      #     message: ${{ steps.coverage.outputs.report }}
+      - name: Add sticky comment to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: ${{ steps.coverage.outputs.report }}
