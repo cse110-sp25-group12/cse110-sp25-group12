@@ -1,4 +1,4 @@
-import 'https://cdn.jsdelivr.net/npm/chart.js';
+import Chart from 'chart.js/auto';
 
 /**
  * Main function that initializes the dashboard and renders all charts and statistics
