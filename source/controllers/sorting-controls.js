@@ -10,43 +10,47 @@
 const SORT_OPTIONS = {
   'date-desc': 'Date Applied (Newest First)',
   'date-asc': 'Date Applied (Oldest First)',
-  'status-priority': 'Status (Most Important First)',
-  'status-reverse': 'Status (Least Important First)',
   'favorites-first': 'Favorites First',
   'company-asc': 'Company (A-Z)',
   'company-desc': 'Company (Z-A)'
 };
 
 /**
- * Status priority order - most important first
- * @constant {Object}
+ * Available filter options for status
+ * @constant {Array}
  */
-const STATUS_PRIORITY = {
-  'Offer': 1,
-  'Interviewing': 2,
-  'Screening': 3,
-  'Applied': 4,
-  'Wishlist': 5,
-  'Withdrawn': 6,
-  'Rejected': 7,
-  'Ghosted': 8
-};
+const FILTER_STATUS_OPTIONS = [
+  'All',
+  'Offer',
+  'Interviewing',
+  'Screening',
+  'Applied',
+  'Wishlist',
+  'Withdrawn',
+  'Rejected',
+  'Ghosted'
+];
+
+// Current filter state
+let currentFilter = 'All';
 
 /**
  * Initializes sorting controls when the page loads
  */
 export function initSortingControls() {
   document.addEventListener('DOMContentLoaded', () => {
-    createSortingUI();
+    createSortingAndFilterUI();
     const defaultSort = getSavedSortPreference() || 'date-desc';
-    applySorting(defaultSort);
+    const defaultFilter = getSavedFilterPreference() || 'All';
+    currentFilter = defaultFilter;
+    applyFilterAndSort(defaultFilter, defaultSort);
   });
 }
 
 /**
- * Creates the sorting dropdown UI element
+ * Creates the sorting dropdown and filter buttons UI
  */
-function createSortingUI() {
+function createSortingAndFilterUI() {
   const controlsContainer = document.querySelector('.applications-controls');
   if (!controlsContainer) {
     console.warn('Applications controls container not found');
@@ -56,6 +60,11 @@ function createSortingUI() {
   // Clear existing content
   controlsContainer.innerHTML = '';
 
+  // Create main controls wrapper
+  const controlsWrapper = document.createElement('div');
+  controlsWrapper.className = 'controls-wrapper';
+
+  // Create sort container
   const sortContainer = document.createElement('div');
   sortContainer.className = 'sort-container';
 
@@ -82,16 +91,113 @@ function createSortingUI() {
     sortSelect.value = savedSort;
   }
 
-  // Add event listener
+  // Add event listener for sorting
   sortSelect.addEventListener('change', (e) => {
     const sortValue = e.target.value;
     saveSortPreference(sortValue);
-    applySorting(sortValue);
+    applyFilterAndSort(currentFilter, sortValue);
   });
 
   sortContainer.appendChild(sortLabel);
   sortContainer.appendChild(sortSelect);
-  controlsContainer.appendChild(sortContainer);
+
+  // Create filter container
+  const filterContainer = document.createElement('div');
+  filterContainer.className = 'filter-container';
+
+  const filterLabel = document.createElement('div');
+  filterLabel.textContent = 'Filter by Status:';
+  filterLabel.className = 'filter-label';
+
+  const filterButtonsContainer = document.createElement('div');
+  filterButtonsContainer.className = 'filter-buttons';
+
+  // Create filter buttons
+  FILTER_STATUS_OPTIONS.forEach(status => {
+    const filterBtn = document.createElement('button');
+    filterBtn.className = 'filter-btn';
+    filterBtn.textContent = status;
+    filterBtn.dataset.status = status;
+
+    // Set active state for saved filter
+    const savedFilter = getSavedFilterPreference();
+    if ((savedFilter && savedFilter === status) || (!savedFilter && status === 'All')) {
+      filterBtn.classList.add('active');
+    }
+
+    // Add click event listener
+    filterBtn.addEventListener('click', () => {
+      // Remove active class from all buttons
+      filterButtonsContainer.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Add active class to clicked button
+      filterBtn.classList.add('active');
+
+      // Update current filter and apply
+      currentFilter = status;
+      saveFilterPreference(status);
+
+      // Get current sort value
+      const currentSort = sortSelect.value;
+      applyFilterAndSort(status, currentSort);
+    });
+
+    filterButtonsContainer.appendChild(filterBtn);
+  });
+
+  filterContainer.appendChild(filterLabel);
+  filterContainer.appendChild(filterButtonsContainer);
+
+  // Add both containers to wrapper
+  controlsWrapper.appendChild(sortContainer);
+  controlsWrapper.appendChild(filterContainer);
+  controlsContainer.appendChild(controlsWrapper);
+}
+
+/**
+ * Applies both filtering and sorting to applications and re-renders the page
+ * @param {string} filterStatus - The status to filter by ('All' for no filter)
+ * @param {string} sortOption - The sorting option key
+ */
+export function applyFilterAndSort(filterStatus, sortOption) {
+  const applications = JSON.parse(localStorage.getItem('applications')) || [];
+  if (applications.length === 0) {
+    console.log('No applications to filter and sort');
+    return;
+  }
+
+  // First filter applications
+  let filteredApplications = filterApplications(applications, filterStatus);
+
+  // Then sort the filtered results
+  const sortedAndFilteredApplications = sortApplications(filteredApplications, sortOption);
+
+  // Re-render the cards with filtered and sorted data
+  if (typeof window.renderCards === 'function') {
+    window.renderCards(sortedAndFilteredApplications);
+  } else {
+    console.warn('renderCards function not found, page may need to be refreshed');
+    location.reload();
+  }
+}
+
+/**
+ * Filters applications by status
+ * @param {Array} applications - Array of application objects
+ * @param {string} filterStatus - Status to filter by ('All' for no filter)
+ * @returns {Array} Filtered array of applications
+ */
+function filterApplications(applications, filterStatus) {
+  if (filterStatus === 'All') {
+    return applications;
+  }
+
+  return applications.filter(app => {
+    const appStatus = (app.status || '').trim();
+    return appStatus === filterStatus;
+  });
 }
 
 /**
@@ -99,37 +205,7 @@ function createSortingUI() {
  * @param {string} sortOption - The sorting option key
  */
 export function applySorting(sortOption) {
-  const applications = JSON.parse(localStorage.getItem('applications')) || [];
-  if (applications.length === 0) {
-    console.log('No applications to sort');
-    return;
-  }
-
-  const sortedApplications = sortApplications(applications, sortOption);
-
-  // Re-render the cards with sorted data
-  if (typeof window.renderCards === 'function') {
-    window.renderCards(sortedApplications);
-  } else {
-    // Try to find and call renderCards from the global scope
-    const renderCards = window.renderCards || document.renderCards;
-    if (renderCards) {
-      renderCards(sortedApplications);
-    } else {
-      console.warn('renderCards function not found, page may need to be refreshed');
-      location.reload();
-    }
-  }
-}
-
-/**
- * Gets the priority value for a status
- * @param {string} status - The status string
- * @returns {number} Priority value (lower = higher priority)
- */
-function getStatusPriority(status) {
-  const normalizedStatus = (status || '').trim();
-  return STATUS_PRIORITY[normalizedStatus] || 999; // Unknown statuses go to the end
+  applyFilterAndSort(currentFilter, sortOption);
 }
 
 /**
@@ -153,20 +229,6 @@ function sortApplications(applications, sortOption) {
       const dateA2 = new Date(a.dateApplied || '1970-01-01');
       const dateB2 = new Date(b.dateApplied || '1970-01-01');
       return dateA2 - dateB2;
-    }
-
-    case 'status-priority': {
-      // Sort by status priority (most important first)
-      const priorityA = getStatusPriority(a.status);
-      const priorityB = getStatusPriority(b.status);
-      return priorityA - priorityB;
-    }
-
-    case 'status-reverse': {
-      // Sort by status priority (least important first)
-      const priorityA2 = getStatusPriority(a.status);
-      const priorityB2 = getStatusPriority(b.status);
-      return priorityB2 - priorityA2;
     }
 
     case 'favorites-first': {
@@ -219,6 +281,22 @@ function saveSortPreference(sortOption) {
  */
 function getSavedSortPreference() {
   return localStorage.getItem('sortPreference');
+}
+
+/**
+ * Saves the filter preference to localStorage
+ * @param {string} filterStatus - The filter status
+ */
+function saveFilterPreference(filterStatus) {
+  localStorage.setItem('filterPreference', filterStatus);
+}
+
+/**
+ * Retrieves the saved filter preference from localStorage
+ * @returns {string|null} The saved filter status or null if not found
+ */
+function getSavedFilterPreference() {
+  return localStorage.getItem('filterPreference');
 }
 
 // Make functions available globally for debugging
