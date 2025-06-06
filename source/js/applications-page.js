@@ -34,9 +34,17 @@ function renderCards(jobs) {
   const container = document.getElementById('applicationCardsContainer');
   container.innerHTML = '';
 
+  // Get current filter for header display
+  const currentFilter = localStorage.getItem('filterPreference') || 'All';
+  const totalApplications = JSON.parse(localStorage.getItem('applications')) || [];
+  
   const header = document.querySelector('.main-header h1');
   if (header) {
-    header.textContent = `All Applications (${jobs.length})`;
+    if (currentFilter === 'All') {
+      header.textContent = `All Applications (${jobs.length})`;
+    } else {
+      header.textContent = `${currentFilter} Applications (${jobs.length} of ${totalApplications.length})`;
+    }
   }
 
   if (jobs.length === 0) {
