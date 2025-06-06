@@ -110,7 +110,7 @@ function openModal(data) {
 
   document.getElementById('modal-title').textContent = data.jobPosition;
   document.getElementById('modal-company').textContent = data.company;
-  document.getElementById('modal-type').textContent = data.positionType;
+  document.getElementById('modal-type').textContent = data.jobType;
   document.getElementById('modal-salary').textContent = `$${data.salary?.toLocaleString() || '-'}`;
   document.getElementById('modal-location').textContent = data.location;
   document.getElementById('modal-date').textContent = data.dateApplied;
