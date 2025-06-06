@@ -37,7 +37,7 @@ function renderCards(jobs) {
   // Get current filter for header display
   const currentFilter = localStorage.getItem('filterPreference') || 'All';
   const totalApplications = JSON.parse(localStorage.getItem('applications')) || [];
-  
+
   const header = document.querySelector('.main-header h1');
   if (header) {
     if (currentFilter === 'All') {

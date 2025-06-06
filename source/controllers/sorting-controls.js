@@ -22,7 +22,7 @@ const SORT_OPTIONS = {
 const FILTER_STATUS_OPTIONS = [
   'All',
   'Offer',
-  'Interviewing', 
+  'Interviewing',
   'Screening',
   'Applied',
   'Wishlist',
@@ -118,7 +118,7 @@ function createSortingAndFilterUI() {
     filterBtn.className = 'filter-btn';
     filterBtn.textContent = status;
     filterBtn.dataset.status = status;
-    
+
     // Set active state for saved filter
     const savedFilter = getSavedFilterPreference();
     if ((savedFilter && savedFilter === status) || (!savedFilter && status === 'All')) {
@@ -131,14 +131,14 @@ function createSortingAndFilterUI() {
       filterButtonsContainer.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active');
       });
-      
+
       // Add active class to clicked button
       filterBtn.classList.add('active');
-      
+
       // Update current filter and apply
       currentFilter = status;
       saveFilterPreference(status);
-      
+
       // Get current sort value
       const currentSort = sortSelect.value;
       applyFilterAndSort(status, currentSort);
@@ -170,7 +170,7 @@ export function applyFilterAndSort(filterStatus, sortOption) {
 
   // First filter applications
   let filteredApplications = filterApplications(applications, filterStatus);
-  
+
   // Then sort the filtered results
   const sortedAndFilteredApplications = sortApplications(filteredApplications, sortOption);
 
@@ -193,7 +193,7 @@ function filterApplications(applications, filterStatus) {
   if (filterStatus === 'All') {
     return applications;
   }
-  
+
   return applications.filter(app => {
     const appStatus = (app.status || '').trim();
     return appStatus === filterStatus;
@@ -206,16 +206,6 @@ function filterApplications(applications, filterStatus) {
  */
 export function applySorting(sortOption) {
   applyFilterAndSort(currentFilter, sortOption);
-}
-
-/**
- * Gets the priority value for a status
- * @param {string} status - The status string
- * @returns {number} Priority value (lower = higher priority)
- */
-function getStatusPriority(status) {
-  const normalizedStatus = (status || '').trim();
-  return STATUS_PRIORITY[normalizedStatus] || 999; // Unknown statuses go to the end
 }
 
 /**
