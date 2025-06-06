@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - cicd/initial-pipeline
 
 
   workflow_dispatch:
@@ -37,7 +36,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
-          publish_branch: ${{ github.ref == 'refs/heads/main' && 'docs' || 'docs-cicd' }}
+          publish_branch: 'docs'
           force_orphan: true
 
 

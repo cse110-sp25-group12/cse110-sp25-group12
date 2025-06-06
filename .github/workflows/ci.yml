@@ -70,3 +70,34 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  coverage:
+    name: Jest Coverage Report
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run coverage report
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        id: coverage
+        with:
+          custom-title: Coverage Table. (For in-detailed coverage, run `npm run test:coverage` locally)
+          output: comment, report-markdown
+          annotations: none
+      
+      - name: Add sticky comment to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: ${{ steps.coverage.outputs.report }}
