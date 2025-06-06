@@ -4,8 +4,12 @@
  */
 
 export function deleteApplication(applicationId){
+  
+  // e.detail.id is a string; convert to number
+  const idToRemove = Number(applicationId);
+
   const cards = JSON.parse(localStorage.getItem('applications')) || [];
-  const updatedCards = cards.filter(card => card.id !== applicationId);
+  const updatedCards = cards.filter(card => card.id !== idToRemove);
   localStorage.setItem('applications', JSON.stringify(updatedCards));
 
   // Remove the entire wrapper that contains both the card and delete button

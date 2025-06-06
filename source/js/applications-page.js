@@ -2,18 +2,28 @@ import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
 import { updateApplication } from '../controllers/updateApplication.js';
 
-
 // Load applications from JSON file and render
 // Only run once if localStorage is empty (first visit)
 document.addEventListener('DOMContentLoaded', async () => {
-  if (!localStorage.getItem('applications')) {
-    const jobs = await fetchApplications();
+  let jobs;
+  const isInitialized = localStorage.getItem('applicationsInitialized');
+
+  if (isInitialized) {
+    // Already initialized — just use localStorage
+    jobs = JSON.parse(localStorage.getItem('applications')) || [];
+  } else {
+    // First time — load from file
+    jobs = await fetchApplications();
     localStorage.setItem('applications', JSON.stringify(jobs));
+    localStorage.setItem('applicationsInitialized', 'true'); // Mark as initialized
   }
-  const jobs = JSON.parse(localStorage.getItem('applications'));
+
   renderCards(jobs);
   setupModal();
 });
+
+
+
 
 async function fetchApplications() {
   try {
@@ -27,7 +37,6 @@ async function fetchApplications() {
 }
 
 function renderCards(jobs) {
-  // If no jobs parameter is provided, get from localStorage
   if (!jobs) {
     jobs = JSON.parse(localStorage.getItem('applications')) || [];
   }
@@ -60,147 +69,28 @@ function renderCards(jobs) {
     const cardElem = document.createElement('job-app-card');
     cardElem.data = job;
     cardElem.dataset.id = job.id;
-    cardElem.addEventListener('click', () => openModal(job));
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-btn');
-    deleteBtn.innerHTML = `
-      <span class="material-symbols-outlined">delete</span>
-      <span class="delete-text">Delete</span>
-    `;
-    deleteBtn.dataset.id = job.id;
-    deleteBtn.title = 'Delete this application';
-
-    const updateBtn = document.createElement('button');
-    updateBtn.classList.add('update-btn');
-    updateBtn.innerHTML = `
-      <span class="material-symbols-outlined">edit</span>
-      <span class="update-text">Edit</span>
-    `;
-    updateBtn.dataset.id = job.id;
-    updateBtn.title = 'Edit this application';
-    updateBtn.style.display = 'flex'; // Ensure it's visible
-
-    updateBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // Prevent modal from opening
-
-      // Prevent multiple forms from stacking
-      const existingForm = wrapper.querySelector('.inline-update-form');
-      if (existingForm) {
-        existingForm.remove();
-        return;
-      }
-
-      if (!document.getElementById('inline-update-style')) {
-        const style = document.createElement('style');
-        style.id = 'inline-update-style';
-        style.textContent = `
-          .inline-update-form {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            max-width: 260px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 8px;
-          }
-          .inline-update-form label {
-            color: #f0f0f0; 
-            font-weight: 500;
-          }
-          .inline-update-form input {
-            padding: 4px 6px;
-            width: 100%;
-            box-sizing: border-box;
-          }
-          .inline-update-form .button-row {
-            display: flex;
-            gap: 8px;
-            justify-content: flex-start;
-          }
-          .inline-update-form button {
-            padding: 4px 10px;
-            font-size: 0.9rem;
-            width: auto;
-            cursor: pointer;
-          }
-          .inline-update-form textarea {
-            padding: 4px 6px;
-            font-size: 0.9rem;
-            resize: vertical;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background: #fff;
-            color: #000;
-            width: 100%;
-            box-sizing: border-box;
-          }
-        `;
-        document.head.appendChild(style);
-      }
-
-      const form = document.createElement('form');
-      form.classList.add('inline-update-form');
-      form.innerHTML = `
-      <label>Company:<input type="text" name="company" value="${job.company}" required /></label>
-      <label>Job Position: <input type="text" name="jobPosition" value="${job.jobPosition}" required /></label>
-      <label>Job Type: <input type="text" name="jobType" value="${job.jobType || ''}" /></label>
-      <label>Location: <input type="text" name="location" value="${job.location || ''}" /></label>
-      <label>Salary: <input type="number" name="salary" value="${job.salary || ''}" /></label>
-      <label>Date Applied: <input type="date" name="dateApplied" value="${job.dateApplied || ''}" /></label>
-      <label>Status: <input type="text" name="status" value="${job.status || ''}" /></label>
-      <label>Contact Email: <input type="email" name="email" value="${job.contact?.email || ''}" /></label>
-      <label>Phone Number: <input type="tel" name="phone" value="${job.contact?.phoneNumber || ''}" /></label>
-      <label>Notes: <textarea name="notes" rows="2">${job.notes || ''}</textarea></label>
-      <div class="button-row">
-        <button type="submit">Save</button>
-        <button type="button" class="cancel-update">Cancel</button>
-      </div>
-    `;
-
-      // Add event listeners
-      form.querySelector('.cancel-update').addEventListener('click', () => {
-        form.remove();
-      });
-
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const updatedData = {
-          company: form.company.value.trim(),
-          jobPosition: form.jobPosition.value.trim(),
-          jobType: form.jobType.value.trim(),
-          location: form.location.value.trim(),
-          salary: Number(form.salary.value),
-          dateApplied: form.dateApplied.value,
-          status: form.status.value.trim(),
-          contact: {
-            email: form.email.value.trim(),
-            phoneNumber: form.phone.value.trim()
-          },
-          notes: form.notes.value.trim(),
-        };
-
-        const updatedApp = updateApplication(job.id, updatedData);
-        if (updatedApp) {
-          updateCardInDOM(job.id);
-          form.remove();
-          location.reload();
-        }
-      });
-
-      wrapper.appendChild(form);
+    // Prevent modal if clicking inside any button (like delete)
+    cardElem.addEventListener('click', (e) => {
+      if (e.composedPath().some(el => el.classList?.contains('delete-btn'))) return;
+      openModal(job);
     });
+
+    // Handle delete event from the custom element
+    cardElem.addEventListener('delete-card', (e) => {
+      const appId = e.detail.id;
+      if (confirm('Are you sure you want to delete this application?')) {
+        deleteApplication(appId);
+        setTimeout(() => {
+          const updated = JSON.parse(localStorage.getItem('applications')) || [];
+          renderCards(updated); // Wait until fade-out is done
+        }, 310); // Slightly longer than the 300ms animation
+      }
+    });
+    
+    
 
     wrapper.appendChild(cardElem);
-    wrapper.appendChild(deleteBtn);
-
-    console.log('Created buttons for job:', job.id, {
-      deleteBtn: deleteBtn.classList.contains('delete-btn'),
-      wrapperChildren: wrapper.children.length
-    });
-
     container.appendChild(wrapper);
   }
 }
@@ -253,42 +143,11 @@ function openModal(data) {
   }
 }
 
-document.addEventListener('click', (e) => {
-  const deleteBtn = e.target.closest('.delete-btn');
-  if (deleteBtn) {
-    const appId = deleteBtn.dataset.id;
-    if (confirm('Are you sure you want to delete this application?')) {
-      deleteApplication(appId);
-      setTimeout(() => {
-        const remainingCards = JSON.parse(localStorage.getItem('applications')) || [];
-        const header = document.querySelector('.main-header h1');
-        if (header) header.textContent = `All Applications (${remainingCards.length})`;
-        if (remainingCards.length === 0) {
-          const container = document.getElementById('applicationCardsContainer');
-          container.innerHTML = `
-            <div class="empty-state">
-              <span class="material-symbols-outlined">work_off</span>
-              <h3>No applications yet</h3>
-              <p>Start tracking your job applications by adding your first one!</p>
-              <a href="add_application.html" class="add-btn">Add Your First Application</a>
-            </div>
-          `;
-        }
-      }, 300);
-    }
-  }
-});
-
 document.getElementById('editApplicationBtn').addEventListener('click', () => {
   if (!window.currentlyViewingJob) return;
-
-  // Store job to edit in localStorage temporarily
   localStorage.setItem('editJobData', JSON.stringify(window.currentlyViewingJob));
-
-  // Redirect to add form (which we will adjust to handle editing)
   window.location.href = 'add_application.html';
 });
-
 
 export function updateCardInDOM(applicationId) {
   const cardElement = document.querySelector(`job-app-card[data-id="${applicationId}"]`);
@@ -310,5 +169,5 @@ export function updateCardInDOM(applicationId) {
   }
 }
 
-// Make renderCards available globally for sorting functionality
+// Expose for other scripts (e.g., sorting)
 window.renderCards = renderCards;
