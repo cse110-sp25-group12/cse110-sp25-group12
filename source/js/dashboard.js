@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'Applied',
       'Screening',
       'Interviewing',
-      'Offer',
+      'Offered',
       'Rejected',
       'Ghosted',
     ];
@@ -390,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Applied: 0,
       Screening: 0,
       Interviewing: 0,
-      Offer: 0,
+      Offered: 0,
       Rejected: 0,
       Ghosted: 0,
     };
@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let status = app.status || 'Applied'; // fallback if missing
 
       // Map 'Offered' to 'Offer' for consistency
-      if (status === 'Offered') status = 'Offer';
+      if (status === 'Offered');
 
       if (statusCounts[status] !== undefined) {
         statusCounts[status]++;
@@ -469,3 +469,115 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+function renderApplicationsChart(applicationsChartEl, getApplicationsByMonth, chartColors) {
+  const monthlyData = getApplicationsByMonth();
+  new Chart(applicationsChartEl.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: monthlyData.months,
+      datasets: [
+        {
+          label: 'Applications Sent',
+          data: monthlyData.applications,
+          borderColor: chartColors.primary,
+          backgroundColor: chartColors.primary + '33',
+          tension: 0.3,
+          fill: true,
+        },
+        {
+          label: 'Interviews Scheduled',
+          data: monthlyData.interviews,
+          borderColor: chartColors.secondary,
+          backgroundColor: chartColors.secondary + '33',
+          tension: 0.3,
+          fill: true,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: chartColors.outline },
+          ticks: { color: chartColors.onSurfaceVariant },
+        },
+        x: {
+          grid: { color: chartColors.outline },
+          ticks: { color: chartColors.onSurfaceVariant },
+        },
+      },
+      plugins: {
+        legend: { labels: { color: chartColors.onSurfaceVariant } },
+      },
+    },
+  });
+}
+
+function renderStatusChart(statusChartEl, applications, chartColors) {
+  const statusLabels = [
+    'Applied',
+    'Screening',
+    'Interviewing',
+    'Offered',
+    'Rejected',
+    'Ghosted',
+  ];
+  const statusCounts = {
+    Applied: 0,
+    Screening: 0,
+    Interviewing: 0,
+    Offered: 0,
+    Rejected: 0,
+    Ghosted: 0,
+  };
+  applications.forEach((app) => {
+    let status = app.status || 'Applied';
+    if (statusCounts[status] !== undefined) {
+      statusCounts[status]++;
+    }
+  });
+  new Chart(statusChartEl.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: statusLabels,
+      datasets: [
+        {
+          label: 'Application Status',
+          data: statusLabels.map((label) => statusCounts[label]),
+          backgroundColor: chartColors.pieSliceColors,
+          borderColor: chartColors.surface,
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: chartColors.onSurfaceVariant },
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              const label = context.label || '';
+              const value = context.raw || 0;
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+              const percentage =
+                total > 0 ? Math.round((value / total) * 100) : 0;
+              return `${label}: ${value} (${percentage}%)`;
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
+// Attach to window for external access
+window.renderApplicationsChart = renderApplicationsChart;
+window.renderStatusChart = renderStatusChart;
