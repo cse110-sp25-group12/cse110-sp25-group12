@@ -21,7 +21,7 @@ const SORT_OPTIONS = {
  */
 const FILTER_STATUS_OPTIONS = [
   'All',
-  'Offer',
+  'Offered',
   'Interviewing',
   'Screening',
   'Applied',
