@@ -13,7 +13,9 @@
   },
   "scripts": {
     "test": "jest --passWithNoTests",
-    "test:coverage": "jest --coverage",
+    "test:unit": "jest source --passWithNoTests",
+    "test:e2e": "jest e2e --passWithNoTests",
+    "test:coverage": "jest --passWithNoTests --coverage",
     "docs": "jsdoc source -r -d docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
