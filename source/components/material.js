@@ -28,7 +28,7 @@
       ]
     },
     applicationStatus: {
-      labels: ['Applied', 'Screening', 'Interviewing', 'Offer', 'Rejected', 'Ghosted'],
+      labels: ['Applied', 'Screening', 'Interviewing', 'Offered', 'Rejected', 'Ghosted'],
       data: [40, 10, 15, 2, 20, 5]
     }
   };
