@@ -36,8 +36,8 @@ We cover 2 of the 3 bases of the testing pyramid by implementing both Unit tests
 
 Here's a short description of the CI/CD pipeline and what it does:
 
-### On every pull request into main:
-1. HTML Validation (W3C). All HTML files fed to W3C validator. Any errors will cause the workflow to fail.
+### On every attempted pull request into main:
+1. HTML Validation (W3C). All HTML files fed to W3C validator. Markup errors will cause the workflow to fail.
    1. The errors are hard to understand. ```"lastLine":25``` tells you which line of the HTML file caused the error.
    2. For easier debugging, just chuck the contents of the failed HTML file into [W3C's website](https://validator.w3.org/#validate_by_input)
 
@@ -53,7 +53,13 @@ Here's a short description of the CI/CD pipeline and what it does:
     6. Spaces required before and after ```=>``` in arrow functions
   
   
-3. Jest Tests. All folders in test/ will be run. Any test fail will cause the workflow to fail
+3. Jest Unit Tests. All unit tests scattered inside source/ will be run. Run ```npm run test:unit``` to run unit tests locally.
+
+4. End-to-End Tests with Jest and Puppeteer. All e2e tests inside e2e/ will be run. Run ```npm run test:e2e"``` to run e2e tests locally.
+
+5. Test Coverage. Runs the [Jest Coverage Report](https://github.com/marketplace/actions/jest-coverage-report) action which summarizes test coverage as a comment in the attempted pull request. Run ```npm run test:coverage``` to generate more detailed coverage report locally.
 
 ### On every push into main:
-1. JSDoc. A separate docs branch will be created that holds docs/, which contains components to a webpage that displays all comments for JS code.
+1. Deployment to Github Pages. Builds latest main branch and deploys to Github Pages.
+
+2. JSDoc Documentation Generation. A separate docs branch will be created that holds docs/, which contains a webpage that displays all documentation for JS logic.
