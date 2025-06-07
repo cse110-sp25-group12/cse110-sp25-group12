@@ -111,10 +111,5 @@ jobs:
         id: coverage
         with:
           custom-title: Coverage Table. (For in-detailed coverage, run `npm run test:coverage` locally)
-          output: report-markdown
+          output: comment, report-markdown
           annotations: none
-      
-      - name: Add sticky comment to PR
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          message: ${{ steps.coverage.outputs.report }}
