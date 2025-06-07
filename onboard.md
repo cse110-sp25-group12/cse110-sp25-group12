@@ -63,3 +63,14 @@ Here's a short description of the CI/CD pipeline and what it does:
 1. Deployment to Github Pages. Builds latest main branch and deploys to Github Pages.
 
 2. JSDoc Documentation Generation. A separate docs branch will be created that holds docs/, which contains a webpage that displays all documentation for JS logic.
+3. 
+
+### Miscellaneous Dev Quality-Of-Life Features
+
+1. Support for running linting, formatting, and testing locally. Commands defined in package.json.
+
+2. HOW-TO-CONTRIBUTE.md file as group's development guideline.
+
+3. Issue templates and pull request templates with clear definition-of-done standards.
+
+4. Story points and prioritization labels for issues
