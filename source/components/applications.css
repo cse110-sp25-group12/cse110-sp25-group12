@@ -311,12 +311,10 @@
 .application-wrapper {
     position: relative;
     display: inline-block;
-    /* Add a minimum height to ensure buttons have space */
     min-height: 200px;
-    /* Add some margin to ensure buttons don't overlap with other cards */
     margin: 10px;
-    /* Ensure the wrapper has a visible boundary for debugging */
     border: 1px solid transparent;
+    vertical-align: top; /* Add this line */
 }
 
 /* ==== Empty State Dialog ==== */
