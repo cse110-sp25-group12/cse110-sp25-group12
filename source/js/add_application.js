@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    //Collect values from form fields 
+    //Collect values from form fields
     const formData = {
       company: document.getElementById('company').value,
       jobPosition: document.getElementById('jobPosition').value,
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
       positionType: document.getElementById('positionType').value,
       salary: document.getElementById('salary').value || null,
       location: document.getElementById('location').value,
-      bookmarked: false, 
+      bookmarked: false,
       contact: {
         name: document.getElementById('contactName').value,
         email: document.getElementById('contactEmail').value,
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // Otherwise, create a new application entry
       createApplication(formData);
     }
-    
+
 
     // After processing, navigate back to the applications list
     setTimeout(() => {
