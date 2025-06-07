@@ -111,7 +111,7 @@ jobs:
         id: coverage
         with:
           custom-title: Coverage Table. (For in-detailed coverage, run `npm run test:coverage` locally)
-          output: comment, report-markdown
+          output: report-markdown
           annotations: none
       
       - name: Add sticky comment to PR
