@@ -121,10 +121,10 @@ describe('dashboardHelpers', () => {
       const result = getApplicationsByMonth(applications);
 
       expect(result).toEqual({
-      months: ['Nov', 'Dec', 'Feb', 'Apr'],  
-      applications: [1, 1, 2, 1],
-      interviews: [0, 0, 2, 0]
-    });
+        months: ['Nov', 'Dec', 'Feb', 'Apr'],   
+        applications: [1, 1, 2, 1],
+        interviews: [0, 0, 2, 0]
+      });
     });
 
     it('handles empty data', () => {
