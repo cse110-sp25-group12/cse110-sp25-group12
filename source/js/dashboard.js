@@ -1,10 +1,32 @@
 import Chart from 'chart.js/auto';
 
 /**
+ * Fetches initial job applications from a JSON data file.
+ * @async
+ * @returns {Promise<Object[]>} Array of job application objects (empty array on error).
+ */
+async function fetchApplications() {
+  try {
+    const response = await fetch('../data/applications.json');
+    if (!response.ok) throw new Error('Failed to load applications.json');
+    return await response.json();
+  } catch (error) {
+    console.error('Error loading applications:', error);
+    return [];
+  }
+}
+
+/**
  * Main function that initializes the dashboard and renders all charts and statistics
  * Loads application data from localStorage and displays relevant metrics
  */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Seed localStorage from JSON file if empty
+  if (!localStorage.getItem('applications')) {
+    const jobs = await fetchApplications();
+    localStorage.setItem('applications', JSON.stringify(jobs));
+  }
+
   // Load applications from localStorage or use empty array if none exists
   const applications = JSON.parse(localStorage.getItem('applications')) || [];
 
@@ -382,6 +404,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'Screening',
       'Interviewing',
       'Offer',
+      'Wishlist',
+      'Withdrawn',
       'Rejected',
       'Ghosted',
     ];
@@ -391,6 +415,8 @@ document.addEventListener('DOMContentLoaded', () => {
       Screening: 0,
       Interviewing: 0,
       Offer: 0,
+      Wishlist: 0,
+      Withdrawn: 0,
       Rejected: 0,
       Ghosted: 0,
     };
@@ -416,7 +442,16 @@ document.addEventListener('DOMContentLoaded', () => {
             {
               label: 'Application Status',
               data: statusLabels.map((label) => statusCounts[label]),
-              backgroundColor: chartColors.pieSliceColors,
+              backgroundColor: [
+                '#4f46e5', // Applied - Primary blue
+                '#06b6d4', // Screening - Cyan
+                '#10b981', // Interviewing - Green
+                '#f59e0b', // Offer - Amber
+                '#8b5cf6', // Wishlist - Purple
+                '#6b7280', // Withdrawn - Gray
+                '#ef4444', // Rejected - Red
+                '#9ca3af', // Ghosted - Light gray
+              ],
               borderColor: chartColors.surface,
               borderWidth: 2,
             },
