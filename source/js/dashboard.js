@@ -311,8 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
     secondary: getCSSColor('--md-sys-color-secondary') || '#06b6d4',
     surface: getCSSColor('--md-sys-color-surface') || '#fff',
     outline: getCSSColor('--md-sys-color-outline') || '#e5e7eb',
-    onSurfaceVariant:
-      getCSSColor('--md-sys-color-on-surface-variant') || '#6b7280',
+    onSurfaceVariant:'#767676',
     pieSliceColors: [
       '#4f46e5',
       '#06b6d4',
