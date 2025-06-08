@@ -10,3 +10,5 @@ How to contribute: [Dev Guidline](/HOW-TO-CONTRIBUTE.md)
 ## Sprint 1 Status Video
 - [YouTube Video Link](https://youtu.be/rx9DWWrCZfE)
 - [Github Video Link ](admin/videos/statusvideo1.mp4)
+
+#Published on lighthearted-brioche-4c7d61.netlify.app
