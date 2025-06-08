@@ -7,15 +7,18 @@
     "babel-jest": "^29.7.0",
     "eslint": "^9.27.0",
     "globals": "^16.1.0",
+    "http_server": "^1.0.12",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdoc": "^4.0.4",
-    "puppeteer": "^24.10.0"
+    "puppeteer": "^24.10.0",
+    "start-server-and-test": "^2.0.12"
   },
   "scripts": {
+    "serve": "npx http-server . -p 5500",
     "test": "jest --passWithNoTests",
     "test:unit": "jest source --passWithNoTests",
-    "test:e2e": "jest e2e --passWithNoTests",
+    "test:e2e": "start-server-and-test 'npm run serve' http://127.0.0.1:5500 'jest e2e --passWithNoTests'",
     "test:coverage": "jest --passWithNoTests --coverage",
     "docs": "jsdoc source -r -d docs",
     "lint": "eslint .",
