@@ -21,7 +21,7 @@ describe('Dashboard E2E Test (Puppeteer)', () => {
 
     // Wait for dashboard to load data and render
     await page.waitForSelector('.content-card-stat', { timeout: 10000 });
-    await new Promise(res => setTimeout(res, 2000));
+    await page.waitForSelector('.dashboard-loaded', { timeout: 10000 });
   }, 30000);
 
   // Teardown: Close browser after tests complete
