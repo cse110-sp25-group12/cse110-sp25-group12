@@ -1,3 +1,5 @@
+/* global Chart */
+
 /**
  * Fetches initial job applications from a JSON data file.
  * @async
@@ -20,7 +22,7 @@ async function fetchApplications() {
  */
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('Dashboard: DOMContentLoaded fired');
-  
+
   // Check if Chart.js is available
   if (typeof Chart === 'undefined') {
     console.error('Chart.js is not loaded!');

@@ -2,6 +2,7 @@ import { createApplication } from '../controllers/createApplication.js';
 import { updateApplication } from '../controllers/updateApplication.js';
 
 
+
 /**
  * @description Initializes the add/edit application form once the DOM is ready.
  * @listens DOMContentLoaded
@@ -98,3 +99,4 @@ function populateFormForEdit(job) {
   document.getElementById('contactPhone').value = job.contact?.phoneNumber || '';
   document.getElementById('notes').value = job.notes || '';
 }
+
