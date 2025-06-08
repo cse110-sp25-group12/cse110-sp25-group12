@@ -19,7 +19,7 @@
     "test": "jest --passWithNoTests",
     "test:unit": "jest source --passWithNoTests",
     "test:e2e": "start-server-and-test 'npm run serve' http://127.0.0.1:5500 'jest e2e --passWithNoTests'",
-    "test:coverage": "jest --passWithNoTests --coverage",
+    "test:coverage": "start-server-and-test 'npm run serve' http://127.0.0.1:5500 'jest --passWithNoTests --coverage'",
     "docs": "jsdoc source -r -d docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
