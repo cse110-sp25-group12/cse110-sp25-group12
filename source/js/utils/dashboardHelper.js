@@ -100,7 +100,7 @@ export function getApplicationsByMonth(applications) {
 
   const months = sortedKeys.map((key) => {
     const [year, month] = key.split('-').map(Number);
-    return new Date(year, month).toLocaleString('en-US', { month: 'short' });
+    return new Date(year, month - 1).toLocaleString('en-US', { month: 'short' });
   });
 
   const applicationsArr = sortedKeys.map((key) => monthMap[key].applications);
