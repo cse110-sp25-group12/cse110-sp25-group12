@@ -1,0 +1,29 @@
+[build]
+  base = "source"
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/pages/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/pages/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/applications"
+  to = "/pages/applications.html"
+  status = 200
+
+[[redirects]]
+  from = "/add-application"
+  to = "/pages/add_application.html"
+  status = 200
+
+# Handle SPA routing - fallback for any unmatched routes
+[[redirects]]
+  from = "/*"
+  to = "/pages/dashboard.html"
+  status = 200 
