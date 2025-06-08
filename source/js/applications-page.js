@@ -1,19 +1,31 @@
+/**
+ * @fileoverview Manages loading, rendering, and user interactions for job application cards.
+ */
 import '../components/job-card.js';
 import { deleteApplication } from '../controllers/deleteApplication.js';
 
 
-// Load applications from JSON file and render
-// Only run once if localStorage is empty (first visit)
+/**
+ * @description Initialize application data and render cards on first visit.
+ * @listens DOMContentLoaded
+ */
 document.addEventListener('DOMContentLoaded', async () => {
+  // Seed localStorage from JSON file if empty
   if (!localStorage.getItem('applications')) {
     const jobs = await fetchApplications();
     localStorage.setItem('applications', JSON.stringify(jobs));
   }
+  // Retrieve and render stored applications
   const jobs = JSON.parse(localStorage.getItem('applications'));
   renderCards(jobs);
   setupModal();
 });
 
+/**
+ * @description Fetches initial job applications from a JSON data file.
+ * @async
+ * @returns {Promise<Object[]>} Array of job application objects (empty array on error).
+ */
 async function fetchApplications() {
   try {
     const response = await fetch('../data/applications.json');
@@ -25,8 +37,12 @@ async function fetchApplications() {
   }
 }
 
+/**
+ * @description Render job application cards based on provided jobs and current filter.
+ * @param {Object[]} [jobs] - Array of job objects to render; defaults to localStorage data.
+ */
 function renderCards(jobs) {
-  // If no jobs parameter is provided, get from localStorage
+  // Fallback to local storage if no jobs are passed in
   if (!jobs) {
     jobs = JSON.parse(localStorage.getItem('applications')) || [];
   }
@@ -34,7 +50,7 @@ function renderCards(jobs) {
   const container = document.getElementById('applicationCardsContainer');
   container.innerHTML = '';
 
-  // Get current filter for header display
+  // Determine current filter and total count for header
   const currentFilter = localStorage.getItem('filterPreference') || 'All';
   const totalApplications = JSON.parse(localStorage.getItem('applications')) || [];
 
@@ -47,6 +63,7 @@ function renderCards(jobs) {
     }
   }
 
+  // Show empty state if there are no jobs
   if (jobs.length === 0) {
     container.innerHTML = `
       <div class="empty-state">
@@ -59,6 +76,7 @@ function renderCards(jobs) {
     return;
   }
 
+  // Create and append a card for each job
   for (const job of jobs) {
     const wrapper = document.createElement('div');
     wrapper.classList.add('application-wrapper');
@@ -68,16 +86,18 @@ function renderCards(jobs) {
     cardElem.data = job;
     cardElem.dataset.id = job.id;
 
+    // Open details modal when card clicked (unless delete button)
     cardElem.addEventListener('click', (e) => {
       if (e.composedPath().some(el => el.classList?.contains('delete-btn'))) return;
       openModal(job);
     });
 
-    // Handle delete event from within the custom element
+    // Handle delete events bubbled from the custom element
     cardElem.addEventListener('delete-card', (e) => {
       const appId = e.detail.id;
       if (confirm('Are you sure you want to delete this application?')) {
         deleteApplication(appId);
+        // Re-render after deletion animation delay
         setTimeout(() => {
           const updated = JSON.parse(localStorage.getItem('applications')) || [];
           renderCards(updated);
@@ -90,6 +110,9 @@ function renderCards(jobs) {
   }
 }
 
+/**
+ * @description Configure modal open/close behaviors (click outside, close button, Escape key).
+ */
 function setupModal() {
   const modal = document.getElementById('appDetailsModal');
   const closeBtn = modal.querySelector('.close-btn');
@@ -98,12 +121,14 @@ function setupModal() {
     modal.classList.remove('show');
   });
 
+  // Close when clicking the backdrop
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
       modal.classList.remove('show');
     }
   });
 
+  // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       modal.classList.remove('show');
@@ -111,11 +136,16 @@ function setupModal() {
   });
 }
 
+/**
+ * @description Populate and display the details modal for a job application.
+ * @param {Object} data - The job application data to show.
+ */
 function openModal(data) {
   window.currentlyViewingJob = data;
   const modal = document.getElementById('appDetailsModal');
   modal.classList.add('show');
 
+  // Fill modal fields with job data
   document.getElementById('modal-title').textContent = data.jobPosition;
   document.getElementById('modal-company').textContent = data.company;
   document.getElementById('modal-type').textContent = data.jobType;
@@ -127,6 +157,7 @@ function openModal(data) {
   document.getElementById('modal-phone').textContent = data.contact?.phoneNumber || '';
   document.getElementById('modal-notes').textContent = data.notes || '';
 
+  // Populate list of important dates if present
   const ul = document.getElementById('modal-important-dates');
   ul.innerHTML = '';
   if (data.importantDates) {
@@ -138,12 +169,17 @@ function openModal(data) {
   }
 }
 
+// Store current job in localStorage and navigate to edit form
 document.getElementById('editApplicationBtn').addEventListener('click', () => {
   if (!window.currentlyViewingJob) return;
   localStorage.setItem('editJobData', JSON.stringify(window.currentlyViewingJob));
   window.location.href = 'add_application.html';
 });
 
+/**
+ * @description Update a specific job-app-card element in the DOM after an application update.
+ * @param {string} applicationId - The ID of the updated application.
+ */
 export function updateCardInDOM(applicationId) {
   const cardElement = document.querySelector(`job-app-card[data-id="${applicationId}"]`);
   if (!cardElement) return;
@@ -152,8 +188,8 @@ export function updateCardInDOM(applicationId) {
   const updatedCard = cards.find(card => card.id === applicationId);
   if (!updatedCard) return;
 
+  // Apply new data and highlight the updated card
   cardElement.data = updatedCard;
-
   const wrapper = cardElement.closest('.application-wrapper');
   if (wrapper) {
     wrapper.style.transition = 'background-color 0.3s ease';
@@ -164,5 +200,5 @@ export function updateCardInDOM(applicationId) {
   }
 }
 
-// Expose for other scripts (e.g., sorting)
+// Expose renderCards globally for external usage
 window.renderCards = renderCards;
