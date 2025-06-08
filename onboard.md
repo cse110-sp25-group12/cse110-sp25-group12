@@ -10,6 +10,21 @@
 
 ## Frontend
 
+In the interest of modularity and consistency, the frontend is built off of Google's material design 3 guidelines. In accordance to these guidelines, there are a certain number of set color variables that have both light and dark mode versions. These colors can be modified per preference in ```styles/colors.css```. This sheet is to be inherited from when building any module.
+
+The layout too, is similarly standardized. It is setup as follows-
+A main content container that will have every body element of the page
+A sidebar that is deployable as a modular component for consistency
+A heading at the top of the page that briefly describes the content of the page
+
+There is a ```template.css``` file that contains the overarching styles for these standard elements. This is paired with the ```template.js```. Both of these are to be included in any page of the website as they are both integral to the functionality of the theme.
+
+The sidebar component is located in ```components/sidebar/```. This html contains the standard sidebar that will be shared across all the pages. ```<app-sidebar>``` is the element that should be included on all the pages. These files should also be imported. Additionally, the sidebar component also determines the color scheme-- dark or light for the pages. The button will toggle the theme for all pages. This is toggled via the meta tag ```data-theme```.
+
+The card elements are in ```components```. They can be spawned using the ```<job-card-app>``` tag. All cards are to be spawned in a card container grid, ```applicationCardsContainer```.
+
+The dashboard contains ```content-card``` objects which differ from the job cards. They are not reused elsewhere and are solely intended to visually represent the data on the dashboard page. This page also contains charts which are procedurally generated using the https://cdn.jsdelivr.net/npm/chart.js API.
+
 ## Backend
 
 Our Backend is build on the localStorage WebAPI, which supports our aim to store data local-first.
