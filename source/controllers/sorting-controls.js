@@ -196,12 +196,12 @@ function filterApplications(applications, filterStatus) {
 
   return applications.filter(app => {
     const appStatus = (app.status || '').trim();
-    
+
     // For 'Offer' filter, match both 'Offer' and 'Offered'
     if (filterStatus === 'Offer') {
       return appStatus === 'Offer' || appStatus === 'Offered';
     }
-    
+
     return appStatus === filterStatus;
   });
 }

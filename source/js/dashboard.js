@@ -521,4 +521,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
   }
+
+  // Add dashboard-loaded class to signal that initialization is complete
+  document.body.classList.add('dashboard-loaded');
+  console.log('Dashboard: Initialization complete, dashboard-loaded class added');
 });
