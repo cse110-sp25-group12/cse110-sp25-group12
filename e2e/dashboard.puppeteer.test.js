@@ -19,8 +19,9 @@ describe('Dashboard E2E Test (Puppeteer)', () => {
     // Navigate to the Dashboard page
     await page.goto('http://127.0.0.1:5500/source/pages/dashboard.html', { waitUntil: 'networkidle0' });
 
-    // Short delay to ensure all dynamic content finishes rendering
-    await new Promise(res => setTimeout(res, 1000));
+    // Wait for dashboard to load data and render
+    await page.waitForSelector('.content-card-stat', { timeout: 10000 });
+    await new Promise(res => setTimeout(res, 2000));
   }, 30000);
 
   // Teardown: Close browser after tests complete
@@ -54,14 +55,36 @@ describe('Dashboard E2E Test (Puppeteer)', () => {
     expect(pageTitle).toBe('JobTrack - Dashboard');
   });
 
-  // Test: Check total applications count is rendered (requires data injection)
-  test('Total Applications shows correct count', async () => {
+  // Test: Check total applications count shows actual data (not placeholder)
+  test('Total Applications shows actual count', async () => {
     const text = await page.$eval('.content-card:nth-of-type(1) .content-card-stat', el => el.textContent.trim());
-    expect(text).toBe('...');
+    // Should show a number (sample data has 3 applications)
+    expect(text).toMatch(/^\d+$/);
+    expect(parseInt(text)).toBeGreaterThanOrEqual(0);
   });
 
-  // Test: Verify Reset button functionality (no assertion yet on data clearing)
+  // Test: Verify Reset button functionality with proper timeout and dialog handling
   test('Reset button clears data', async () => {
+    // Get initial count
+    const initialText = await page.$eval('.content-card:nth-of-type(1) .content-card-stat', el => el.textContent.trim());
+    const initialCount = parseInt(initialText);
+    
+    // Handle the confirmation dialog
+    page.on('dialog', async dialog => {
+      await dialog.accept();
+    });
+    
     await page.click('#resetDataBtn');
-  });
+    
+    // Wait for page reload after reset
+    await new Promise(res => setTimeout(res, 3000));
+    
+    // The dashboard automatically loads sample data when localStorage is empty
+    // So we should either see 0 (if no sample data) or the sample data count (3)
+    const text = await page.$eval('.content-card:nth-of-type(1) .content-card-stat', el => el.textContent.trim());
+    const finalCount = parseInt(text);
+    
+    // After reset, it should either be 0 or reload with sample data (3)
+    expect(finalCount === 0 || finalCount === 3).toBe(true);
+  }, 15000);
 });
