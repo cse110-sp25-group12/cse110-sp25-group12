@@ -12,8 +12,10 @@
     "jsdoc": "^4.0.4"
   },
   "scripts": {
-    "test": "jest --passWithNoTests --coverage",
-    "test:coverage": "jest --coverage",
+    "test": "jest --passWithNoTests",
+    "test:unit": "jest source --passWithNoTests",
+    "test:e2e": "jest e2e --passWithNoTests",
+    "test:coverage": "jest --passWithNoTests --coverage",
     "docs": "jsdoc source -r -d docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
