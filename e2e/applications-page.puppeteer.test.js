@@ -2,6 +2,8 @@
 
 import puppeteer from 'puppeteer';
 
+const isCI = process.env.GITHUB_ACTIONS === 'true';
+
 // Sample test data inserted into localStorage before page load
 const testData = [
   {
@@ -27,7 +29,11 @@ describe('Applications Page E2E Test (Puppeteer)', () => {
 
   // Setup: Launch browser and preload data before tests run
   beforeAll(async () => {
-    browser = await puppeteer.launch({ headless: false, slowMo: 50 });
+    browser = await puppeteer.launch({
+      headless: isCI,
+      slowMo: isCI ? 0 : 50,
+      args: isCI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []
+    });
     page = await browser.newPage();
 
     // Inject test data directly into localStorage before page navigation

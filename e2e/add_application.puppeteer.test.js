@@ -2,6 +2,8 @@
 
 import puppeteer from 'puppeteer';
 
+const isCI = process.env.GITHUB_ACTIONS === 'true';
+
 // Main test suite for Add Application Page E2E using Puppeteer
 describe('Add Application Page E2E Test (Puppeteer)', () => {
   let browser, page;
@@ -9,8 +11,9 @@ describe('Add Application Page E2E Test (Puppeteer)', () => {
   // Launch Puppeteer before running tests
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: false, // Run browser in visible mode (for debugging)
-      slowMo: 50       // Slow down each operation slightly for stability
+      headless: isCI,
+      slowMo: isCI ? 0 : 50,
+      args: isCI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []
     });
 
     page = await browser.newPage();

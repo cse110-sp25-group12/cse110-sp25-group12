@@ -1,5 +1,7 @@
 import puppeteer from 'puppeteer';
 
+const isCI = process.env.GITHUB_ACTIONS === 'true';
+
 // Puppeteer-based end-to-end tests for the Dashboard Page
 describe('Dashboard E2E Test (Puppeteer)', () => {
   let browser, page;
@@ -7,8 +9,9 @@ describe('Dashboard E2E Test (Puppeteer)', () => {
   // Setup: Launch browser and navigate to Dashboard before tests run
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: false,  // Show browser window for visibility (useful during debugging)
-      slowMo: 50,       // Slight delay for stability between actions
+      headless: isCI,
+      slowMo: isCI ? 0 : 50,
+      args: isCI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []
     });
 
     page = await browser.newPage();
