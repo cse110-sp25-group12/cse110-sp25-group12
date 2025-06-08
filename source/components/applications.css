@@ -5,12 +5,80 @@
     display: flex;
     gap: 16px; /* Increased gap for better spacing */
     margin-bottom: 24px;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap; 
     padding: 12px; /* Add some padding around the controls */
     background-color: var(--md-sys-color-surface-container-low); /* Slight background */
     border-radius: 8px;
     border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* Controls wrapper to organize sort and filter sections */
+.controls-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Sort container */
+.sort-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Filter container */
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filter-label {
+    font-size: 0.875rem; /* 14px */
+    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 500;
+}
+
+/* Filter buttons container */
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Individual filter buttons */
+.filter-btn {
+    padding: 8px 16px;
+    border-radius: 20px; /* Pill shape */
+    border: 1px solid var(--md-sys-color-outline);
+    background-color: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    border-color: var(--md-sys-color-secondary);
+}
+
+.filter-btn.active {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    border-color: var(--md-sys-color-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-btn.active:hover {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
 }
 
 .applications-controls label {
@@ -32,24 +100,37 @@
     outline: none; /* Remove default outline */
     transition: border-color 0.2s ease, background-color 0.2s ease;
 }
+
 .applications-controls select:focus,
 .applications-controls button:focus {
     border-color: var(--md-sys-color-primary); /* Highlight on focus */
 }
 
-.applications-controls button {
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
+.applications-controls select {
+    min-width: 200px;
 }
 
-.applications-controls button:hover {
-    background-color: var(--md-sys-color-secondary);
-    color: var(--md-sys-color-on-secondary);
+/* Responsive adjustments for filter controls */
+@media (max-width: 768px) {
+    .controls-wrapper {
+        gap: 16px;
+    }
+    
+    .filter-buttons {
+        gap: 6px;
+    }
+    
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .sort-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
 }
-
 
 /* ==== Material Symbols Styling ==== */
 .material-symbols-outlined {

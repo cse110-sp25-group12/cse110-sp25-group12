@@ -2,14 +2,19 @@
  * @jest-environment jsdom
  */
 
+// Import job-app-card custom element and deleteApplication controller function
 import '../../components/job-card.js';
 import { deleteApplication } from '../../controllers/deleteApplication.js';
 
+// Mock deleteApplication so we can observe calls without executing actual delete logic
 jest.mock('../../controllers/deleteApplication.js', () => ({
   deleteApplication: jest.fn()
 }));
 
+// Main test suite for applications-pages.js functionality
 describe('applications-pages.js functionality', () => {
+
+  // Reset DOM before each test
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="applicationCardsContainer"></div>
@@ -31,12 +36,14 @@ describe('applications-pages.js functionality', () => {
     `;
   });
 
+  // Test: render multiple job cards correctly
   it('renders application cards correctly', () => {
     const jobs = [
       { id: '1', company: 'Google', jobPosition: 'SWE' },
       { id: '2', company: 'Amazon', jobPosition: 'PM' }
     ];
     const container = document.getElementById('applicationCardsContainer');
+
     jobs.forEach(job => {
       const wrapper = document.createElement('div');
       wrapper.classList.add('application-wrapper');
@@ -58,6 +65,7 @@ describe('applications-pages.js functionality', () => {
     expect(container.querySelectorAll('.application-wrapper').length).toBe(2);
   });
 
+  // Test: render empty state when no applications exist
   it('renders empty state correctly when no jobs', () => {
     const container = document.getElementById('applicationCardsContainer');
     const header = document.querySelector('.main-header h1');
@@ -72,6 +80,7 @@ describe('applications-pages.js functionality', () => {
     expect(container.querySelector('.empty-state')).not.toBeNull();
   });
 
+  // Test: populate modal with full job data
   it('updates modal correctly for full data', () => {
     const job = {
       jobPosition: 'SWE',
@@ -107,6 +116,7 @@ describe('applications-pages.js functionality', () => {
     expect(ul.children.length).toBe(1);
   });
 
+  // Test: handle missing contact info or notes without crashing
   it('handles missing contact and notes gracefully', () => {
     const job = {
       jobPosition: 'SWE',
@@ -124,16 +134,20 @@ describe('applications-pages.js functionality', () => {
     expect(document.getElementById('modal-notes').textContent).toBe('');
   });
 
+  // Test: verify deleteApplication is called when delete button is clicked
   it('calls deleteApplication when delete button clicked', () => {
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('delete-btn');
     deleteBtn.dataset.id = '123';
     document.body.appendChild(deleteBtn);
 
-    jest.spyOn(window, 'confirm').mockReturnValue(true);
+    jest.spyOn(window, 'confirm').mockReturnValue(true); // mock confirmation
+
     deleteBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
     deleteApplication('123');
     expect(deleteApplication).toHaveBeenCalledWith('123');
-    window.confirm.mockRestore();
+
+    window.confirm.mockRestore(); // restore window.confirm after test
   });
 });

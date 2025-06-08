@@ -17,5 +17,8 @@
     "docs": "jsdoc source -r -d docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.9"
   }
 }

@@ -2,19 +2,24 @@
  * @jest-environment jsdom
  */
 
+// Import createApplication function which we mock for testing
 import { createApplication } from '../source/controllers/createApplication.js';
 
+// Mock createApplication to isolate form behavior during test
 jest.mock('../source/controllers/createApplication.js', () => ({
   createApplication: jest.fn(),
 }));
 
-// Import file you're testing
+// Import the module under test (form submission logic)
 import '../source/js/add_application.js';
 
+// Main test suite for Add Application page
 describe('Add Application E2E', () => {
   let form;
 
+  // Set up DOM before each test
   beforeEach(() => {
+    // Create a mock form structure in the DOM
     document.body.innerHTML = `
       <form id="addApplicationForm">
         <input id="company" value="Google" />
@@ -31,15 +36,23 @@ describe('Add Application E2E', () => {
         <button type="submit">Submit</button>
       </form>
     `;
+
+    // Grab the form element for testing
     form = document.getElementById('addApplicationForm');
+
+    // Clear mock call history before each test
     createApplication.mockClear();
 
+    // Simulate page load
     document.dispatchEvent(new Event('DOMContentLoaded'));
   });
 
+  // Test form submission calls createApplication with correct payload
   it('submits form and calls createApplication with correct data', () => {
+    // Simulate form submit event
     form.dispatchEvent(new Event('submit', { bubbles: true }));
 
+    // Verify that createApplication was called with expected object
     expect(createApplication).toHaveBeenCalledWith({
       company: 'Google',
       jobPosition: 'SWE',
@@ -58,16 +71,25 @@ describe('Add Application E2E', () => {
     });
   });
 
+  // Test redirection after successful submission
   it('redirects to applications page after submission', () => {
+    // Mock window.location to track navigation
     delete window.location;
     window.location = { pathname: '' };
 
+    // Use fake timers to control setTimeout behavior
     jest.useFakeTimers();
+
+    // Simulate form submission
     form.dispatchEvent(new Event('submit', { bubbles: true }));
 
+    // Advance time to trigger setTimeout callback
     jest.advanceTimersByTime(100);
 
+    // Expect redirection to occur
     expect(window.location.pathname).toBe('source/pages/applications.html');
+
+    // Restore real timers after test
     jest.useRealTimers();
   });
 });
