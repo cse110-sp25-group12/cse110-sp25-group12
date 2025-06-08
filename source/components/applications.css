@@ -8,7 +8,7 @@
     align-items: flex-start;
     flex-wrap: wrap; 
     padding: 12px; /* Add some padding around the controls */
-    background-color: var(--md-sys-color-surface-container-low); /* Slight background */
+    background-color: var(--md-sys-color-surface-container); /* Slight background */
     border-radius: 8px;
     border: 1px solid var(--md-sys-color-outline-variant);
 }
@@ -236,8 +236,8 @@
 }
 
 #sort-select {
-  padding: 0.4rem;
-  border-radius: 5px;
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 0.95rem;
 }
 
@@ -311,12 +311,62 @@
 .application-wrapper {
     position: relative;
     display: inline-block;
-    /* Add a minimum height to ensure buttons have space */
     min-height: 200px;
-    /* Add some margin to ensure buttons don't overlap with other cards */
     margin: 10px;
-    /* Ensure the wrapper has a visible boundary for debugging */
     border: 1px solid transparent;
+    vertical-align: top; /* Add this line */
+}
+
+/* ==== Empty State Dialog ==== */
+.empty-state {
+    display: flex; /* Or block, depending on your layout needs */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    margin-top: 20px; /* Adjust as needed */
+    text-align: center;
+    border-radius: 8px; /* Optional: if you want a card-like appearance */
+
+    /* Use theme variables for colors */
+    background-color: var(--md-sys-color-surface-container); /* A slightly different background */
+    color: var(--md-sys-color-on-surface-variant); /* For less prominent text */
+    border: 1px dashed var(--md-sys-color-outline-variant); /* Optional border */
+}
+
+.empty-state .material-symbols-outlined { /* If you use an icon */
+    font-size: 48px;
+    color: var(--md-sys-color-secondary); /* Use a theme color for the icon */
+    margin-bottom: 16px;
+}
+
+.empty-state h3 { /* A title for the empty state */
+    font-size: 1.25rem;
+    color: var(--md-sys-color-on-surface); /* More prominent text for title */
+    margin-bottom: 8px;
+}
+
+.empty-state p { /* Descriptive text */
+    font-size: 1rem;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: 16px;
+}
+
+.empty-state .empty-state-action button { /* If you have an action button like "Add Application" */
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    padding: 10px 24px;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.empty-state .empty-state-action button:hover {
+    background-color: var(--md-sys-color-primary-container); /* Adjust hover if needed */
+    color: var(--md-sys-color-on-primary-container);
 }
 
 
