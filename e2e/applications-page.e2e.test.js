@@ -10,8 +10,6 @@ jest.mock('../source/controllers/deleteApplication.js', () => ({
   deleteApplication: jest.fn(),
 }));
 
-let applicationsPageModule;
-
 // Setup DOM before each test case
 beforeEach(async () => {
   // Create minimal HTML structure required by applications-page.js
@@ -41,8 +39,8 @@ beforeEach(async () => {
   // Reset mock call history before each test
   deleteApplication.mockClear();
 
-  // Dynamically import the module after setting up DOM
-  applicationsPageModule = await import('../source/js/applications-page.js');
+  // Dynamically import the module after setting up DOM (for side effects)
+  await import('../source/js/applications-page.js');
 });
 
 // Main test suite for applications-page.js

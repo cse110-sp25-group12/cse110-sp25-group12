@@ -1,43 +1,43 @@
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
 
-// Test suite for end-to-end testing of the Dashboard page
+// Puppeteer-based end-to-end tests for the Dashboard Page
 describe('Dashboard E2E Test (Puppeteer)', () => {
   let browser, page;
 
-  // Setup browser and navigate before running tests
+  // Setup: Launch browser and navigate to Dashboard before tests run
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: false,  // Run with browser UI for visibility
-      slowMo: 50,       // Slow down interactions for more stable test runs
+      headless: false,  // Show browser window for visibility (useful during debugging)
+      slowMo: 50,       // Slight delay for stability between actions
     });
 
     page = await browser.newPage();
 
-    // Navigate to local dashboard page and wait for network to settle
+    // Navigate to the Dashboard page
     await page.goto('http://127.0.0.1:5500/source/pages/dashboard.html', { waitUntil: 'networkidle0' });
 
-    // Short delay to allow page animations or dynamic content to fully render
+    // Short delay to ensure all dynamic content finishes rendering
     await new Promise(res => setTimeout(res, 1000));
-  }, 30000); // Timeout for full setup
+  }, 30000);
 
-  // Close browser after tests complete
+  // Teardown: Close browser after tests complete
   afterAll(async () => {
     await browser.close();
   });
 
-  // Test: Verify all dashboard summary cards are rendered
+  // Test: Verify that all dashboard cards are rendered
   test('should render all dashboard cards', async () => {
     const cardCount = await page.$$eval('.content-card', cards => cards.length);
-    expect(cardCount).toBe(7);  // Expect 7 cards (based on dashboard layout)
+    expect(cardCount).toBe(7);
   });
 
-  // Test: Check that Reset Dashboard button is present
+  // Test: Check if Reset Dashboard button exists
   test('should have Reset Dashboard button', async () => {
     const resetButton = await page.$('#resetDataBtn');
     expect(resetButton).not.toBeNull();
   });
 
-  // Test: Check both charts are rendered (Applications and Status charts)
+  // Test: Verify both charts are present on the page
   test('should have both charts present', async () => {
     const appsChart = await page.$('#applicationsChart');
     const statusChart = await page.$('#statusChart');
@@ -45,21 +45,20 @@ describe('Dashboard E2E Test (Puppeteer)', () => {
     expect(statusChart).not.toBeNull();
   });
 
-  // Test: Confirm correct page title is shown
+  // Test: Validate correct page title for Dashboard page
   test('should have correct page title', async () => {
     const pageTitle = await page.title();
     expect(pageTitle).toBe('JobTrack - Dashboard');
   });
 
-  // Test: Check that total applications count is displayed (data-dependent test)
+  // Test: Check total applications count is rendered (requires data injection)
   test('Total Applications shows correct count', async () => {
-    const text = await page.$eval(".content-card:nth-of-type(1) .content-card-stat", el => el.textContent.trim());
+    const text = await page.$eval('.content-card:nth-of-type(1) .content-card-stat', el => el.textContent.trim());
     expect(text).toBe('...');
   });
 
-  // Test: Verify Reset button click functionality (actual reset verification can be expanded)
+  // Test: Verify Reset button functionality (no assertion yet on data clearing)
   test('Reset button clears data', async () => {
     await page.click('#resetDataBtn');
-    // NOTE: Add verification steps here to check localStorage or DOM changes after reset
   });
 });

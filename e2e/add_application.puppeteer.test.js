@@ -1,4 +1,6 @@
-const puppeteer = require('puppeteer');
+/* eslint-env node */
+
+import puppeteer from 'puppeteer';
 
 // Main test suite for Add Application Page E2E using Puppeteer
 describe('Add Application Page E2E Test (Puppeteer)', () => {

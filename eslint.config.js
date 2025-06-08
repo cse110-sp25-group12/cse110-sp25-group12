@@ -1,7 +1,7 @@
-import globals from 'globals';
 import js from '@eslint/js';
 import stylisticJs from '@stylistic/eslint-plugin-js';
 import { defineConfig } from 'eslint/config';
+import globals from 'globals';
 
 
 export default defineConfig([
@@ -29,6 +29,16 @@ export default defineConfig([
       'arrow-spacing': ['error', { before: true, after: true }],
       'no-console': 'off',
     }
+  },
+  {
+    files: ['**/*.puppeteer.test.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,  // use Node.js globals (allows require, etc.)
+        ...globals.jest,
+      },
+      sourceType: 'commonjs',  // allow require()
+    },
   },
   {
     ignores: ['docs/**'],

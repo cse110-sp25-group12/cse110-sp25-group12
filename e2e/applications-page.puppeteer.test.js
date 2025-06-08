@@ -1,21 +1,23 @@
-const puppeteer = require('puppeteer');
+/* eslint-env node */
+
+import puppeteer from 'puppeteer';
 
 // Sample test data inserted into localStorage before page load
 const testData = [
   {
-    id: "1",
-    company: "Google",
-    jobPosition: "Software Engineer",
-    positionType: "Full-Time",
+    id: '1',
+    company: 'Google',
+    jobPosition: 'Software Engineer',
+    positionType: 'Full-Time',
     salary: 120000,
-    location: "Mountain View, CA",
-    dateApplied: "2025-06-01",
-    status: "Interviewing",
+    location: 'Mountain View, CA',
+    dateApplied: '2025-06-01',
+    status: 'Interviewing',
     contact: {
-      email: "recruiter@google.com",
-      phoneNumber: "123-456-7890"
+      email: 'recruiter@google.com',
+      phoneNumber: '123-456-7890'
     },
-    notes: "Excited for the interview"
+    notes: 'Excited for the interview'
   }
 ];
 
@@ -77,16 +79,16 @@ describe('Applications Page E2E Test (Puppeteer)', () => {
     });
     expect(deleteBtns).toBeGreaterThan(0);
   });
-  
+
   // Test: Validate that job card deletion works correctly
   test('should delete a job card', async () => {
     const initialCount = await page.$$eval('.application-wrapper', els => els.length);
-  
+
     // Listen for confirm dialog and accept it automatically
     page.once('dialog', async dialog => {
       await dialog.accept();
     });
-  
+
     // Enter shadow DOM to locate and click delete button
     await page.evaluate(() => {
       const card = document.querySelector('job-app-card');
@@ -94,13 +96,13 @@ describe('Applications Page E2E Test (Puppeteer)', () => {
       const deleteBtn = shadow.querySelector('.delete-btn');
       deleteBtn.click();
     });
-  
+
     await new Promise(res => setTimeout(res, 1000)); // wait for deletion logic
-  
+
     const newCount = await page.$$eval('.application-wrapper', els => els.length);
     expect(newCount).toBe(initialCount - 1);
   }, 10000);
-  
+
   // Skipped test: Placeholder for edit button test
   test.skip('should have edit button on job card', async () => {
     const editBtns = await page.$$eval('.update-btn', els => els.length);
