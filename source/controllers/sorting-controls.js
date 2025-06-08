@@ -21,7 +21,7 @@ const SORT_OPTIONS = {
  */
 const FILTER_STATUS_OPTIONS = [
   'All',
-  'Offered',
+  'Offer',
   'Interviewing',
   'Screening',
   'Applied',
@@ -196,6 +196,12 @@ function filterApplications(applications, filterStatus) {
 
   return applications.filter(app => {
     const appStatus = (app.status || '').trim();
+
+    // For 'Offer' filter, match both 'Offer' and 'Offered'
+    if (filterStatus === 'Offer') {
+      return appStatus === 'Offer' || appStatus === 'Offered';
+    }
+
     return appStatus === filterStatus;
   });
 }

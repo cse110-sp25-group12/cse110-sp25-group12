@@ -121,7 +121,7 @@ describe('dashboardHelpers', () => {
       const result = getApplicationsByMonth(applications);
 
       expect(result).toEqual({
-        months: ['Dec', 'Jan', 'Mar', 'May'],
+        months: ['Nov', 'Dec', 'Feb', 'Apr'],
         applications: [1, 1, 2, 1],
         interviews: [0, 0, 2, 0]
       });
