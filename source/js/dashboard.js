@@ -1,4 +1,4 @@
-import 'https://cdn.jsdelivr.net/npm/chart.js';
+import Chart from 'chart.js/auto';
 
 /**
  * Main function that initializes the dashboard and renders all charts and statistics
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthlyData = getApplicationsByMonth();
 
     try {
-      new Chart(applicationsChartEl.getContext('2d'), { /*eslint-disable-line */
+      new Chart(applicationsChartEl.getContext('2d'), {
         type: 'line',
         data: {
           labels: monthlyData.months,
@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     try {
-      new Chart(statusChartEl.getContext('2d'), { /*eslint-disable-line */
+      new Chart(statusChartEl.getContext('2d'), {
         type: 'doughnut',
         data: {
           labels: statusLabels,

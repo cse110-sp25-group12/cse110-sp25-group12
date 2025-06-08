@@ -1,8 +1,7 @@
-import globals from 'globals';
 import js from '@eslint/js';
 import stylisticJs from '@stylistic/eslint-plugin-js';
 import { defineConfig } from 'eslint/config';
-
+import globals from 'globals';
 
 export default defineConfig([
   js.configs.recommended,
@@ -12,6 +11,7 @@ export default defineConfig([
       globals: {
         ...globals.browser,
         ...globals.jest,
+        ...globals.node, // <-- add node globally (helps puppeteer tests too)
         global: 'writable',
       },
       sourceType: 'module',

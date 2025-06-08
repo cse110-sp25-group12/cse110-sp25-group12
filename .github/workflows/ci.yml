@@ -113,6 +113,7 @@ jobs:
           custom-title: Coverage Table. (For in-detailed coverage, run `npm run test:coverage` locally)
           output: report-markdown
           annotations: none
+          test-script: npm run test:coverage
       
       - name: Add sticky comment to PR
         uses: marocchino/sticky-pull-request-comment@v2

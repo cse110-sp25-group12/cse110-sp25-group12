@@ -305,3 +305,5 @@ window.initSortingControls = initSortingControls;
 
 // Auto-initialize when this module is loaded
 initSortingControls();
+
+export { filterApplications, sortApplications };
