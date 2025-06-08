@@ -1,5 +1,3 @@
-import Chart from 'chart.js/auto';
-
 /**
  * Fetches initial job applications from a JSON data file.
  * @async
@@ -21,14 +19,26 @@ async function fetchApplications() {
  * Loads application data from localStorage and displays relevant metrics
  */
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log('Dashboard: DOMContentLoaded fired');
+  
+  // Check if Chart.js is available
+  if (typeof Chart === 'undefined') {
+    console.error('Chart.js is not loaded!');
+    return;
+  }
+  console.log('Dashboard: Chart.js is available');
+
   // Seed localStorage from JSON file if empty
   if (!localStorage.getItem('applications')) {
+    console.log('Dashboard: Loading sample data...');
     const jobs = await fetchApplications();
     localStorage.setItem('applications', JSON.stringify(jobs));
+    console.log('Dashboard: Sample data loaded:', jobs.length, 'applications');
   }
 
   // Load applications from localStorage or use empty array if none exists
   const applications = JSON.parse(localStorage.getItem('applications')) || [];
+  console.log('Dashboard: Working with', applications.length, 'applications');
 
   // === DOM References ===
   const totalApplicationsEl = document.querySelector(
@@ -58,6 +68,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const applicationsChartEl = document.getElementById('applicationsChart');
   const statusChartEl = document.getElementById('statusChart');
+
+  console.log('Dashboard: DOM elements found:', {
+    totalApplicationsEl: !!totalApplicationsEl,
+    applicationsChartEl: !!applicationsChartEl,
+    statusChartEl: !!statusChartEl
+  });
 
   /**
    * Returns applications submitted during the current week
