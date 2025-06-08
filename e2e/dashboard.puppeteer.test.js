@@ -65,25 +65,21 @@ describe('Dashboard E2E Test (Puppeteer)', () => {
 
   // Test: Verify Reset button functionality with proper timeout and dialog handling
   test('Reset button clears data', async () => {
-    // Get initial count
-    const initialText = await page.$eval('.content-card:nth-of-type(1) .content-card-stat', el => el.textContent.trim());
-    const initialCount = parseInt(initialText);
-    
     // Handle the confirmation dialog
     page.on('dialog', async dialog => {
       await dialog.accept();
     });
-    
+
     await page.click('#resetDataBtn');
-    
+
     // Wait for page reload after reset
     await new Promise(res => setTimeout(res, 3000));
-    
+
     // The dashboard automatically loads sample data when localStorage is empty
     // So we should either see 0 (if no sample data) or the sample data count (3)
     const text = await page.$eval('.content-card:nth-of-type(1) .content-card-stat', el => el.textContent.trim());
     const finalCount = parseInt(text);
-    
+
     // After reset, it should either be 0 or reload with sample data (3)
     expect(finalCount === 0 || finalCount === 3).toBe(true);
   }, 15000);
