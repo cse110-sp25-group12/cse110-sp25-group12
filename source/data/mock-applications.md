@@ -2,6 +2,9 @@
 
 This file documents the structure and content of the mock JSON used for simulating application cards in the UI.
 To access the actual JSON file, it can be found in source/data/applications.json
+
+Add a comment here.
+
 ```jsonc
 [
   {
