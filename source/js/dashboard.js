@@ -368,6 +368,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const monthlyData = getApplicationsByMonth();
 
     try {
+      // Check if chart already exists and destroy it
+      const existingChart = Chart.getChart(applicationsChartEl);
+      if (existingChart) {
+        existingChart.destroy();
+      }
+
       new Chart(applicationsChartEl.getContext('2d'), {
         type: 'line',
         data: {
@@ -452,6 +458,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     try {
+      // Check if chart already exists and destroy it
+      const existingStatusChart = Chart.getChart(statusChartEl);
+      if (existingStatusChart) {
+        existingStatusChart.destroy();
+      }
+
       new Chart(statusChartEl.getContext('2d'), {
         type: 'doughnut',
         data: {

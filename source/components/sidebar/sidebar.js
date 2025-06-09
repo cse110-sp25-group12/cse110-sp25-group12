@@ -7,7 +7,7 @@ class AppSidebar extends HTMLElement {
 
   async connectedCallback() {
     // Load the sidebar HTML into shadow DOM
-    const response = await fetch('../components/sidebar/sidebar.html');
+    const response = await fetch('/components/sidebar/sidebar.html');
     if (!response.ok) {
       console.error(`Failed to load sidebar.html: ${response.statusText}`);
       this.shadowRoot.innerHTML = '<p>Error loading sidebar content.</p>';
@@ -17,8 +17,8 @@ class AppSidebar extends HTMLElement {
     const html = await response.text();
 
     const styles = `
-      <link rel="stylesheet" href="../styles/colors.css"> 
-      <link rel="stylesheet" href="../components/sidebar/sidebar.css"> 
+      <link rel="stylesheet" href="/styles/colors.css"> 
+      <link rel="stylesheet" href="/components/sidebar/sidebar.css"> 
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     `;
 
