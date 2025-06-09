@@ -1,0 +1,5 @@
+/              /pages/dashboard.html       200
+/dashboard     /pages/dashboard.html       200
+/applications  /pages/applications.html    200
+/add-application /pages/add_application.html 200
+/*             /pages/dashboard.html       200 
