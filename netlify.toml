@@ -3,6 +3,12 @@
   publish = "source"
 # Redirect direct access to source paths to clean URLs
 [[redirects]]
+  from = "/source/*"
+  to = "/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/source/pages/dashboard.html"
   to = "/dashboard"
   status = 301
