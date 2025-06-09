@@ -50,13 +50,22 @@ document.addEventListener('DOMContentLoaded', function () {
       return element ? element.value : '';
     };
 
+    // Validate salary is not negative
+    const salaryValue = getElementValue('salary');
+    const parsedSalary = salaryValue ? parseInt(salaryValue, 10) : null;
+    
+    if (parsedSalary !== null && parsedSalary < 0) {
+      showErrorMessage('Salary cannot be negative. Please enter a valid amount.');
+      return;
+    }
+
     const formData = {
       company: getElementValue('company'),
       jobPosition: getElementValue('jobPosition'),
       dateApplied: getElementValue('dateApplied'),
       status: getElementValue('status'),
       positionType: getElementValue('positionType'),
-      salary: getElementValue('salary') || null,
+      salary: parsedSalary,
       location: getElementValue('location'),
       bookmarked: false,
       contact: {
@@ -88,13 +97,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // After processing, navigate back to the applications list
       setTimeout(() => {
-        // Use different approaches for redirect based on environment
+        // Use clean URL for Netlify compatibility
         if (typeof window !== 'undefined') {
-          if (window.location.assign) {
-            window.location.assign('applications.html');
-          } else {
-            window.location.pathname = 'source/pages/applications.html';
-          }
+          window.location.href = '/applications';
         }
       }, 100); // Match test expectation timing
       

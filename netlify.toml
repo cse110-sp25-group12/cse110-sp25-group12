@@ -1,7 +1,24 @@
 [build]
-  base = "source"
-  publish = "."
+  base = "."
+  publish = "source"
 
+# Redirect direct access to pages to clean URLs
+[[redirects]]
+  from = "/pages/dashboard.html"
+  to = "/dashboard"
+  status = 301
+
+[[redirects]]
+  from = "/pages/applications.html" 
+  to = "/applications"
+  status = 301
+
+[[redirects]]
+  from = "/pages/add_application.html"
+  to = "/add-application"
+  status = 301
+
+# Main application routes
 [[redirects]]
   from = "/"
   to = "/pages/dashboard.html"
