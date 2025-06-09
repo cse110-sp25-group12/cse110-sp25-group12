@@ -23,7 +23,7 @@ describe('populateFormForEdit() unit tests', () => {
     `;
   });
 
-  // Test full data population (happy path)
+  // Test full data population
   test('populateFormForEdit fills all fields correctly', () => {
     const job = {
       company: 'Google',

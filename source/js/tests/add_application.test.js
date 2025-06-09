@@ -76,7 +76,7 @@ describe('add_application.js form submission', () => {
     });
   });
 
-  // Test: verify form data is collected correctly
+  // verify form data is collected correctly
   it('collects form data correctly and calls createApplication', () => {
     form.dispatchEvent(new Event('submit'));
 
@@ -98,7 +98,7 @@ describe('add_application.js form submission', () => {
     });
   });
 
-  // Test: verify page redirects after successful form submission
+  // verify page redirects after successful form submission
   it('redirects to applications page after submission', () => {
     delete window.location;
     window.location = { pathname: '' };
@@ -109,7 +109,7 @@ describe('add_application.js form submission', () => {
     expect(window.location.pathname).toBe('source/pages/applications.html');
   });
 
-  // Test: handle missing optional fields gracefully (empty notes and phone)
+  // handle missing optional fields gracefully (empty notes and phone)
   it('handles missing optional fields gracefully', () => {
     document.getElementById('notes').value = '';
     document.getElementById('contactPhone').value = '';
@@ -126,7 +126,7 @@ describe('add_application.js form submission', () => {
     );
   });
 
-  // Test: allow negative salary values but still submit
+  // allow negative salary values but still submit
   it('still calls createApplication even if salary is negative', () => {
     document.getElementById('salary').value = '-5000';
 
@@ -139,7 +139,7 @@ describe('add_application.js form submission', () => {
     );
   });
 
-  // Test: ensure no double submission happens
+  // ensure no double submission happens
   it('does not submit twice accidentally', () => {
     form.dispatchEvent(new Event('submit'));
     form.dispatchEvent(new Event('submit'));

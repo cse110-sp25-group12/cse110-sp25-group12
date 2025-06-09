@@ -32,7 +32,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
   describe('filterApplications', () => {
     /**
      * Prepare mock data for filtering tests.
-     * Include both normal statuses and edge cases (empty status & missing status)
+     * Include both normal statuses and edge cases
      */
     const mockData = [
       { status: 'Offer' },
@@ -43,8 +43,8 @@ describe('sorting-controls tests (full coverage with docs)', () => {
     ];
 
     /**
-     * Test: Filtering by 'All' should return the full list.
-     * This verifies the default behavior when no filter is applied.
+     * Filtering by 'All' should return the full list
+     * This verifies the default behavior when no filter is applied
      */
     test('should return all when filter is All', () => {
       const result = filterApplications(mockData, 'All');
@@ -52,8 +52,8 @@ describe('sorting-controls tests (full coverage with docs)', () => {
     });
 
     /**
-     * Test: Filtering by a valid status (e.g. 'Offer').
-     * Expect only items with that status.
+     * Filtering by a valid status
+     * Expect only items with that status
      */
     test('should filter by status', () => {
       const result = filterApplications(mockData, 'Offer');
@@ -61,7 +61,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
     });
 
     /**
-     * Test: Filtering by a status that doesn't exist in dataset.
+     * Filtering by a status that doesn't exist in dataset.
      * Should return empty array.
      */
     test('should return empty if no matches', () => {
@@ -70,7 +70,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
     });
 
     /**
-     * Test: Handle empty string filter status gracefully.
+     * Handle empty string filter status gracefully.
      * Should return empty array (no matches).
      */
     test('should handle missing or empty status gracefully', () => {
@@ -82,13 +82,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
   /** ----------------- SortApplications Tests ------------------ */
 
   describe('sortApplications', () => {
-    /**
-     * Prepare mock data for sorting tests.
-     * Includes:
-     *  - normal company names
-     *  - valid dateApplied values
-     *  - one record with null fields (to test defensive code)
-     */
+    //Prepare mock data for sorting tests.
     const mockData = [
       { company: 'Google', dateApplied: '2024-01-02', bookmarked: false },
       { company: 'Amazon', dateApplied: '2024-05-01', bookmarked: true },
@@ -97,7 +91,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
     ];
 
     /**
-     * Test: Sort descending by dateApplied.
+     * Sort descending by dateApplied.
      * Expect newest date first.
      */
     test('should sort by date descending', () => {
@@ -106,7 +100,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
     });
 
     /**
-     * Test: Sort ascending by dateApplied.
+     * Sort ascending by dateApplied.
      * Expect oldest date first.
      * Should handle null dates as 'oldest'.
      */
@@ -115,24 +109,20 @@ describe('sorting-controls tests (full coverage with docs)', () => {
       expect(result[0].company).toBe(null);
     });
 
-    /**
-     * Test: Sort companies alphabetically (A-Z).
-     */
+    //Sort companies alphabetically (A-Z).
     test('should sort by company ascending', () => {
       const result = sortApplications(mockData, 'company-asc');
       expect(result[1].company).toBe('Amazon');
     });
 
-    /**
-     * Test: Sort companies reverse alphabetically (Z-A).
-     */
+    //Sort companies reverse alphabetically (Z-A).
     test('should sort by company descending', () => {
       const result = sortApplications(mockData, 'company-desc');
       expect(result[0].company).toBe('Google');
     });
 
     /**
-     * Test: Sort by favorites-first.
+     * Sort by favorites-first.
      * Bookmarked applications should come first.
      */
     test('should sort by favorites first', () => {
@@ -141,7 +131,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
     });
 
     /**
-     * Test: Handle invalid sort option gracefully (default fallback).
+     * Handle invalid sort option gracefully (default fallback).
      * Should return data unsorted.
      */
     test('should return original array on invalid sort option', () => {
@@ -150,7 +140,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
     });
 
     /**
-     * Test: Handle missing dateApplied and company fields.
+     * Handle missing dateApplied and company fields.
      * Should not crash.
      */
     test('should handle missing dateApplied and company safely', () => {

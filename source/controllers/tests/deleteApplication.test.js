@@ -26,7 +26,7 @@ describe('deleteApplication', () => {
     ]));
   });
 
-  // Test: correct item should be removed from localStorage
+  // correct item should be removed from localStorage
   it('removes the correct item from localStorage', () => {
     deleteApplication('1');
     const stored = JSON.parse(localStorage.getItem('applications'));
@@ -34,12 +34,12 @@ describe('deleteApplication', () => {
     expect(stored[0].id).toBe('2');  // The remaining item should be id '2'
   });
 
-  // Test: wrapper element should be removed from DOM after animation delay
+  // wrapper element should be removed from DOM after animation delay
   it('removes the wrapper element from DOM after animation', () => {
     jest.useFakeTimers();  // Mock timers to control animation delay
     deleteApplication('1');
 
-    // Immediately after calling delete, wrapper still exists (before timeout)
+    // Immediately after calling delete, wrapper still exists - before timeout
     const wrapper = document.querySelector('.application-wrapper[data-id="1"]');
     expect(wrapper).not.toBeNull();
 
@@ -53,7 +53,7 @@ describe('deleteApplication', () => {
     jest.useRealTimers();
   });
 
-  // Test: fallback behavior when wrapper doesn't exist (only job-app-card exists)
+  // fallback behavior when wrapper doesn't exist
   it('removes just the card element if wrapper is not found', () => {
     // Reset DOM to only have job-app-card without wrapper
     document.body.innerHTML = '<job-app-card data-id="1"></job-app-card>';

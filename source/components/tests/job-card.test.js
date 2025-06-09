@@ -75,7 +75,7 @@ describe('JobAppCard component', () => {
   });
 
   it('dispatches delete-card event on delete button click', () => {
-    // Set dataset & attach listener BEFORE assigning data
+    // Setting dataset & attach listener before assigning data
     element.dataset.id = 'test-123';
     const listener = jest.fn();
     element.addEventListener('delete-card', listener);

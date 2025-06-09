@@ -4,7 +4,7 @@
 
 import '../../components/job-card.js';
 
-// ✅ Mock deleteApplication so no real deletes happen
+// Mock deleteApplication so no real deletes happen
 jest.mock('../../controllers/deleteApplication.js', () => ({
   deleteApplication: jest.fn(),
 }));
@@ -12,7 +12,7 @@ jest.mock('../../controllers/deleteApplication.js', () => ({
 let applicationsPage;
 
 beforeEach(async () => {
-  // ✅ Build DOM before import
+  // Build DOM before import
   document.body.innerHTML = `
     <button id="editApplicationBtn"></button>
     <div id="applicationCardsContainer"></div>
@@ -36,14 +36,14 @@ beforeEach(async () => {
   localStorage.clear();
   jest.clearAllMocks();
 
-  // ✅ Dynamically import AFTER DOM setup
+  // Dynamically import AFTER DOM setup
   applicationsPage = await import('../../js/applications-page.js');
 });
 
 describe('applications-page.js extra unit tests for coverage', () => {
 
   test('updateCardInDOM updates card if ID exists', () => {
-    // ✅ Create wrapper + card
+    // Create wrapper + card
     const wrapper = document.createElement('div');
     wrapper.classList.add('application-wrapper');
     document.getElementById('applicationCardsContainer').appendChild(wrapper);
@@ -51,7 +51,7 @@ describe('applications-page.js extra unit tests for coverage', () => {
     const card = document.createElement('job-app-card');
     card.dataset.id = '123';
 
-    // ✅ Manually define .data property to simulate custom element behavior
+    // Manually define .data property to simulate custom element behavior
     Object.defineProperty(card, 'data', {
       value: undefined,
       writable: true
@@ -59,15 +59,15 @@ describe('applications-page.js extra unit tests for coverage', () => {
 
     wrapper.appendChild(card);
 
-    // ✅ Put matching data in localStorage
+    // Put matching data in localStorage
     localStorage.setItem('applications', JSON.stringify([
       { id: '123', company: 'Test' }
     ]));
 
-    // ✅ Call function
+    // Call function
     applicationsPage.updateCardInDOM('123');
 
-    // ✅ Now card.data is assigned by updateCardInDOM()
+    // Now card.data is assigned by updateCardInDOM()
     expect(card.data).toEqual({ id: '123', company: 'Test' });
   });
 
@@ -78,7 +78,7 @@ describe('applications-page.js extra unit tests for coverage', () => {
 
   test('loadMockData works and adds mock data', () => {
     const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
-    window.loadMockData();   // ✅ window instead of applicationsPage
+    window.loadMockData();   // window instead of applicationsPage
 
     const apps = JSON.parse(localStorage.getItem('applications'));
     expect(apps.length).toBeGreaterThan(0);
@@ -92,7 +92,7 @@ describe('applications-page.js extra unit tests for coverage', () => {
     const confirmSpy = jest.spyOn(window, 'confirm').mockReturnValue(true);
     const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
 
-    window.clearAllData();   // ✅ window instead of applicationsPage
+    window.clearAllData();   // window instead of applicationsPage
 
     expect(localStorage.getItem('applications')).toBeNull();
 
@@ -101,7 +101,7 @@ describe('applications-page.js extra unit tests for coverage', () => {
   });
 
   test('openModal() populates modal with job data', () => {
-    // ✅ Get openModal directly from window
+    // Get openModal directly from window
     const openModal = window.openModal;
 
     const job = {
