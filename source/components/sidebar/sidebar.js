@@ -6,44 +6,42 @@ class AppSidebar extends HTMLElement {
   }
 
   async connectedCallback() {
-    // Adjust the fetch path to be relative to the HTML page in the 'pages' directory
+    // Load the sidebar HTML into shadow DOM
     const response = await fetch('../components/sidebar/sidebar.html');
     if (!response.ok) {
-      console.error(`Failed to load sidebar.html: ${response.statusText} (path: ../components/sidebar/sidebar.html)`);
+      console.error(`Failed to load sidebar.html: ${response.statusText}`);
       this.shadowRoot.innerHTML = '<p>Error loading sidebar content.</p>';
-      // Dispatch an event even on error, so the page doesn't hang indefinitely
-      // Or handle this state differently in the main page script
       this.dispatchEvent(new CustomEvent('sidebar-load-failed', { bubbles: true, composed: true }));
       return;
     }
     const html = await response.text();
 
     const styles = `
-            <link rel="stylesheet" href="../styles/colors.css"> 
-            <link rel="stylesheet" href="../components/sidebar/sidebar.css"> 
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        `;
+      <link rel="stylesheet" href="../styles/colors.css"> 
+      <link rel="stylesheet" href="../components/sidebar/sidebar.css"> 
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    `;
 
-    this.shadowRoot.innerHTML = `${styles}<aside class="sidebar-wrapper">${html}</aside>`;
+    this.shadowRoot.innerHTML = `
+      ${styles}
+      <aside class="sidebar-wrapper">${html}</aside>
+    `;
+    this.dispatchEvent(new CustomEvent('sidebar-loaded', { bubbles: true, composed: true }));
 
-    // Dispatch an event to signal that the sidebar is loaded
-    this.dispatchEvent(new CustomEvent('sidebar-loaded', {
-      bubbles: true,
-      composed: true
-    }));
-
+    // Grab elements
     this._themeToggleButton = this.shadowRoot.querySelector('.theme-toggle-button');
-    this._themeToggleIcon = this._themeToggleButton?.querySelector('.material-symbols-outlined');
-    this._navLinks = this.shadowRoot.querySelectorAll('.nav-link');
+    this._themeToggleIcon   = this._themeToggleButton?.querySelector('.material-symbols-outlined');
+    this._navLinks          = this.shadowRoot.querySelectorAll('.nav-link');
 
     this._addEventListeners();
     this._updateThemeUI(document.documentElement.getAttribute('data-theme') || 'light');
     this._setActiveNavLink();
 
-    this._themeObserver = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-          this._updateThemeUI(mutation.target.getAttribute('data-theme'));
+    // Watch for theme changes on <html>
+    this._themeObserver = new MutationObserver(muts => {
+      muts.forEach(m => {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          this._updateThemeUI(m.target.getAttribute('data-theme'));
         }
       });
     });
@@ -51,15 +49,42 @@ class AppSidebar extends HTMLElement {
   }
 
   disconnectedCallback() {
-    if (this._observer) this._observer.disconnect();
+    if (this._themeObserver) this._themeObserver.disconnect();
   }
 
   _addEventListeners() {
+    // 1) Theme toggle
     if (this._themeToggleButton) {
       this._themeToggleButton.addEventListener('click', () => {
         this.dispatchEvent(new CustomEvent('request-theme-toggle', { bubbles: true, composed: true }));
       });
     }
+
+    // 2) Intercept "Add Application" link
+    const addAppLink = this.shadowRoot.querySelector('a.add-application-button');
+    if (addAppLink) {
+      addAppLink.addEventListener('click', e => {
+        const editData = localStorage.getItem('editJobData');
+        if (editData) {
+          e.preventDefault();
+          alert('You must save your changes before adding a new application.');
+        }
+      });
+    }
+
+    // 3) Intercept Dashboard & Applications links
+    const protectedLinks = this.shadowRoot.querySelectorAll(
+      'a.nav-link[href="dashboard.html"], a.nav-link[href="applications.html"]'
+    );
+    protectedLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        const editData = localStorage.getItem('editJobData');
+        if (editData) {
+          e.preventDefault();
+          alert('You must save your changes before leaving this page.');
+        }
+      });
+    });
   }
 
   _updateThemeUI(theme) {
@@ -71,19 +96,14 @@ class AppSidebar extends HTMLElement {
   _setActiveNavLink() {
     const currentPage = window.location.pathname.split('/').pop();
     this._navLinks.forEach(link => {
-      if (link.getAttribute('href') === currentPage) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
-      }
+      link.classList.toggle('active', link.getAttribute('href') === currentPage);
     });
-    // Special handling for add_application.html button if it's part of the main nav structure
-    const addAppButton = this.shadowRoot.querySelector('.add-application-button');
-    if (addAppButton && addAppButton.getAttribute('href') === currentPage) {
-      addAppButton.classList.add('active'); // Assuming 'active' style is defined for it
-    } else if (addAppButton) {
-      addAppButton.classList.remove('active');
+
+    const addAppButton = this.shadowRoot.querySelector('a.add-application-button');
+    if (addAppButton) {
+      addAppButton.classList.toggle('active', addAppButton.getAttribute('href') === currentPage);
     }
   }
 }
+
 customElements.define('app-sidebar', AppSidebar);
