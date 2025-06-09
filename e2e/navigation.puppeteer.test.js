@@ -25,7 +25,7 @@ describe('Cross-Page Navigation E2E Test (Puppeteer)', () => {
   test('should navigate from dashboard to applications page', async () => {
     // Start on dashboard page
     await page.goto('http://127.0.0.1:5500/source/pages/dashboard.html', { waitUntil: 'networkidle0' });
-    
+
     // Look for link or button that navigates to applications page
     const applicationsLink = await page.$('a[href*="applications"]');
     if (applicationsLink) {
@@ -42,7 +42,7 @@ describe('Cross-Page Navigation E2E Test (Puppeteer)', () => {
   test('should navigate to add application page', async () => {
     // Start on applications page
     await page.goto('http://127.0.0.1:5500/source/pages/applications.html', { waitUntil: 'domcontentloaded' });
-    
+
     // Look for "Add Application" button or link
     const addButton = await page.$('#addApplicationBtn');
     if (addButton) {
@@ -59,7 +59,7 @@ describe('Cross-Page Navigation E2E Test (Puppeteer)', () => {
   test('should have consistent sidebar navigation', async () => {
     // Test sidebar on dashboard page
     await page.goto('http://127.0.0.1:5500/source/pages/dashboard.html', { waitUntil: 'networkidle0' });
-    
+
     // Check if sidebar component exists
     const sidebar = await page.$('app-sidebar');
     expect(sidebar).not.toBeNull();
@@ -78,7 +78,7 @@ describe('Cross-Page Navigation E2E Test (Puppeteer)', () => {
 
     // Test sidebar consistency on applications page
     await page.goto('http://127.0.0.1:5500/source/pages/applications.html', { waitUntil: 'domcontentloaded' });
-    
+
     const sidebarOnAppsPage = await page.$('app-sidebar');
     expect(sidebarOnAppsPage).not.toBeNull();
 

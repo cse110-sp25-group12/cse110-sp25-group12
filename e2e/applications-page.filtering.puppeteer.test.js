@@ -85,7 +85,7 @@ describe('Applications Page Filtering E2E Test (Puppeteer)', () => {
 
       // Count visible application cards (not hidden by CSS display:none)
       const visibleCards = await page.$$eval('.application-wrapper:not([style*="display: none"])', els => els.length);
-      
+
       // Should show 2 applications (Google and Netflix both have "Applied" status)
       expect(visibleCards).toBe(2);
     }
@@ -108,7 +108,7 @@ describe('Applications Page Filtering E2E Test (Puppeteer)', () => {
 
       // Count visible application cards
       const visibleCards = await page.$$eval('.application-wrapper:not([style*="display: none"])', els => els.length);
-      
+
       // Should show 1 application (only Google matches)
       expect(visibleCards).toBe(1);
 
@@ -143,7 +143,7 @@ describe('Applications Page Filtering E2E Test (Puppeteer)', () => {
 
       // Count all visible application cards
       const visibleCards = await page.$$eval('.application-wrapper', els => els.length);
-      
+
       // Should show all 4 applications after clearing filters
       expect(visibleCards).toBe(4);
     }
