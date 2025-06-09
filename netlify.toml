@@ -1,6 +1,6 @@
 [build]
-  base = "source"
-  publish = "."
+  base = "."
+  publish = "source"
 
 [[redirects]]
   from = "/"
