@@ -1,7 +1,22 @@
 [build]
   base = "."
   publish = "source"
+# Redirect direct access to source paths to clean URLs
+[[redirects]]
+  from = "/source/pages/dashboard.html"
+  to = "/dashboard"
+  status = 301
 
+[[redirects]]
+  from = "/source/pages/applications.html"
+  to = "/applications"
+  status = 301
+
+[[redirects]]
+  from = "/source/pages/add_application.html"
+  to = "/add-application"
+  status = 301
+  
 [[redirects]]
   from = "/"
   to = "/pages/dashboard.html"
