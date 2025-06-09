@@ -100,3 +100,4 @@ function populateFormForEdit(job) {
   document.getElementById('notes').value = job.notes || '';
 }
 
+export { populateFormForEdit };
