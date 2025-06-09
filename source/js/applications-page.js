@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const jobs = JSON.parse(localStorage.getItem('applications'));
   renderCards(jobs);
   setupModal();
+
+  // Listen for new applications being created
+  window.addEventListener('applicationCreated', () => {
+    const updatedJobs = JSON.parse(localStorage.getItem('applications')) || [];
+    renderCards(updatedJobs);
+  });
 });
 
 /**

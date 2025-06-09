@@ -62,22 +62,33 @@ document.addEventListener('DOMContentLoaded', function () {
       notes: document.getElementById('notes').value
     };
 
-    if (editData) {
-      // In edit mode, preserve the existing ID and update storage
-      const job = JSON.parse(editData);
-      formData.id = job.id;
-      updateApplication(job.id, formData);
-      localStorage.removeItem('editJobData');
-    } else {
-      // Otherwise, create a new application entry
-      createApplication(formData);
+    try {
+      if (editData) {
+        // In edit mode, preserve the existing ID and update storage
+        const job = JSON.parse(editData);
+        formData.id = job.id;
+        updateApplication(job.id, formData);
+        localStorage.removeItem('editJobData');
+        
+        // Show success message for update
+        showSuccessMessage('Application updated successfully!');
+      } else {
+        // Otherwise, create a new application entry
+        const newApplication = createApplication(formData);
+        
+        // Show success message for creation
+        showSuccessMessage(`Application for ${newApplication.company} created successfully!`);
+      }
+
+      // After processing, navigate back to the applications list
+      setTimeout(() => {
+        window.location.href = 'applications.html';
+      }, 1500); // Longer delay to show success message
+      
+    } catch (error) {
+      console.error('Error saving application:', error);
+      showErrorMessage('Failed to save application. Please try again.');
     }
-
-
-    // After processing, navigate back to the applications list
-    setTimeout(() => {
-      window.location.pathname = 'source/pages/applications.html';
-    }, 100);
   });
 });
 
@@ -98,6 +109,98 @@ function populateFormForEdit(job) {
   document.getElementById('contactEmail').value = job.contact?.email || '';
   document.getElementById('contactPhone').value = job.contact?.phoneNumber || '';
   document.getElementById('notes').value = job.notes || '';
+}
+
+/**
+ * @description Show a success message to the user
+ * @param {string} message - The success message to display
+ */
+function showSuccessMessage(message) {
+  // Create a success notification element
+  const notification = document.createElement('div');
+  notification.className = 'success-notification';
+  notification.textContent = message;
+  
+  // Style the notification
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    backgroundColor: '#4caf50',
+    color: 'white',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: '10000',
+    fontSize: '14px',
+    fontWeight: '500',
+    maxWidth: '400px',
+    transform: 'translateX(100%)',
+    transition: 'transform 0.3s ease-in-out'
+  });
+  
+  document.body.appendChild(notification);
+  
+  // Animate in
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  // Remove after delay
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 3000);
+}
+
+/**
+ * @description Show an error message to the user
+ * @param {string} message - The error message to display
+ */
+function showErrorMessage(message) {
+  // Create an error notification element
+  const notification = document.createElement('div');
+  notification.className = 'error-notification';
+  notification.textContent = message;
+  
+  // Style the notification
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    backgroundColor: '#f44336',
+    color: 'white',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: '10000',
+    fontSize: '14px',
+    fontWeight: '500',
+    maxWidth: '400px',
+    transform: 'translateX(100%)',
+    transition: 'transform 0.3s ease-in-out'
+  });
+  
+  document.body.appendChild(notification);
+  
+  // Animate in
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  // Remove after delay
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 5000); // Error messages stay longer
 }
 
 export { populateFormForEdit };

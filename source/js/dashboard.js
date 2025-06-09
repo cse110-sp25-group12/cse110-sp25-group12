@@ -367,6 +367,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (applicationsChartEl) {
     const monthlyData = getApplicationsByMonth();
 
+    // Destroy any existing chart instance before creating a new one
+    const existingChart = Chart.getChart(applicationsChartEl);
+    if (existingChart) {
+      existingChart.destroy();
+    }
+
     try {
       new Chart(applicationsChartEl.getContext('2d'), {
         type: 'line',
@@ -450,6 +456,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         statusCounts[status]++;
       }
     });
+
+    // Destroy any existing chart instance before creating a new one
+    const existingStatusChart = Chart.getChart(statusChartEl);
+    if (existingStatusChart) {
+      existingStatusChart.destroy();
+    }
 
     try {
       new Chart(statusChartEl.getContext('2d'), {
