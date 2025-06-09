@@ -52,7 +52,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
       clear: jest.fn(),
       removeItem: jest.fn()
     };
-    
+
     // Make localStorage available globally
     global.localStorage = mockLocalStorage;
   });
@@ -60,7 +60,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
   beforeEach(() => {
     // Clear all mocks before each test
     jest.clearAllMocks();
-    
+
     // Reset localStorage mock to return empty array by default
     mockLocalStorage.getItem.mockReturnValue('[]');
   });
@@ -101,7 +101,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
     // Verify localStorage was called correctly
     expect(mockLocalStorage.getItem).toHaveBeenCalledWith('applications');
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
-      'applications', 
+      'applications',
       expect.stringContaining('Google')
     );
   });
@@ -140,7 +140,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
     expect(mockLocalStorage.setItem).toHaveBeenCalled();
   });
 
-  // Test 4: Special characters in form data  
+  // Test 4: Special characters in form data
   test('should handle special characters in form data', () => {
     const specialData = {
       company: 'Test & Company <script>alert("xss")</script>',
@@ -157,7 +157,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
     expect(result).toBeDefined();
     expect(result.company).toBe('Test & Company <script>alert("xss")</script>');
     expect(result.contact.name).toBe('John O\'Brien');
-    
+
     // Verify data was passed through correctly (no sanitization expected)
     expect(result.notes).toBe('Special chars: !@#$%^&*()');
   });
@@ -178,7 +178,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
 
     // Verify it called getItem to get existing data
     expect(mockLocalStorage.getItem).toHaveBeenCalledWith('applications');
-    
+
     // Verify it saved the combined data
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
       'applications',
@@ -268,7 +268,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
     );
   });
 
-  // Test 10: localStorage error handling 
+  // Test 10: localStorage error handling
   test('should handle localStorage errors', () => {
     // Create a fresh mock for this test only
     const errorMock = {
@@ -277,7 +277,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
         throw new Error('localStorage is full');
       })
     };
-    
+
     // Temporarily replace the global mock
     const originalMock = global.localStorage;
     global.localStorage = errorMock;
@@ -288,7 +288,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
     expect(() => {
       createApplication(testData);
     }).toThrow('localStorage is full');
-    
+
     // Restore the original mock
     global.localStorage = originalMock;
   });
@@ -300,7 +300,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
       getItem: jest.fn().mockReturnValue('invalid-json-data'),
       setItem: jest.fn()
     };
-    
+
     // Temporarily replace the global mock
     const originalMock = global.localStorage;
     global.localStorage = corruptedMock;
@@ -311,7 +311,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
     expect(() => {
       createApplication(newData);
     }).toThrow();
-    
+
     // Restore the original mock
     global.localStorage = originalMock;
   });
@@ -363,7 +363,7 @@ describe('createApplication - Enhanced Coverage Tests', () => {
     expect(result.customField).toBe('custom value');
     expect(result.nestedObject.key).toBe('value');
     expect(result.arrayField).toEqual([1, 2, 3]);
-    
+
     // Plus the generated ID
     expect(result.id).toBeDefined();
   });
@@ -390,20 +390,20 @@ describe('createApplication - Enhanced Coverage Tests', () => {
     const mockCrypto = {
       randomUUID: jest.fn().mockReturnValue('mocked-uuid-12345')
     };
-    
+
     const originalCrypto = global.crypto;
     global.crypto = mockCrypto;
-    
+
     const result1 = createApplication({ company: 'Crypto Test' });
     expect(result1.id).toBe('mocked-uuid-12345');
-    
+
     // Test fallback when crypto is undefined
     delete global.crypto;
     const result2 = createApplication({ company: 'Fallback Test' });
     expect(result2.id).toBeDefined();
     expect(typeof result2.id).toBe('string');
     expect(result2.id.length).toBeGreaterThan(10); // Should be a reasonable UUID length
-    
+
     // Restore original crypto
     global.crypto = originalCrypto;
   });
