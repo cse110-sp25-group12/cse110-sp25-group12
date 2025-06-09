@@ -1,28 +1,24 @@
 [build]
   base = "."
   publish = "source"
-# Redirect direct access to source paths to clean URLs
-[[redirects]]
-  from = "/source/*"
-  to = "/:splat"
-  status = 301
-  force = true
 
+# Redirect direct access to pages to clean URLs
 [[redirects]]
-  from = "/source/pages/dashboard.html"
+  from = "/pages/dashboard.html"
   to = "/dashboard"
   status = 301
 
 [[redirects]]
-  from = "/source/pages/applications.html"
+  from = "/pages/applications.html" 
   to = "/applications"
   status = 301
 
 [[redirects]]
-  from = "/source/pages/add_application.html"
+  from = "/pages/add_application.html"
   to = "/add-application"
   status = 301
-  
+
+# Main application routes
 [[redirects]]
   from = "/"
   to = "/pages/dashboard.html"
