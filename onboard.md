@@ -75,9 +75,9 @@ Here's a short description of the CI/CD pipeline and what it does:
 5. Test Coverage. Runs the [Jest Coverage Report](https://github.com/marketplace/actions/jest-coverage-report) action which summarizes test coverage as a comment in the attempted pull request. Run ```npm run test:coverage``` to generate more detailed coverage report locally.
 
 ### On every push into main:
-1. Deployment to Github Pages. Builds latest main branch and deploys to Github Pages.
+1. JSDoc Documentation Generation. A separate docs branch will be created holding information for a documentation website. This branch is deployed to Github Pages.
 
-2. JSDoc Documentation Generation. A separate docs branch will be created that holds docs/, which contains a webpage that displays all documentation for JS logic.
+2. App Deployment with Netlify.
 
 
 
