@@ -7,7 +7,7 @@
  */
 async function fetchApplications() {
   try {
-    const response = await fetch('../data/applications.json');
+    const response = await fetch('/data/applications.json');
     if (!response.ok) throw new Error('Failed to load applications.json');
     return await response.json();
   } catch (error) {

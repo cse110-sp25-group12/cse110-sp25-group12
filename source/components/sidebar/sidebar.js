@@ -6,10 +6,10 @@ class AppSidebar extends HTMLElement {
   }
 
   async connectedCallback() {
-    // Adjust the fetch path to be relative to the HTML page in the 'pages' directory
-    const response = await fetch('../components/sidebar/sidebar.html');
+    // Use absolute path from site root for Netlify compatibility
+    const response = await fetch('/components/sidebar/sidebar.html');
     if (!response.ok) {
-      console.error(`Failed to load sidebar.html: ${response.statusText} (path: ../components/sidebar/sidebar.html)`);
+      console.error(`Failed to load sidebar.html: ${response.statusText} (path: /components/sidebar/sidebar.html)`);
       this.shadowRoot.innerHTML = '<p>Error loading sidebar content.</p>';
       // Dispatch an event even on error, so the page doesn't hang indefinitely
       // Or handle this state differently in the main page script
@@ -19,8 +19,8 @@ class AppSidebar extends HTMLElement {
     const html = await response.text();
 
     const styles = `
-            <link rel="stylesheet" href="../styles/colors.css"> 
-            <link rel="stylesheet" href="../components/sidebar/sidebar.css"> 
+            <link rel="stylesheet" href="/styles/colors.css"> 
+            <link rel="stylesheet" href="/components/sidebar/sidebar.css"> 
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         `;
 
