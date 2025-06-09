@@ -22,8 +22,4 @@
   to = "/pages/add_application.html"
   status = 200
 
-# Handle SPA routing - fallback for any unmatched routes
-[[redirects]]
-  from = "/*"
-  to = "/pages/dashboard.html"
-  status = 200 
+# Allow direct access to pages without redirecting to dashboard
