@@ -7,7 +7,7 @@
  */
 async function fetchApplications() {
   try {
-    const response = await fetch('../data/applications.json');
+    const response = await fetch('/data/applications.json');
     if (!response.ok) throw new Error('Failed to load applications.json');
     return await response.json();
   } catch (error) {
@@ -366,6 +366,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // === Applications Over Time Chart ===
   if (applicationsChartEl) {
     const monthlyData = getApplicationsByMonth();
+    console.log('Dashboard: Monthly chart data:', monthlyData);
 
     // Destroy any existing chart instance before creating a new one
     // Use try-catch for compatibility with different Chart.js versions
@@ -411,21 +412,27 @@ document.addEventListener('DOMContentLoaded', async () => {
           scales: {
             y: {
               beginAtZero: true,
-              grid: { color: chartColors.outline },
-              ticks: { color: chartColors.onSurfaceVariant },
+              grid: { color: chartColors.outline || '#e5e7eb' },
+              ticks: { 
+                color: chartColors.onSurfaceVariant || '#6b7280',
+                stepSize: 1
+              },
             },
             x: {
-              grid: { color: chartColors.outline },
-              ticks: { color: chartColors.onSurfaceVariant },
+              grid: { color: chartColors.outline || '#e5e7eb' },
+              ticks: { color: chartColors.onSurfaceVariant || '#6b7280' },
             },
           },
           plugins: {
-            legend: { labels: { color: chartColors.onSurfaceVariant } },
+            legend: { labels: { color: chartColors.onSurfaceVariant || '#6b7280' } },
           },
         },
       });
+      console.log('Dashboard: Applications chart created successfully');
     } catch (error) {
       console.error('Error creating applications chart:', error);
+      // Fallback: show a message in the chart container
+      applicationsChartEl.parentElement.innerHTML = '<p style="text-align: center; color: #6b7280; margin-top: 100px;">Chart data will appear after adding applications</p>';
     }
   }
 
@@ -465,40 +472,42 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-    // Destroy any existing chart instance before creating a new one
-    // Use try-catch for compatibility with different Chart.js versions
-    try {
-      const existingStatusChart = Chart.getChart ? Chart.getChart(statusChartEl) : null;
-      if (existingStatusChart) {
-        existingStatusChart.destroy();
+    console.log('Dashboard: Status counts:', statusCounts);
+
+    // Filter out statuses with 0 counts for better visualization
+    const activeLabels = [];
+    const activeData = [];
+    const activeColors = [];
+    const colorMap = [
+      '#4f46e5', // Applied - Primary blue
+      '#06b6d4', // Screening - Cyan
+      '#10b981', // Interviewing - Green
+      '#f59e0b', // Offer - Amber
+      '#8b5cf6', // Wishlist - Purple
+      '#6b7280', // Withdrawn - Gray
+      '#ef4444', // Rejected - Red
+      '#9ca3af', // Ghosted - Light gray
+    ];
+
+    statusLabels.forEach((label, index) => {
+      if (statusCounts[label] > 0) {
+        activeLabels.push(label);
+        activeData.push(statusCounts[label]);
+        activeColors.push(colorMap[index]);
       }
-    } catch (error) {
-      // Fallback for older Chart.js versions - check for existing chart instance
-      if (statusChartEl._chartjs) {
-        statusChartEl._chartjs.destroy();
-      }
-    }
+    });
 
     try {
       new Chart(statusChartEl.getContext('2d'), {
         type: 'doughnut',
         data: {
-          labels: statusLabels,
+          labels: activeLabels.length > 0 ? activeLabels : ['No Data'],
           datasets: [
             {
               label: 'Application Status',
-              data: statusLabels.map((label) => statusCounts[label]),
-              backgroundColor: [
-                '#4f46e5', // Applied - Primary blue
-                '#06b6d4', // Screening - Cyan
-                '#10b981', // Interviewing - Green
-                '#f59e0b', // Offer - Amber
-                '#8b5cf6', // Wishlist - Purple
-                '#6b7280', // Withdrawn - Gray
-                '#ef4444', // Rejected - Red
-                '#9ca3af', // Ghosted - Light gray
-              ],
-              borderColor: chartColors.surface,
+              data: activeData.length > 0 ? activeData : [1],
+              backgroundColor: activeColors.length > 0 ? activeColors : ['#e5e7eb'],
+              borderColor: chartColors.surface || '#fff',
               borderWidth: 2,
             },
           ],
@@ -509,11 +518,12 @@ document.addEventListener('DOMContentLoaded', async () => {
           plugins: {
             legend: {
               position: 'bottom',
-              labels: { color: chartColors.onSurfaceVariant },
+              labels: { color: chartColors.onSurfaceVariant || '#6b7280' },
             },
             tooltip: {
               callbacks: {
                 label: function (context) {
+                  if (activeData.length === 0) return 'No applications yet';
                   const label = context.label || '';
                   const value = context.raw || 0;
                   const total = context.dataset.data.reduce((a, b) => a + b, 0);
@@ -526,8 +536,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           },
         },
       });
+      console.log('Dashboard: Status chart created successfully');
     } catch (error) {
       console.error('Error creating status chart:', error);
+      // Fallback: show a message in the chart container
+      statusChartEl.parentElement.innerHTML = '<p style="text-align: center; color: #6b7280; margin-top: 100px;">Status breakdown will appear after adding applications</p>';
     }
   }
 
@@ -553,4 +566,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Add dashboard-loaded class to signal that initialization is complete
   document.body.classList.add('dashboard-loaded');
   console.log('Dashboard: Initialization complete, dashboard-loaded class added');
+
+  // Listen for localStorage changes (when user adds/edits applications)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'applications') {
+      console.log('Dashboard: Applications data changed, reloading...');
+      location.reload();
+    }
+  });
+
+  // Also check for focus events (when user returns to dashboard)
+  window.addEventListener('focus', () => {
+    const currentApps = JSON.parse(localStorage.getItem('applications')) || [];
+    if (currentApps.length !== applications.length) {
+      console.log('Dashboard: Application count changed, reloading...');
+      location.reload();
+    }
+  });
 });
