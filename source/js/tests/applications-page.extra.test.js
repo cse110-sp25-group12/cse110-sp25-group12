@@ -42,35 +42,35 @@ beforeEach(async () => {
 
 describe('applications-page.js extra unit tests for coverage', () => {
 
-    test('updateCardInDOM updates card if ID exists', () => {
-        // ✅ Create wrapper + card
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('application-wrapper');
-        document.getElementById('applicationCardsContainer').appendChild(wrapper);
-      
-        const card = document.createElement('job-app-card');
-        card.dataset.id = '123';
-      
-        // ✅ Manually define .data property to simulate custom element behavior
-        Object.defineProperty(card, 'data', {
-          value: undefined,
-          writable: true
-        });
-      
-        wrapper.appendChild(card);
-      
-        // ✅ Put matching data in localStorage
-        localStorage.setItem('applications', JSON.stringify([
-          { id: '123', company: 'Test' }
-        ]));
-      
-        // ✅ Call function
-        applicationsPage.updateCardInDOM('123');
-      
-        // ✅ Now card.data is assigned by updateCardInDOM()
-        expect(card.data).toEqual({ id: '123', company: 'Test' });
-      });
-      
+  test('updateCardInDOM updates card if ID exists', () => {
+    // ✅ Create wrapper + card
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('application-wrapper');
+    document.getElementById('applicationCardsContainer').appendChild(wrapper);
+
+    const card = document.createElement('job-app-card');
+    card.dataset.id = '123';
+
+    // ✅ Manually define .data property to simulate custom element behavior
+    Object.defineProperty(card, 'data', {
+      value: undefined,
+      writable: true
+    });
+
+    wrapper.appendChild(card);
+
+    // ✅ Put matching data in localStorage
+    localStorage.setItem('applications', JSON.stringify([
+      { id: '123', company: 'Test' }
+    ]));
+
+    // ✅ Call function
+    applicationsPage.updateCardInDOM('123');
+
+    // ✅ Now card.data is assigned by updateCardInDOM()
+    expect(card.data).toEqual({ id: '123', company: 'Test' });
+  });
+
 
   test('updateCardInDOM does nothing if card not found', () => {
     applicationsPage.updateCardInDOM('nonexistent');
@@ -103,7 +103,7 @@ describe('applications-page.js extra unit tests for coverage', () => {
   test('openModal() populates modal with job data', () => {
     // ✅ Get openModal directly from window
     const openModal = window.openModal;
-  
+
     const job = {
       jobPosition: 'SWE',
       company: 'Google',
@@ -116,63 +116,63 @@ describe('applications-page.js extra unit tests for coverage', () => {
       notes: 'Follow up soon',
       importantDates: { 'Interview': '2025-06-01' }
     };
-  
+
     openModal(job);
-  
+
     expect(document.getElementById('modal-company').textContent).toBe('Google');
     expect(document.getElementById('modal-salary').textContent).toBe('$150,000');
     expect(document.querySelector('#modal-important-dates li').textContent).toBe('Interview: 2025-06-01');
   });
-  
+
   test('openModal() handles missing salary and contact gracefully', () => {
     const openModal = window.openModal;
-  
+
     const job = {
       jobPosition: 'PM',
       company: 'Amazon',
       salary: null,
       contact: {}
     };
-  
+
     openModal(job);
-  
+
     expect(document.getElementById('modal-salary').textContent).toBe('$-');
     expect(document.getElementById('modal-contact').textContent).toBe('');
   });
-  
+
   test('setupModal() closes modal on Escape key', () => {
     const setupModal = window.setupModal;
-  
+
     setupModal();
     const modal = document.getElementById('appDetailsModal');
     modal.classList.add('show');
-  
+
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-  
+
     expect(modal.classList.contains('show')).toBe(false);
   });
-  
+
   test('setupModal() closes modal when backdrop clicked', () => {
     const setupModal = window.setupModal;
-  
+
     setupModal();
     const modal = document.getElementById('appDetailsModal');
     modal.classList.add('show');
-  
+
     modal.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-  
+
     expect(modal.classList.contains('show')).toBe(false);
   });
-  
+
   test('setupModal() closes modal on close button click', () => {
     const setupModal = window.setupModal;
-  
+
     setupModal();
     const modal = document.getElementById('appDetailsModal');
     modal.classList.add('show');
-  
+
     modal.querySelector('.close-btn').click();
-  
+
     expect(modal.classList.contains('show')).toBe(false);
   });
 });

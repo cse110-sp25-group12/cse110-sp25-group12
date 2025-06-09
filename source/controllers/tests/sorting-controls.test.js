@@ -42,7 +42,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
       { },             // edge case: missing status property
     ];
 
-    /** 
+    /**
      * Test: Filtering by 'All' should return the full list.
      * This verifies the default behavior when no filter is applied.
      */
@@ -112,7 +112,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
      */
     test('should sort by date ascending', () => {
       const result = sortApplications(mockData, 'date-asc');
-      expect(result[0].company).toBe(null); 
+      expect(result[0].company).toBe(null);
     });
 
     /**
@@ -137,7 +137,7 @@ describe('sorting-controls tests (full coverage with docs)', () => {
      */
     test('should sort by favorites first', () => {
       const result = sortApplications(mockData, 'favorites-first');
-      expect(result[0].company).toBe('Amazon'); 
+      expect(result[0].company).toBe('Amazon');
     });
 
     /**

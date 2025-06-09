@@ -60,13 +60,13 @@ describe('JobAppCard component', () => {
     element.data = {
       // No logo, no company, no jobPosition, no dateApplied, no contact
     };
-  
+
     const logo = shadow.querySelector('.logo');
     const title = shadow.querySelector('.title');
     const company = shadow.querySelector('.company');
     const date = shadow.querySelector('.date');
     const email = shadow.querySelector('.email');
-  
+
     expect(logo.src).toContain('data:image/svg+xml;base64');  // fallback logo
     expect(title.textContent).toBe('Untitled Position');
     expect(company.textContent).toBe('Unknown Company');
