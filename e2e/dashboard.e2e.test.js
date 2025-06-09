@@ -5,10 +5,10 @@
 // Mock Chart.js globally to prevent errors during test since charts require canvas context
 global.Chart = jest.fn();
 
-// Import the dashboard module (this will automatically hook into DOMContentLoaded)
+// Import the dashboard module (will automatically hook into DOMContentLoaded)
 import '../source/js/dashboard.js';
 
-// Test suite for dashboard.js E2E logic (specifically total applications display)
+// Test suite for dashboard.js E2E logic
 describe('dashboard.js E2E - Total Applications Count', () => {
 
   // Setup DOM before each test
@@ -61,7 +61,7 @@ describe('dashboard.js E2E - Total Applications Count', () => {
     // Trigger DOMContentLoaded to simulate full page load and initialize dashboard logic
     document.dispatchEvent(new Event('DOMContentLoaded'));
 
-    // Grab the total applications display element (first content-card-stat block)
+    // Grab the total applications display element
     const totalApplicationsEl = document.querySelector(
       '.content-card:nth-child(1) .content-card-stat'
     );

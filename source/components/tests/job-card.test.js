@@ -55,4 +55,65 @@ describe('JobAppCard component', () => {
     expect(favoriteBtn.classList.contains('active')).toBe(false);
     expect(icon.textContent).toBe('bookmark');
   });
+
+  it('renders fallback values when data is missing', () => {
+    element.data = {
+      // No logo, no company, no jobPosition, no dateApplied, no contact
+    };
+
+    const logo = shadow.querySelector('.logo');
+    const title = shadow.querySelector('.title');
+    const company = shadow.querySelector('.company');
+    const date = shadow.querySelector('.date');
+    const email = shadow.querySelector('.email');
+
+    expect(logo.src).toContain('data:image/svg+xml;base64');  // fallback logo
+    expect(title.textContent).toBe('Untitled Position');
+    expect(company.textContent).toBe('Unknown Company');
+    expect(date.textContent).toContain('-');
+    expect(email.textContent).toContain('No email');
+  });
+
+  it('dispatches delete-card event on delete button click', () => {
+    // Setting dataset & attach listener before assigning data
+    element.dataset.id = 'test-123';
+    const listener = jest.fn();
+    element.addEventListener('delete-card', listener);
+
+    element.data = {
+      logo: '',
+      company: '',
+      jobPosition: '',
+      dateApplied: '',
+      contact: {}
+    };
+
+    const deleteBtn = shadow.querySelector('.delete-btn');
+    deleteBtn.click();
+
+    expect(listener).toHaveBeenCalledWith(expect.objectContaining({
+      detail: { id: 'test-123' }
+    }));
+  });
+
+  it('dispatches favorite-toggled event on favorite button click', () => {
+    element.dataset.id = 'test-456';
+    const listener = jest.fn();
+    element.addEventListener('favorite-toggled', listener);
+
+    element.data = {
+      logo: '',
+      company: '',
+      jobPosition: '',
+      dateApplied: '',
+      contact: {}
+    };
+
+    const favoriteBtn = shadow.querySelector('.favorite-btn');
+    favoriteBtn.click();
+
+    expect(listener).toHaveBeenCalledWith(expect.objectContaining({
+      detail: { id: 'test-456', favorited: true }
+    }));
+  });
 });

@@ -15,7 +15,7 @@ describe('updateApplication', () => {
     ]));
   });
 
-  // Test: should correctly update existing application
+  // should correctly update existing application
   it('updates an existing application correctly', () => {
     const updatedData = { company: 'Alphabet', jobPosition: 'Senior SWE' };
     const result = updateApplication('1', updatedData);
@@ -37,7 +37,7 @@ describe('updateApplication', () => {
     });
   });
 
-  // Test: should return null if application ID does not exist
+  // should return null if application ID does not exist
   it('returns null if application ID not found', () => {
     const result = updateApplication('999', { company: 'Test' });
     expect(result).toBeNull();
@@ -71,7 +71,7 @@ beforeEach(() => {
   });
 });
 
-// Test: updateCardInDOM should update card's data when card exists
+// updateCardInDOM should update card's data when card exists
 it('updates card DOM if card exists', () => {
   updateCardInDOM('1');
   const card = document.querySelector('job-app-card');
@@ -82,13 +82,13 @@ it('updates card DOM if card exists', () => {
   });
 });
 
-// Test: updateCardInDOM should not throw error if card doesn't exist
+// updateCardInDOM should not throw error if card doesn't exist
 it('does nothing if card does not exist', () => {
   document.body.innerHTML = '';
   expect(() => updateCardInDOM('1')).not.toThrow();
 });
 
-// Test: updateCardInDOM should not throw error if updated card not found in localStorage
+// updateCardInDOM should not throw error if updated card not found in localStorage
 it('does nothing if updated card not found in localStorage', () => {
   localStorage.setItem('applications', JSON.stringify([]));
   expect(() => updateCardInDOM('1')).not.toThrow();

@@ -427,3 +427,5 @@ function clearAllData() {
 window.loadMockData = loadMockData;
 window.clearAllData = clearAllData;
 window.mockApplications = mockApplications;
+window.openModal = openModal;
+window.setupModal = setupModal;

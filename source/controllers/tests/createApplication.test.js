@@ -22,7 +22,7 @@ describe('createApplication', function () {
     global.localStorage = localStorageMock;
   });
 
-  // Test: should successfully create a new application entry and store it in localStorage
+  // should successfully create a new application entry and store it in localStorage
   test('should create a new application and store it in localStorage', function () {
     const formData = {
       company: 'OpenAI',
@@ -44,7 +44,7 @@ describe('createApplication', function () {
     expect(stored[0].id).toBe(newCard.id);
   });
 
-  // Test: handle empty formData object without error
+  // handle empty formData object without error
   test('should handle empty formData object gracefully', function () {
     const formData = {};
     const newCard = createApplication(formData);
@@ -58,21 +58,21 @@ describe('createApplication', function () {
     expect(stored.length).toBe(1);
   });
 
-  // Test: should throw error if formData is null
+  // should throw error if formData is null
   test('should throw if formData is null', function () {
     expect(function () {
       createApplication(null);
     }).toThrow();
   });
 
-  // Test: should throw error if formData is undefined
+  // should throw error if formData is undefined
   test('should throw if formData is undefined', function () {
     expect(function () {
       createApplication(undefined);
     }).toThrow();
   });
 
-  // Test: append new application to existing localStorage data
+  // append new application to existing localStorage data
   test('should append to existing applications in localStorage', function () {
     const existing = [{ id: '123', company: 'Test' }];
     localStorage.setItem('applications', JSON.stringify(existing));
@@ -91,7 +91,7 @@ describe('createApplication', function () {
     expect(stored[1].id).toBe(newCard.id);
   });
 
-  // Test: ensure each card receives a unique ID
+  // ensure each card receives a unique ID
   test('should assign a unique id to each new card', function () {
     const card1 = createApplication({ company: 'A', logo: 'a.png' });
     const card2 = createApplication({ company: 'B', logo: 'b.png' });
