@@ -7,7 +7,11 @@
  */
 async function fetchApplications() {
   try {
-    const response = await fetch('/data/applications.json');
+    // Try absolute path first (for Netlify), then relative path (for local/test)
+    let response = await fetch('/data/applications.json');
+    if (!response.ok) {
+      response = await fetch('../data/applications.json');
+    }
     if (!response.ok) throw new Error('Failed to load applications.json');
     return await response.json();
   } catch (error) {
@@ -367,6 +371,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (applicationsChartEl) {
     const monthlyData = getApplicationsByMonth();
     console.log('Dashboard: Monthly chart data:', monthlyData);
+
+    // Destroy any existing chart instance before creating a new one
+    // Use try-catch for compatibility with different Chart.js versions
+    try {
+      const existingChart = Chart.getChart ? Chart.getChart(applicationsChartEl) : null;
+      if (existingChart) {
+        existingChart.destroy();
+      }
+    } catch (error) {
+      // Fallback for older Chart.js versions - check for existing chart instance
+      if (applicationsChartEl._chartjs) {
+        applicationsChartEl._chartjs.destroy();
+      }
+    }
 
     try {
       new Chart(applicationsChartEl.getContext('2d'), {

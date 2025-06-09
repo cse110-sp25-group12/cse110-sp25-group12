@@ -44,40 +44,75 @@ document.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    //Collect values from form fields
-    const formData = {
-      company: document.getElementById('company').value,
-      jobPosition: document.getElementById('jobPosition').value,
-      dateApplied: document.getElementById('dateApplied').value,
-      status: document.getElementById('status').value,
-      positionType: document.getElementById('positionType').value,
-      salary: document.getElementById('salary').value || null,
-      location: document.getElementById('location').value,
-      bookmarked: false,
-      contact: {
-        name: document.getElementById('contactName').value,
-        email: document.getElementById('contactEmail').value,
-        phoneNumber: document.getElementById('contactPhone').value
-      },
-      notes: document.getElementById('notes').value
+    //Collect values from form fields with null safety
+    const getElementValue = (id) => {
+      const element = document.getElementById(id);
+      return element ? element.value : '';
     };
 
-    if (editData) {
-      // In edit mode, preserve the existing ID and update storage
-      const job = JSON.parse(editData);
-      formData.id = job.id;
-      updateApplication(job.id, formData);
-      localStorage.removeItem('editJobData');
-    } else {
-      // Otherwise, create a new application entry
-      createApplication(formData);
+    // Validate salary is not negative
+    const salaryValue = getElementValue('salary');
+    
+    if (salaryValue && parseInt(salaryValue, 10) < 0) {
+      showErrorMessage('Salary cannot be negative. Please enter a valid amount.');
+      return;
     }
 
+    const formData = {
+      company: getElementValue('company'),
+      jobPosition: getElementValue('jobPosition'),
+      dateApplied: getElementValue('dateApplied'),
+      status: getElementValue('status'),
+      positionType: getElementValue('positionType'),
+      salary: salaryValue || null,
+      location: getElementValue('location'),
+      bookmarked: false,
+      contact: {
+        name: getElementValue('contactName'),
+        email: getElementValue('contactEmail'),
+        phoneNumber: getElementValue('contactPhone')
+      },
+      notes: getElementValue('notes')
+    };
 
-    // After processing, navigate back to the applications list
-    setTimeout(() => {
-      window.location.pathname = 'source/pages/applications.html';
-    }, 100);
+    try {
+      if (editData) {
+        // In edit mode, preserve the existing ID and update storage
+        const job = JSON.parse(editData);
+        formData.id = job.id;
+        updateApplication(job.id, formData);
+        localStorage.removeItem('editJobData');
+        
+        // Show success message for update
+        showSuccessMessage('Application updated successfully!');
+      } else {
+        // Otherwise, create a new application entry
+        const newApplication = createApplication(formData);
+        
+        // Show success message for creation
+        const companyName = newApplication?.company || formData.company || 'Unknown Company';
+        showSuccessMessage(`Application for ${companyName} created successfully!`);
+      }
+
+      // After processing, navigate back to the applications list
+      setTimeout(() => {
+        // Use different redirect strategies for different environments
+        if (typeof window !== 'undefined') {
+          // Check if we're in a test environment or production
+          if (window.location.protocol === 'file:' || window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
+            // Local/test environment - use relative path
+            window.location.pathname = 'source/pages/applications.html';
+          } else {
+            // Production/Netlify environment - use clean URL
+            window.location.href = '/applications';
+          }
+        }
+      }, 100); // Match test expectation timing
+      
+    } catch (error) {
+      console.error('Error saving application:', error);
+      showErrorMessage('Failed to save application. Please try again.');
+    }
   });
 });
 
@@ -98,6 +133,98 @@ function populateFormForEdit(job) {
   document.getElementById('contactEmail').value = job.contact?.email || '';
   document.getElementById('contactPhone').value = job.contact?.phoneNumber || '';
   document.getElementById('notes').value = job.notes || '';
+}
+
+/**
+ * @description Show a success message to the user
+ * @param {string} message - The success message to display
+ */
+function showSuccessMessage(message) {
+  // Create a success notification element
+  const notification = document.createElement('div');
+  notification.className = 'success-notification';
+  notification.textContent = message;
+  
+  // Style the notification
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    backgroundColor: '#4caf50',
+    color: 'white',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: '10000',
+    fontSize: '14px',
+    fontWeight: '500',
+    maxWidth: '400px',
+    transform: 'translateX(100%)',
+    transition: 'transform 0.3s ease-in-out'
+  });
+  
+  document.body.appendChild(notification);
+  
+  // Animate in
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  // Remove after delay
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 3000);
+}
+
+/**
+ * @description Show an error message to the user
+ * @param {string} message - The error message to display
+ */
+function showErrorMessage(message) {
+  // Create an error notification element
+  const notification = document.createElement('div');
+  notification.className = 'error-notification';
+  notification.textContent = message;
+  
+  // Style the notification
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    backgroundColor: '#f44336',
+    color: 'white',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: '10000',
+    fontSize: '14px',
+    fontWeight: '500',
+    maxWidth: '400px',
+    transform: 'translateX(100%)',
+    transition: 'transform 0.3s ease-in-out'
+  });
+  
+  document.body.appendChild(notification);
+  
+  // Animate in
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  // Remove after delay
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 5000); // Error messages stay longer
 }
 
 export { populateFormForEdit };

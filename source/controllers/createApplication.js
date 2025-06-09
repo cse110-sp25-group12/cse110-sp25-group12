@@ -37,6 +37,13 @@ export function createApplication(formData) {
   cards.push(newCard);
   localStorage.setItem('applications', JSON.stringify(cards));
 
+  // Dispatch a custom event to notify other parts of the app about the new application
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('applicationCreated', { 
+      detail: { application: newCard } 
+    }));
+  }
+
   return newCard;
 }
 
