@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 import puppeteer from 'puppeteer';
 
 const isCI = process.env.GITHUB_ACTIONS === 'true';
