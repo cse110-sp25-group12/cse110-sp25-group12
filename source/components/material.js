@@ -49,7 +49,7 @@
     }
     if (typeof createCharts === 'function') {
       // Pass the chart data when re-creating charts due to theme change
-      setTimeout(() => createCharts(sampleChartData), 50);
+      //setTimeout(() => createCharts(sampleChartData), 50);
     }
   }
 
