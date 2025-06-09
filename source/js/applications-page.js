@@ -34,7 +34,11 @@ document.addEventListener('DOMContentLoaded', async () => {
  */
 async function fetchApplications() {
   try {
-    const response = await fetch('/data/applications.json');
+    // Try absolute path first (for Netlify), then relative path (for local/test)
+    let response = await fetch('/data/applications.json');
+    if (!response.ok) {
+      response = await fetch('../data/applications.json');
+    }
     if (!response.ok) throw new Error('Failed to load applications.json');
     return await response.json();
   } catch (error) {
