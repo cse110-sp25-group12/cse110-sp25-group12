@@ -2,6 +2,8 @@
 
 **Live Application**: [JobTrack on Netlify](https://lighthearted-brioche-4c7d61.netlify.app)
 
+**JS Documentation**: [Github Pages](https://cse110-sp25-group12.github.io/cse110-sp25-group12/)
+
 # Getting Started (with VSCode)
 
 1. Clone the repository onto your computer with ```git clone <repo-url>```
