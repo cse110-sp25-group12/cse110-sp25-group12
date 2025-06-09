@@ -44,22 +44,27 @@ document.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    //Collect values from form fields
+    //Collect values from form fields with null safety
+    const getElementValue = (id) => {
+      const element = document.getElementById(id);
+      return element ? element.value : '';
+    };
+
     const formData = {
-      company: document.getElementById('company').value,
-      jobPosition: document.getElementById('jobPosition').value,
-      dateApplied: document.getElementById('dateApplied').value,
-      status: document.getElementById('status').value,
-      positionType: document.getElementById('positionType').value,
-      salary: document.getElementById('salary').value || null,
-      location: document.getElementById('location').value,
+      company: getElementValue('company'),
+      jobPosition: getElementValue('jobPosition'),
+      dateApplied: getElementValue('dateApplied'),
+      status: getElementValue('status'),
+      positionType: getElementValue('positionType'),
+      salary: getElementValue('salary') || null,
+      location: getElementValue('location'),
       bookmarked: false,
       contact: {
-        name: document.getElementById('contactName').value,
-        email: document.getElementById('contactEmail').value,
-        phoneNumber: document.getElementById('contactPhone').value
+        name: getElementValue('contactName'),
+        email: getElementValue('contactEmail'),
+        phoneNumber: getElementValue('contactPhone')
       },
-      notes: document.getElementById('notes').value
+      notes: getElementValue('notes')
     };
 
     try {
@@ -77,12 +82,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const newApplication = createApplication(formData);
         
         // Show success message for creation
-        showSuccessMessage(`Application for ${newApplication.company} created successfully!`);
+        const companyName = newApplication?.company || formData.company || 'Unknown Company';
+        showSuccessMessage(`Application for ${companyName} created successfully!`);
       }
 
       // After processing, navigate back to the applications list
       setTimeout(() => {
-        window.location.href = 'applications.html';
+        // Use different approaches for redirect based on environment
+        if (typeof window !== 'undefined') {
+          if (window.location.assign) {
+            window.location.assign('applications.html');
+          } else {
+            window.location.href = 'applications.html';
+          }
+        }
       }, 1500); // Longer delay to show success message
       
     } catch (error) {

@@ -368,9 +368,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     const monthlyData = getApplicationsByMonth();
 
     // Destroy any existing chart instance before creating a new one
-    const existingChart = Chart.getChart(applicationsChartEl);
-    if (existingChart) {
-      existingChart.destroy();
+    // Use try-catch for compatibility with different Chart.js versions
+    try {
+      const existingChart = Chart.getChart ? Chart.getChart(applicationsChartEl) : null;
+      if (existingChart) {
+        existingChart.destroy();
+      }
+    } catch (error) {
+      // Fallback for older Chart.js versions - check for existing chart instance
+      if (applicationsChartEl._chartjs) {
+        applicationsChartEl._chartjs.destroy();
+      }
     }
 
     try {
@@ -458,9 +466,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Destroy any existing chart instance before creating a new one
-    const existingStatusChart = Chart.getChart(statusChartEl);
-    if (existingStatusChart) {
-      existingStatusChart.destroy();
+    // Use try-catch for compatibility with different Chart.js versions
+    try {
+      const existingStatusChart = Chart.getChart ? Chart.getChart(statusChartEl) : null;
+      if (existingStatusChart) {
+        existingStatusChart.destroy();
+      }
+    } catch (error) {
+      // Fallback for older Chart.js versions - check for existing chart instance
+      if (statusChartEl._chartjs) {
+        statusChartEl._chartjs.destroy();
+      }
     }
 
     try {
