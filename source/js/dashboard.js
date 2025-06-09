@@ -43,14 +43,30 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   const getThisWeeksApplications = () => {
     const today = new Date();
+    // find this week’s Sunday 00:00 (local time)
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay()); // Set to Sunday
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
     startOfWeek.setHours(0, 0, 0, 0);
 
+    // find next week’s Sunday 00:00 (local time, exclusive)
+    const startOfNextWeek = new Date(startOfWeek);
+    startOfNextWeek.setDate(startOfWeek.getDate() + 7);
+
     return applications.filter((app) => {
-      if (!app.dateApplied) return false;
-      const appDate = new Date(app.dateApplied);
-      return appDate >= startOfWeek;
+      if (!app.dateApplied || typeof app.dateApplied !== 'string') return false;
+      
+      // Parse "YYYY-MM-DD" string as local date at midnight
+      const parts = app.dateApplied.split('-');
+      if (parts.length !== 3) return false; // Basic validation
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; // JavaScript months are 0-indexed
+      const day = parseInt(parts[2], 10);
+      const d = new Date(year, month, day); // Creates date at local midnight
+
+      // Check for invalid date result from parsing
+      if (isNaN(d.getTime())) return false;
+
+      return d >= startOfWeek && d < startOfNextWeek;
     });
   };
 
@@ -60,20 +76,30 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   const getPreviousWeeksApplications = () => {
     const today = new Date();
-    const startOfThisWeek = new Date(today);
-    startOfThisWeek.setDate(today.getDate() - today.getDay());
-    startOfThisWeek.setHours(0, 0, 0, 0);
+    // this week’s Sunday 00:00 (local time)
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+    startOfWeek.setHours(0, 0, 0, 0);
 
-    const startOfPrevWeek = new Date(startOfThisWeek);
-    startOfPrevWeek.setDate(startOfThisWeek.getDate() - 7);
-
-    const endOfPrevWeek = new Date(startOfThisWeek);
-    endOfPrevWeek.setMilliseconds(-1);
+    // previous week’s Sunday 00:00 (local time)
+    const startOfPrevWeek = new Date(startOfWeek);
+    startOfPrevWeek.setDate(startOfWeek.getDate() - 7);
 
     return applications.filter((app) => {
-      if (!app.dateApplied) return false;
-      const appDate = new Date(app.dateApplied);
-      return appDate >= startOfPrevWeek && appDate <= endOfPrevWeek;
+      if (!app.dateApplied || typeof app.dateApplied !== 'string') return false;
+
+      // Parse "YYYY-MM-DD" string as local date at midnight
+      const parts = app.dateApplied.split('-');
+      if (parts.length !== 3) return false; // Basic validation
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; // JavaScript months are 0-indexed
+      const day = parseInt(parts[2], 10);
+      const d = new Date(year, month, day); // Creates date at local midnight
+
+      // Check for invalid date result from parsing
+      if (isNaN(d.getTime())) return false;
+
+      return d >= startOfPrevWeek && d < startOfWeek;
     });
   };
 
