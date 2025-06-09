@@ -93,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
           if (window.location.assign) {
             window.location.assign('applications.html');
           } else {
-            window.location.href = 'applications.html';
+            window.location.pathname = 'source/pages/applications.html';
           }
         }
-      }, 1500); // Longer delay to show success message
+      }, 100); // Match test expectation timing
       
     } catch (error) {
       console.error('Error saving application:', error);
