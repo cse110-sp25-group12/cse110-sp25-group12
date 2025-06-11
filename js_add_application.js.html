@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: js/add_application.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: js/add_application.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { createApplication } from '../controllers/createApplication.js';
+import { updateApplication } from '../controllers/updateApplication.js';
+
+
+
+/**
+ * @description Initializes the add/edit application form once the DOM is ready.
+ * @listens DOMContentLoaded
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  // Button to clear edit data when adding a new application
+  const addBtn = document.getElementById('addApplicationBtn');
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      localStorage.removeItem('editJobData');
+    });
+  }
+
+  // Reference to the add/edit form
+  const form = document.getElementById('addApplicationForm');
+
+  // Attempt to read any stored edit data
+  const rawEdit = localStorage.getItem('editJobData');
+  if (!rawEdit) {
+    localStorage.removeItem('editJobData');
+  }
+
+
+  const editData = localStorage.getItem('editJobData');
+
+  // If we're in edit mode, populate the form and update UI text
+  if (editData) {
+    const job = JSON.parse(editData);
+    populateFormForEdit(job);
+    document.title = 'JobTrack - Edit Application';
+    document.querySelector('.main-header h1').textContent = 'Edit Current Job Application';
+    document.getElementById('submitBtn').textContent = 'Save Changes';
+  }
+
+  /**
+   * @description Handle form submission for creating or updating an application.
+   * @param {SubmitEvent} event
+   */
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    //Collect values from form fields with null safety
+    const getElementValue = (id) => {
+      const element = document.getElementById(id);
+      return element ? element.value : '';
+    };
+
+    // Validate salary is not negative
+    const salaryValue = getElementValue('salary');
+    
+    if (salaryValue &amp;&amp; parseInt(salaryValue, 10) &lt; 0) {
+      showErrorMessage('Salary cannot be negative. Please enter a valid amount.');
+      return;
+    }
+
+    const formData = {
+      company: getElementValue('company'),
+      jobPosition: getElementValue('jobPosition'),
+      dateApplied: getElementValue('dateApplied'),
+      status: getElementValue('status'),
+      positionType: getElementValue('positionType'),
+      salary: salaryValue || null,
+      location: getElementValue('location'),
+      bookmarked: false,
+      contact: {
+        name: getElementValue('contactName'),
+        email: getElementValue('contactEmail'),
+        phoneNumber: getElementValue('contactPhone')
+      },
+      notes: getElementValue('notes')
+    };
+
+    try {
+      if (editData) {
+        // In edit mode, preserve the existing ID and update storage
+        const job = JSON.parse(editData);
+        formData.id = job.id;
+        updateApplication(job.id, formData);
+        localStorage.removeItem('editJobData');
+        
+        // Show success message for update
+        showSuccessMessage('Application updated successfully!');
+      } else {
+        // Otherwise, create a new application entry
+        const newApplication = createApplication(formData);
+        
+        // Show success message for creation
+        const companyName = newApplication?.company || formData.company || 'Unknown Company';
+        showSuccessMessage(`Application for ${companyName} created successfully!`);
+      }
+
+      // After processing, navigate back to the applications list
+      setTimeout(() => {
+        // Use different redirect strategies for different environments
+        if (typeof window !== 'undefined') {
+          // Check if we're in a test environment or production
+          if (window.location.protocol === 'file:' || window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
+            // Local/test environment - use relative path
+            window.location.pathname = 'source/pages/applications.html';
+          } else {
+            // Production/Netlify environment - use clean URL
+            window.location.href = '/applications';
+          }
+        }
+      }, 100); // Match test expectation timing
+      
+    } catch (error) {
+      console.error('Error saving application:', error);
+      showErrorMessage('Failed to save application. Please try again.');
+    }
+  });
+});
+
+/**
+ * @description Populate form fields with data for editing an existing application.
+ * @param {Object} job - The job data to load into the form.
+ */
+function populateFormForEdit(job) {
+  // Fill each field from the job object (use empty string defaults if missing)
+  document.getElementById('company').value = job.company;
+  document.getElementById('jobPosition').value = job.jobPosition;
+  document.getElementById('dateApplied').value = job.dateApplied || '';
+  document.getElementById('status').value = job.status;
+  document.getElementById('positionType').value = job.positionType || job.jobType || '';
+  document.getElementById('salary').value = job.salary || '';
+  document.getElementById('location').value = job.location || '';
+  document.getElementById('contactName').value = job.contact?.name || '';
+  document.getElementById('contactEmail').value = job.contact?.email || '';
+  document.getElementById('contactPhone').value = job.contact?.phoneNumber || '';
+  document.getElementById('notes').value = job.notes || '';
+}
+
+/**
+ * @description Show a success message to the user
+ * @param {string} message - The success message to display
+ */
+function showSuccessMessage(message) {
+  // Create a success notification element
+  const notification = document.createElement('div');
+  notification.className = 'success-notification';
+  notification.textContent = message;
+  
+  // Style the notification
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    backgroundColor: '#4caf50',
+    color: 'white',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: '10000',
+    fontSize: '14px',
+    fontWeight: '500',
+    maxWidth: '400px',
+    transform: 'translateX(100%)',
+    transition: 'transform 0.3s ease-in-out'
+  });
+  
+  document.body.appendChild(notification);
+  
+  // Animate in
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  // Remove after delay
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 3000);
+}
+
+/**
+ * @description Show an error message to the user
+ * @param {string} message - The error message to display
+ */
+function showErrorMessage(message) {
+  // Create an error notification element
+  const notification = document.createElement('div');
+  notification.className = 'error-notification';
+  notification.textContent = message;
+  
+  // Style the notification
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    backgroundColor: '#f44336',
+    color: 'white',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: '10000',
+    fontSize: '14px',
+    fontWeight: '500',
+    maxWidth: '400px',
+    transform: 'translateX(100%)',
+    transition: 'transform 0.3s ease-in-out'
+  });
+  
+  document.body.appendChild(notification);
+  
+  // Animate in
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  // Remove after delay
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 5000); // Error messages stay longer
+}
+
+export { populateFormForEdit };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#FILTER_STATUS_OPTIONS">FILTER_STATUS_OPTIONS</a></li><li><a href="global.html#SORT_OPTIONS">SORT_OPTIONS</a></li><li><a href="global.html#applyFilterAndSort">applyFilterAndSort</a></li><li><a href="global.html#applySorting">applySorting</a></li><li><a href="global.html#clearAllData">clearAllData</a></li><li><a href="global.html#createApplication">createApplication</a></li><li><a href="global.html#createSortingAndFilterUI">createSortingAndFilterUI</a></li><li><a href="global.html#deleteApplication">deleteApplication</a></li><li><a href="global.html#fetchApplications">fetchApplications</a></li><li><a href="global.html#filterApplications">filterApplications</a></li><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#getSavedFilterPreference">getSavedFilterPreference</a></li><li><a href="global.html#getSavedSortPreference">getSavedSortPreference</a></li><li><a href="global.html#initSortingControls">initSortingControls</a></li><li><a href="global.html#loadMockData">loadMockData</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#populateFormForEdit">populateFormForEdit</a></li><li><a href="global.html#renderCards">renderCards</a></li><li><a href="global.html#saveFilterPreference">saveFilterPreference</a></li><li><a href="global.html#saveSortPreference">saveSortPreference</a></li><li><a href="global.html#setupModal">setupModal</a></li><li><a href="global.html#showErrorMessage">showErrorMessage</a></li><li><a href="global.html#showSuccessMessage">showSuccessMessage</a></li><li><a href="global.html#sortApplications">sortApplications</a></li><li><a href="global.html#updateApplication">updateApplication</a></li><li><a href="global.html#updateCardInDOM">updateCardInDOM</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 11 2025 05:43:58 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
