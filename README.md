@@ -1,5 +1,10 @@
 # cse110-sp25-group12
 
+## Introduction
+
+This repository contains **JobTracker**, a full-stack application built for the Software Engineering course **CSE110** at UC San Diego. Our team of **10 students** collaborated over **four** Agile sprints - using sprint planning, daily stand-ups, code reviews, CI/CD pipelines, and retrospectives—to design, implement, test, and document this project.  
+
+
 **Live Application**: [JobTrack on Netlify](https://lighthearted-brioche-4c7d61.netlify.app)
 
 **JS Documentation**: [Github Pages](https://cse110-sp25-group12.github.io/cse110-sp25-group12/)
@@ -21,4 +26,5 @@
 - [Github Video Link ](admin/videos/statusvideo1.mp4)
 
 ## Final Video
-- []()
+- [Private Version](https://www.youtube.com/watch?v=bPN3yUbq7KU)
+- [Public Version](https://www.youtube.com/watch?v=loOqkMW1a0c)
